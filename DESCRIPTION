@@ -1,6 +1,6 @@
 Package: scorz
 Title: Derive Summary Scores from Questionnaire Item Responses
-Version: 0.0.0.9001
+Version: 0.0.0.9002
 Authors@R: c(
     person("Matthew", "Hamilton", , "matthew.hamilton@orygen.org.au", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-7407-9194")),
@@ -33,6 +33,7 @@ Imports:
     lifecycle,
     magrittr,
     methods,
+    mice,
     purrr,
     rlang,
     simstudy,
@@ -47,3 +48,5 @@ Depends:
     ready4
 Suggests: 
     rmarkdown
+Remotes: 
+    ready4-dev/ready4
