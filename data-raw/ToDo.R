@@ -1,5 +1,5 @@
 ####
-library(youthvars)
+# library(youthvars)
 ScorzProfile <- methods::setClass("ScorzProfile", #scorz
                                   contains = "Ready4Module",
                                   slots = c(a_YouthvarsProfile = "YouthvarsProfile",
