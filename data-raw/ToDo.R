@@ -1,5 +1,5 @@
 ####
-# library(youthvars)
+library(youthvars)
 ScorzProfile <- methods::setClass("ScorzProfile", #scorz
                                   contains = "Ready4Module",
                                   slots = c(a_YouthvarsProfile = "YouthvarsProfile",
@@ -9,6 +9,7 @@ ScorzProfile <- methods::setClass("ScorzProfile", #scorz
                                             instrument_nm_1L_chr = "character",
                                             itm_labels_chr = "character",
                                             itm_prefix_1L_chr =  "character",
+                                            scrg_dss_ls = "list",
                                             total_wtd_var_nm_1L_chr = "character",
                                             total_unwtd_var_nm_1L_chr = "character"),
                                   prototype = list(a_YouthvarsProfile = YouthvarsProfile(),
@@ -18,6 +19,7 @@ ScorzProfile <- methods::setClass("ScorzProfile", #scorz
                                                    instrument_nm_1L_chr = NA_character_,
                                                    itm_labels_chr = NA_character_,
                                                    itm_prefix_1L_chr =  NA_character_,
+                                                   scrg_dss_ls = list(),
                                                    total_wtd_var_nm_1L_chr = NA_character_,
                                                    total_unwtd_var_nm_1L_chr = NA_character_))
 ScorzAqol6 <- methods::setClass("ScorzAqol6",
@@ -29,6 +31,7 @@ ScorzAqol6 <- methods::setClass("ScorzAqol6",
                                           instrument_nm_1L_chr = "character",
                                           itm_labels_chr = "character",
                                           itm_prefix_1L_chr =  "character",
+                                          scrg_dss_ls = "list",
                                           total_wtd_var_nm_1L_chr = "character",
                                           total_unwtd_var_nm_1L_chr = "character"),
                                 prototype = list(a_YouthvarsProfile = YouthvarsProfile(),
@@ -45,6 +48,7 @@ ScorzAqol6 <- methods::setClass("ScorzAqol6",
                                                                     "Pain interference","Vision", "Hearing",
                                                                     "Communication"),
                                                  itm_prefix_1L_chr =  "aqol6d_q",
+                                                 scrg_dss_ls = list(),
                                                  total_wtd_var_nm_1L_chr = "aqol6d_total_w",
                                                  total_unwtd_var_nm_1L_chr = NA_character_))
 ScorzAqol6Adol <- methods::setClass("ScorzAqol6Adol",
@@ -114,8 +118,8 @@ methods::setMethod("depict",
                    ),
                    depict_ScorzProfile)
 renew_ScorzAqol6Adol <- function(x,
-                                 type_1L_chr = "score_a6d"){
-  if(type_1L_chr == "score_a6d"){
+                                 type_1L_chr = "score"){
+  if(type_1L_chr == "score"){ ## PICK UP HERE
     scored_data_tb <- add_adol6d_scores(x@a_YouthvarsProfile@a_Ready4useDyad@ds_tb,
                                         prefix_1L_chr =  x@itm_prefix_1L_chr,
                                         id_var_nm_1L_chr = x@a_YouthvarsProfile@id_var_nm_1L_chr,
@@ -133,6 +137,30 @@ methods::setMethod("renew",
                    methods::className("ScorzAqol6Adol"#, package = "ready4use"
                    ),
                    renew_ScorzAqol6Adol)
+
+###
+x <- ready4use::Ready4useRepos(dv_nm_1L_chr = "fakes",
+                               dv_ds_nm_1L_chr = "https://doi.org/10.7910/DVN/W95KED",
+                               dv_server_1L_chr = "dataverse.harvard.edu") %>%
+  ingest(fls_to_ingest_chr = "ymh_clinical_dyad_r4") # MAKE DEFAULT PROCURE METHOD IF RETURN FILE ==T
+x <- procure(procureSlot(x,"b_Ready4useIngest"), # MAKE DEFAULT PROCURE METHOD FOR RECORD IF FL NM PROVIDED
+             fl_nm_1L_chr = "ymh_clinical_dyad_r4")
+exhibit(x)
+y <- youthvars::YouthvarsProfile(a_Ready4useDyad = x,
+                                 id_var_nm_1L_chr = "fkClientID")
+z <- ScorzAqol6Adol(a_YouthvarsProfile = y)
+x <- procureSlot(procureSlot(z,"a_YouthvarsProfile"),
+                 "a_Ready4useDyad")
+exhibit(x)
+depict(z, type_1L_chr = "item_by_time")
+depict(z, type_1L_chr = "item_by_time", var_idcs_int = c(2L))
+depict(z, type_1L_chr = "domain_by_time")
+depict(z, type_1L_chr = "domain_by_time", var_idcs_int = c(1L))
+depict(z, type_1L_chr = "total_by_time")
+depict(z, type_1L_chr = "comp_item_by_time")
+depict(z, type_1L_chr = "comp_domain_by_time")
+##
+## MIGRATE TO SPECIFIC
 ScorzModelSpec <- methods::setClass("ScorzModelSpec", #youthvars
                                     contains = "Ready4Module",
                                     slots = c(a_ScorzProfile = "ScorzProfile",
@@ -185,14 +213,5 @@ methods::setMethod("exhibit",
                    methods::className("ScorzModelSpec"#, package = "ready4use"
                    ),
                    exhibit_ScorzModelSpec)
-z <- ScorzAqol6Adol(a_YouthvarsProfile = y)
-z <- renew(z,
-           type_1L_chr = "score_a6d")
-depict(z, type_1L_chr = "item_by_time")
-depict(z, type_1L_chr = "item_by_time", var_idcs_int = c(2L))
-depict(z, type_1L_chr = "domain_by_time")
-depict(z, type_1L_chr = "domain_by_time", var_idcs_int = c(1L))
-depict(z, type_1L_chr = "total_by_time")
-depict(z, type_1L_chr = "comp_item_by_time")
-depict(z, type_1L_chr = "comp_domain_by_time")
+
 #
