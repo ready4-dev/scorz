@@ -22,7 +22,9 @@ x <- ready4fun::make_pkg_desc_ls(pkg_title_1L_chr = "Derive Summary scores from 
                            copyright_holders_chr = "Orygen",
                            custom_dmt_ls = ready4fun::make_custom_dmt_ls(#user_manual_fns_chr = c()
                            ),##
-                           dev_pkgs_chr = c("ready4","ready4use","ready4show"),
+                           dev_pkgs_chr = c("ready4",
+                                            "ready4use","ready4show",
+                                            "youthvars"),
                            lifecycle_stage_1L_chr = "experimental",
                            path_to_pkg_logo_1L_chr = "../../../../../Documentation/Images/scorz-logo/default.png",
                            piggyback_to_1L_chr = "ready4-dev/ready4",

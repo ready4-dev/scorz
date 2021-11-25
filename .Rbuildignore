@@ -14,3 +14,4 @@
 ^data-raw/ReleaseCopy\.R$
 ^data-raw/fns/calculate\.R$
 ^data-raw/fns/get\.R$
+^data-raw/ToDo\.R$

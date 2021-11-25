@@ -4,10 +4,7 @@
 \alias{make_adol_aqol6d_disv_lup}
 \title{Make adolescent Assessment of Quality of Life Six Dimension disvalue lookup table}
 \usage{
-make_adol_aqol6d_disv_lup(aqol6d_scrg_dss_ls = NULL)
-}
-\arguments{
-\item{aqol6d_scrg_dss_ls}{Assessment of Quality of Life Six Dimension scoring datasets (a list), Default: NULL}
+make_adol_aqol6d_disv_lup()
 }
 \value{
 Adolescent Assessment of Quality of Life Six Dimension disvalue (a lookup table)

@@ -4,12 +4,10 @@
 \alias{add_aqol6d_adol_dim_scrg_eqs}
 \title{Add Assessment of Quality of Life Six Dimension adolescent dimension scoring equations}
 \usage{
-add_aqol6d_adol_dim_scrg_eqs(unscored_aqol_tb, aqol6d_scrg_dss_ls = NULL)
+add_aqol6d_adol_dim_scrg_eqs(unscored_aqol_tb)
 }
 \arguments{
 \item{unscored_aqol_tb}{Unscored Assessment of Quality of Life (a tibble)}
-
-\item{aqol6d_scrg_dss_ls}{Assessment of Quality of Life Six Dimension scoring datasets (a list), Default: NULL}
 }
 \value{
 Unscored Assessment of Quality of Life (a tibble)

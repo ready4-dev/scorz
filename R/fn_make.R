@@ -1,16 +1,16 @@
 #' Make adolescent Assessment of Quality of Life Six Dimension disvalue lookup table
 #' @description make_adol_aqol6d_disv_lup() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make adolescent assessment of quality of life six dimension disvalue lookup table. The function returns Adolescent Assessment of Quality of Life Six Dimension disvalue (a lookup table).
-#' @param aqol6d_scrg_dss_ls Assessment of Quality of Life Six Dimension scoring datasets (a list), Default: NULL
+
 #' @return Adolescent Assessment of Quality of Life Six Dimension disvalue (a lookup table)
 #' @rdname make_adol_aqol6d_disv_lup
 #' @export 
+#' @importFrom utils data
 #' @importFrom dplyr mutate case_when
 #' @keywords internal
-make_adol_aqol6d_disv_lup <- function (aqol6d_scrg_dss_ls = NULL) 
+make_adol_aqol6d_disv_lup <- function () 
 {
-    if (is.null(aqol6d_scrg_dss_ls)) 
-        aqol6d_scrg_dss_ls <- get_aqol6d_scrng_dss()
-    aqol6d_adult_disv_lup_tb <- aqol6d_scrg_dss_ls$aqol6d_adult_disv_lup_tb
+    utils::data("aqol6d_adult_disv_lup_tb", package = "youthvars", 
+        envir = environment())
     adol_aqol6d_disv_lup <- aqol6d_adult_disv_lup_tb %>% dplyr::mutate(Answer_4_dbl = dplyr::case_when(Question_chr == 
         "Q18" ~ 0.622, TRUE ~ Answer_4_dbl), Answer_5_dbl = dplyr::case_when(Question_chr == 
         "Q3" ~ 0.827, TRUE ~ Answer_5_dbl), Answer_6_dbl = dplyr::case_when(Question_chr == 
@@ -24,7 +24,6 @@ make_adol_aqol6d_disv_lup <- function (aqol6d_scrg_dss_ls = NULL)
 #' @param series_names_chr Series names (a character vector)
 #' @param synth_data_spine_ls Synthetic data spine (a list)
 #' @param temporal_cors_ls Temporal correlations (a list)
-#' @param aqol6d_scrg_dss_ls Assessment of Quality of Life Six Dimension scoring datasets (a list), Default: NULL
 #' @param id_var_nm_1L_chr Identity variable name (a character vector of length one), Default: 'fkClientID'
 #' @param prefix_chr Prefix (a character vector), Default: c(uid = "Participant_", aqol_item = "aqol6d_q", domain_unwtd_pfx_1L_chr = "aqol6d_subtotal_c_", 
 #'    domain_wtd_pfx_1L_chr = "aqol6d_subtotal_w_")
@@ -36,33 +35,26 @@ make_adol_aqol6d_disv_lup <- function (aqol6d_scrg_dss_ls = NULL)
 #' @importFrom rlang sym
 #' @keywords internal
 make_aqol6d_adol_pop_tbs_ls <- function (aqol_items_prpns_tbs_ls, aqol_scores_pars_ls, series_names_chr, 
-    synth_data_spine_ls, temporal_cors_ls, aqol6d_scrg_dss_ls = NULL, 
-    id_var_nm_1L_chr = "fkClientID", prefix_chr = c(uid = "Participant_", 
-        aqol_item = "aqol6d_q", domain_unwtd_pfx_1L_chr = "aqol6d_subtotal_c_", 
-        domain_wtd_pfx_1L_chr = "aqol6d_subtotal_w_")) 
+    synth_data_spine_ls, temporal_cors_ls, id_var_nm_1L_chr = "fkClientID", 
+    prefix_chr = c(uid = "Participant_", aqol_item = "aqol6d_q", 
+        domain_unwtd_pfx_1L_chr = "aqol6d_subtotal_c_", domain_wtd_pfx_1L_chr = "aqol6d_subtotal_w_")) 
 {
-    if (is.null(aqol6d_scrg_dss_ls)) {
-        aqol6d_scrg_dss_ls <- get_aqol6d_scrng_dss()
-    }
-    domain_qs_lup_tb <- aqol6d_scrg_dss_ls$aqol6d_domain_qs_lup_tb
     item_pfx_1L_chr <- prefix_chr[["aqol_item"]]
     uid_pfx_1L_chr <- prefix_chr[["uid"]]
     aqol6d_adol_pop_tbs_ls <- make_synth_series_tbs_ls(synth_data_spine_ls, 
         series_names_chr = series_names_chr) %>% add_cors_and_utls_to_aqol6d_tbs_ls(aqol_scores_pars_ls = aqol_scores_pars_ls, 
         aqol_items_prpns_tbs_ls = aqol_items_prpns_tbs_ls, temporal_cors_ls = temporal_cors_ls, 
         prefix_chr = prefix_chr, aqol_tots_var_nms_chr = synth_data_spine_ls$aqol_tots_var_nms_chr, 
-        aqol6d_scrg_dss_ls = aqol6d_scrg_dss_ls, id_var_nm_1L_chr = id_var_nm_1L_chr) %>% 
-        purrr::map(~{
-            domain_items_ls <- make_domain_items_ls(domain_qs_lup_tb = domain_qs_lup_tb, 
-                item_pfx_1L_chr = item_pfx_1L_chr)
-            domain_items_ls %>% add_unwtd_dim_tots(items_tb = .x, 
-                domain_pfx_1L_chr = prefix_chr[["domain_unwtd_pfx_1L_chr"]]) %>% 
-                add_wtd_dim_tots(domain_items_ls = domain_items_ls, 
-                  domain_unwtd_pfx_1L_chr = prefix_chr[["domain_unwtd_pfx_1L_chr"]], 
-                  domain_wtd_pfx_1L_chr = prefix_chr[["domain_wtd_pfx_1L_chr"]], 
-                  aqol6d_scrg_dss_ls = aqol6d_scrg_dss_ls) %>% 
-                add_labels_to_aqol6d_tb()
-        }) %>% purrr::map(~.x %>% dplyr::select(!!rlang::sym(id_var_nm_1L_chr), 
+        id_var_nm_1L_chr = id_var_nm_1L_chr) %>% purrr::map(~{
+        domain_items_ls <- make_domain_items_ls(domain_qs_lup_tb = aqol6d_domain_qs_lup_tb, 
+            item_pfx_1L_chr = item_pfx_1L_chr)
+        domain_items_ls %>% add_unwtd_dim_tots(items_tb = .x, 
+            domain_pfx_1L_chr = prefix_chr[["domain_unwtd_pfx_1L_chr"]]) %>% 
+            add_wtd_dim_tots(domain_items_ls = domain_items_ls, 
+                domain_unwtd_pfx_1L_chr = prefix_chr[["domain_unwtd_pfx_1L_chr"]], 
+                domain_wtd_pfx_1L_chr = prefix_chr[["domain_wtd_pfx_1L_chr"]]) %>% 
+            add_labels_to_aqol6d_tb()
+    }) %>% purrr::map(~.x %>% dplyr::select(!!rlang::sym(id_var_nm_1L_chr), 
         dplyr::starts_with(item_pfx_1L_chr), dplyr::starts_with(prefix_chr[["domain_unwtd_pfx_1L_chr"]]), 
         dplyr::starts_with(prefix_chr[["domain_wtd_pfx_1L_chr"]]), 
         dplyr::everything()))
