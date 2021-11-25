@@ -37,3 +37,4 @@ z <- ready4pack::make_pt_ready4pack_manifest(x#,
 ) %>%
   ready4pack::ready4pack_manifest()
 z <- ready4::author(z)
+devtools::build_vignettes()
