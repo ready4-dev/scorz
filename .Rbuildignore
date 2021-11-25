@@ -1,0 +1,16 @@
+^scorz\.Rproj$
+^\.Rproj\.user$
+^data-raw$
+^LICENSE\.md$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^data-raw/DATASET\.R$
+^data-raw/fns/add\.R$
+^\.github$
+^initial_setup\.R$
+^data-raw/fns/impute\.R$
+^data-raw/fns/make\.R$
+^data-raw/ReleaseCopy\.R$
+^data-raw/fns/calculate\.R$
+^data-raw/fns/get\.R$
