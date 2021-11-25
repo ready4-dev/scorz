@@ -1,6 +1,6 @@
 Package: scorz
 Title: Derive Summary Scores from Questionnaire Item Responses
-Version: 0.0.0.9003
+Version: 0.0.0.9004
 Authors@R: c(
     person("Matthew", "Hamilton", , "matthew.hamilton@orygen.org.au", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-7407-9194")),
@@ -28,6 +28,7 @@ RoxygenNote: 7.1.2
 Imports: 
     dplyr,
     Hmisc,
+    hutils,
     knitr,
     knitrBootstrap,
     lifecycle,
@@ -35,18 +36,19 @@ Imports:
     methods,
     mice,
     purrr,
+    ready4use (>= 0.0.0.9195),
     rlang,
     simstudy,
     stats,
     stringr,
     testthat,
     tibble,
-    tidyselect,
-    utils
+    tidyselect
 VignetteBuilder: knitr
 Depends: 
     ready4
 Suggests: 
     rmarkdown
 Remotes: 
-    ready4-dev/ready4
+    ready4-dev/ready4,
+    ready4-dev/ready4use
