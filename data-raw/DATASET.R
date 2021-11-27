@@ -1,4 +1,6 @@
 library(ready4)
+library(youthvars)
+library(ready4use)
 fns_env_ls <- ready4fun::read_fns(c("data-raw/fns/","data-raw/mthds/"),
                                   fns_env = new.env(parent = globalenv()))
 x <- ready4fun::make_pkg_desc_ls(pkg_title_1L_chr = "Derive Summary scores from questionnaire item responses" %>% tools::toTitleCase(),
@@ -31,10 +33,84 @@ x <- ready4fun::make_pkg_desc_ls(pkg_title_1L_chr = "Derive Summary scores from 
                            ready4_type_1L_chr = "authoring",
                            zenodo_badge_1L_chr = "[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5722708.svg)](https://doi.org/10.5281/zenodo.5722708)"
   )
-z <- ready4pack::make_pt_ready4pack_manifest(x#,
-                                             # constructor_r3 = y,
+y <- dplyr::bind_rows(ready4class::make_pt_ready4class_constructor(make_s3_lgl = FALSE,
+                                                                   name_stub_chr = "Profile",
+                                                                   slots_ls = list("a_YouthvarsProfile",
+                                                                                   "domain_unwtd_var_nms_chr",
+                                                                                   "domain_wtd_var_nms_chr",
+                                                                                   "instrument_dict_r3",
+                                                                                   "instrument_nm_1L_chr",
+                                                                                   "instrument_version_1L_chr",
+                                                                                   "itm_labels_chr",
+                                                                                   "itm_prefix_1L_chr",
+                                                                                   "scrg_dss_ls",
+                                                                                   "total_wtd_var_nm_1L_chr",
+                                                                                   "total_unwtd_var_nm_1L_chr"
+                                                                   ) %>% list(),
+                                                                   pt_ls = list("YouthvarsProfile",
+                                                                                "character",
+                                                                                "character",
+                                                                                "ready4use_dictionary",
+                                                                                "character",
+                                                                                "character",
+                                                                                "character",
+                                                                                "character",
+                                                                                "list",
+                                                                                "character",
+                                                                                "character") %>% list(),
+                                                                   class_desc_chr= "A dataset to be scored, its associated metadata and details of the scoring instrument.",
+                                                                   parent_class_chr = "Ready4Module"),
+                      ready4class::make_pt_ready4class_constructor(make_s3_lgl = FALSE,
+                                                                   name_stub_chr = "Aqol6",
+                                                                   slots_ls = list("a_YouthvarsProfile",
+                                                                                   "domain_unwtd_var_nms_chr",
+                                                                                   "domain_wtd_var_nms_chr",
+                                                                                   "instrument_dict_r3",
+                                                                                   "instrument_nm_1L_chr",
+                                                                                   "instrument_version_1L_chr",
+                                                                                   "itm_labels_chr",
+                                                                                   "itm_prefix_1L_chr",
+                                                                                   "scrg_dss_ls",
+                                                                                   "total_wtd_var_nm_1L_chr",
+                                                                                   "total_unwtd_var_nm_1L_chr"
+                                                                   ) %>% list(),
+                                                                   pt_ls = list("YouthvarsProfile",
+                                                                                "character",
+                                                                                "character",
+                                                                                "ready4use_dictionary",
+                                                                                "character",
+                                                                                "character",
+                                                                                "character",
+                                                                                "character",
+                                                                                "list",
+                                                                                "character",
+                                                                                "character") %>% list(),
+                                                                   vals_ls = list(#a_YouthvarsProfile = YouthvarsProfile(),
+                                                                                       #domain_unwtd_var_nms_chr = NA_character_,
+                                                                                       domain_wtd_var_nms_chr = "paste0(\"vD\",1:6)",
+                                                                                       instrument_dict_r3 = "get_aqol6d_scrg_dict()",
+                                                                                       instrument_nm_1L_chr = "'Assessment of Quality of Life (6 Dimension)'",
+                                                                                       #instrument_version_1L_chr = NA_character_,
+                                                                                       itm_labels_chr = "make_aqol6d_item_nms()",
+                                                                                       itm_prefix_1L_chr =  "'aqol6d_q'",
+                                                                                       scrg_dss_ls = "get_aqol6d_scrg_dss()",
+                                                                                       total_wtd_var_nm_1L_chr = "'aqol6d_total_w'",
+                                                                                       total_unwtd_var_nm_1L_chr = "'aqol6d_total_c'"
+                                                                                       ),
+                                                                   class_desc_chr = "A dataset and the required information to implement an AQoL-6D scoring algorithm.",
+                                                                   parent_class_chr = "ScorzProfile",
+                                                                   inc_clss_ls = list("ScorzProfile"))#,
+                      # ready4class::make_pt_ready4class_constructor(make_s3_lgl = FALSE,
+                      #                                              name_stub_chr = "Aqol6Adol",
+                      #                                              vals_ls = list(list(instrument_version_1L_chr = "Adolescent")),
+                      #                                              class_desc_chr = "A dataset and the required information to implement an AQoL-6D scoring algorithm.",
+                      #                                              parent_class_chr = "ScorzAqol6")
+                      ) %>%
+  ready4class::ready4class_constructor()
+z <- ready4pack::make_pt_ready4pack_manifest(x,
+                                             constructor_r3 = y#,
                                              # pkg_ds_ls_ls = datasets_ls
 ) %>%
   ready4pack::ready4pack_manifest()
 z <- ready4::author(z)
-devtools::build_vignettes()
+# devtools::build_vignettes()

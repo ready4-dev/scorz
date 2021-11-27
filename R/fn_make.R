@@ -83,6 +83,23 @@ make_aqol6d_fns_ls <- function (domain_items_ls)
         "_disv") %>% purrr::map(~rlang::sym(.x))
     return(aqol6d_disu_fn_ls)
 }
+#' Make Assessment of Quality of Life Six Dimension item names
+#' @description make_aqol6d_item_nms() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make assessment of quality of life six dimension item names. The function returns Assessment of Quality of Life Six Dimension item names (a character vector).
+
+#' @return Assessment of Quality of Life Six Dimension item names (a character vector)
+#' @rdname make_aqol6d_item_nms
+#' @export 
+#' @keywords internal
+make_aqol6d_item_nms <- function () 
+{
+    aqol6d_item_nms_chr <- c("Household tasks", "Getting around", 
+        "Morbility", "Self care", "Enjoy close rel's", "Family rel's", 
+        "Community involv't", "Despair", "Worry", "Sad", "Agitated", 
+        "Energy level", "Control", "Coping", "Frequency of pain", 
+        "Degree of pain", "Pain interference", "Vision", "Hearing", 
+        "Communication")
+    return(aqol6d_item_nms_chr)
+}
 #' Make Assessment of Quality of Life Six Dimension items tibble
 #' @description make_aqol6d_items_tb() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make assessment of quality of life six dimension items tibble. The function returns Assessment of Quality of Life Six Dimension items (a tibble).
 #' @param aqol_tb Assessment of Quality of Life (a tibble)

@@ -1,7 +1,7 @@
 home:
   links:
   - text: Manual - User (PDF)
-    href: https://github.com/ready4-dev/scorz/releases/download/Documentation_0.0/scorz_Developer.pdf
+    href: https://github.com/ready4-dev/scorz/releases/download/Documentation_0.0/aqol_scrg_dict_r3.RDS
   - text: Manual - Developer (PDF)
     href: https://github.com/ready4-dev/scorz/releases/download/Documentation_0.0/aqol6d_scrg_dss_ls.RDS
   - text: Project website
@@ -9,3 +9,7 @@ home:
 development:
   mode: auto
 reference:
+- title: "S4 Classes"
+- contents:
+  - ScorzProfile
+  - ScorzAqol6

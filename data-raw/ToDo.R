@@ -1,5 +1,15 @@
 ####
+# devtools::load_all()
 library(youthvars)
+devtools::load_all()
+# library(scorz)
+a <- ingest(Ready4useRepos(gh_repo_1L_chr = "ready4-dev/scorz",
+                           gh_tag_1L_chr = "Documentation_0.0"),
+            fls_to_ingest_chr = c("aqol_scrg_dict_r3")) %>%
+  procureSlot("b_Ready4useIngest") %>%
+  procure(fl_nm_1L_chr = "aqol_scrg_dict_r3")
+
+
 ScorzProfile <- methods::setClass("ScorzProfile", #scorz
                                   contains = "Ready4Module",
                                   slots = c(a_YouthvarsProfile = "YouthvarsProfile",
@@ -50,7 +60,7 @@ ScorzAqol6 <- methods::setClass("ScorzAqol6",
                                                  itm_prefix_1L_chr =  "aqol6d_q",
                                                  scrg_dss_ls = list(),
                                                  total_wtd_var_nm_1L_chr = "aqol6d_total_w",
-                                                 total_unwtd_var_nm_1L_chr = NA_character_))
+                                                 total_unwtd_var_nm_1L_chr = "aqol6d_total_c"))
 ScorzAqol6Adol <- methods::setClass("ScorzAqol6Adol",
                                     contains = "ScorzAqol6",
                                     prototype = list(instrument_nm_1L_chr = "Assessment of Quality of Life (6 Dimension, Adolescent Version)"))
@@ -68,7 +78,7 @@ depict_ScorzProfile <- function(x,
         heights_int <- c(20L, 1L)
       if(is.na(plot_rows_cols_pair_int[1]))
         plot_rows_cols_pair_int <- c(5L,4L)
-      plt <- make_itm_resp_plts(x@a_YouthvarsProfile@a_Ready4useDyad@ds_tb,
+      plt_xx <- make_itm_resp_plts(x@a_YouthvarsProfile@a_Ready4useDyad@ds_tb,
                                 col_nms_chr = names(dplyr::select(x@a_YouthvarsProfile@a_Ready4useDyad@ds_tb,
                                                                   starts_with(x@itm_prefix_1L_chr))),
                                 lbl_nms_chr = x@itm_labels_chr,
@@ -84,7 +94,7 @@ depict_ScorzProfile <- function(x,
         heights_int <- c(10L, 1L)
       if(is.na(plot_rows_cols_pair_int[1]))
         plot_rows_cols_pair_int <- c(3L,2L)
-      plt <- make_sub_tot_plts(x@a_YouthvarsProfile@a_Ready4useDyad@ds_tb,
+      plt_xx <- make_sub_tot_plts(x@a_YouthvarsProfile@a_Ready4useDyad@ds_tb,
                                col_nms_chr = x@domain_wtd_var_nms_chr,
                                plot_rows_cols_pair_int = plot_rows_cols_pair_int,
                                round_var_nm_1L_chr = x@a_YouthvarsProfile@timepoint_var_nm_1L_chr,
@@ -106,30 +116,43 @@ depict_ScorzProfile <- function(x,
       }
       if(is.na(var_idcs_int[1]))
         var_idcs_int <- 1:length(var_nms_chr)
-      var_nms_chr[var_idcs_int] %>%
+      plt_xx <- var_nms_chr[var_idcs_int] %>%
         purrr::map(~ depict(x@a_YouthvarsProfile,
                             type_1L_chr = "by_time",
                             var_nms_chr = .x))
     }
   }
+  return(plt_xx)
 }
 methods::setMethod("depict",
                    methods::className("ScorzProfile"#, package = "ready4use"
                    ),
                    depict_ScorzProfile)
 renew_ScorzAqol6Adol <- function(x,
+                                 label_ds_1L_lgl = T,
                                  type_1L_chr = "score"){
   if(type_1L_chr == "score"){ ## PICK UP HERE
-    scored_data_tb <- add_adol6d_scores(x@a_YouthvarsProfile@a_Ready4useDyad@ds_tb,
+    if(identical(x@scrg_dss_ls,list())){
+      x@scrg_dss_ls <- get_aqol6d_scrg_dss()
+    }
+    y <- x@a_YouthvarsProfile@a_Ready4useDyad
+    y <- renew(y, type_1L_chr = "unlabel")
+    select_chr <- setdiff(names(y@ds_tb),
+                          x@instrument_dict_r3$var_nm_chr[!x@instrument_dict_r3$var_nm_chr %>%
+                                                            startsWith(prefix_1L_chr)] %>% as.vector())
+    y@ds_tb <- y@ds_tb %>%
+      dplyr::select((select_chr))
+    y@ds_tb <- add_adol6d_scores(y@ds_tb,
+                                        aqol6d_scrg_dss_ls = x@scrg_dss_ls,
                                         prefix_1L_chr =  x@itm_prefix_1L_chr,
                                         id_var_nm_1L_chr = x@a_YouthvarsProfile@id_var_nm_1L_chr,
+                                        total_aqol_var_nm_1L_chr = x@total_unwtd_var_nm_1L_chr,
                                         wtd_aqol_var_nm_1L_chr = x@total_wtd_var_nm_1L_chr)
-    dictionary_r3 <- ready4::renew(x@a_YouthvarsProfile@a_Ready4useDyad@dictionary_r3,
-                                   new_ready4_dict_r3 = x@instrument_dict_r3)
-    scored_data_tb <- scored_data_tb %>%
-      ready4use::add_labels_from_dictionary(dictionary_r3)
-    x@a_YouthvarsProfile@a_Ready4useDyad@ds_tb <- scored_data_tb
-    x@a_YouthvarsProfile@a_Ready4useDyad@dictionary_r3 <- dictionary_r3
+    y@dictionary_r3 <- ready4::renew(y@dictionary_r3,
+                                     new_ready4_dict_r3 = x@instrument_dict_r3)
+    if(label_ds_1L_lgl)
+      y <- renew(y)
+    x@a_YouthvarsProfile@a_Ready4useDyad <- y
   }
   return(x)
 }
@@ -137,7 +160,6 @@ methods::setMethod("renew",
                    methods::className("ScorzAqol6Adol"#, package = "ready4use"
                    ),
                    renew_ScorzAqol6Adol)
-
 ###
 x <- ready4use::Ready4useRepos(dv_nm_1L_chr = "fakes",
                                dv_ds_nm_1L_chr = "https://doi.org/10.7910/DVN/W95KED",
@@ -146,16 +168,20 @@ x <- ready4use::Ready4useRepos(dv_nm_1L_chr = "fakes",
 x <- procure(procureSlot(x,"b_Ready4useIngest"), # MAKE DEFAULT PROCURE METHOD FOR RECORD IF FL NM PROVIDED
              fl_nm_1L_chr = "ymh_clinical_dyad_r4")
 exhibit(x)
-y <- youthvars::YouthvarsProfile(a_Ready4useDyad = x,
-                                 id_var_nm_1L_chr = "fkClientID")
+y <- youthvars::YouthvarsSeries(a_Ready4useDyad = x,
+                                id_var_nm_1L_chr = "fkClientID",
+                                timepoint_var_nm_1L_chr = "round",
+                                timepoint_vals_chr = levels(x@ds_tb$round))
 z <- ScorzAqol6Adol(a_YouthvarsProfile = y)
+z <- renew(z)
 x <- procureSlot(procureSlot(z,"a_YouthvarsProfile"),
                  "a_Ready4useDyad")
 exhibit(x)
-depict(z, type_1L_chr = "item_by_time")
-depict(z, type_1L_chr = "item_by_time", var_idcs_int = c(2L))
+
 depict(z, type_1L_chr = "domain_by_time")
 depict(z, type_1L_chr = "domain_by_time", var_idcs_int = c(1L))
+#depict(z, type_1L_chr = "item_by_time")
+depict(z, type_1L_chr = "item_by_time", var_idcs_int = c(2L))
 depict(z, type_1L_chr = "total_by_time")
 depict(z, type_1L_chr = "comp_item_by_time")
 depict(z, type_1L_chr = "comp_domain_by_time")

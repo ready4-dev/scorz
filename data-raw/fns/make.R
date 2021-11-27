@@ -52,6 +52,17 @@ make_aqol6d_fns_ls <- function (domain_items_ls)
                               "_disv") %>% purrr::map(~rlang::sym(.x))
   return(aqol6d_disu_fn_ls)
 }
+make_aqol6d_item_nms <- function(){
+  aqol6d_item_nms_chr <- c("Household tasks", "Getting around",
+                           "Morbility","Self care","Enjoy close rel\'s",
+                           "Family rel\'s", "Community involv\'t",
+                           "Despair","Worry", "Sad", "Agitated",
+                           "Energy level", "Control", "Coping",
+                           "Frequency of pain", "Degree of pain",
+                           "Pain interference","Vision", "Hearing",
+                           "Communication")
+  return(aqol6d_item_nms_chr)
+}
 make_aqol6d_items_tb <- function (aqol_tb, old_pfx_1L_chr, new_pfx_1L_chr)
 {
   aqol6d_items_tb <- aqol_tb %>% dplyr::select(dplyr::starts_with(old_pfx_1L_chr)) %>%
