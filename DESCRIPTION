@@ -1,6 +1,6 @@
 Package: scorz
 Title: Derive Summary Scores from Questionnaire Item Responses
-Version: 0.0.0.9011
+Version: 0.0.0.9012
 Authors@R: c(
     person("Matthew", "Hamilton", , "matthew.hamilton@orygen.org.au", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-7407-9194")),
@@ -46,7 +46,6 @@ Imports:
     tidyselect
 VignetteBuilder: knitr
 Collate: 
-    'C4_ScorzProfile.R'
     'C4_ScorzAqol6.R'
     'C4_ScorzAqol6Adol.R'
     'fn_add.R'
