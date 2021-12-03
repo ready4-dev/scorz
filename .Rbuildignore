@@ -17,3 +17,10 @@
 ^data-raw/ToDo\.R$
 ^doc$
 ^Meta$
+^data-raw/TEMP/fn_add\.R$
+^data-raw/TEMP/fn_calculate\.R$
+^data-raw/TEMP/fn_get\.R$
+^data-raw/TEMP/fn_impute\.R$
+^data-raw/TEMP/fn_make\.R$
+^data-raw/s4_fns/depict\.R$
+^data-raw/s4_fns/renew\.R$

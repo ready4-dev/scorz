@@ -1,4 +1,3 @@
-library(ready4)
 library(youthvars)
 library(ready4use)
 fns_env_ls <- ready4fun::read_fns(c("data-raw/fns/","data-raw/mthds/"),
@@ -85,9 +84,7 @@ y <- dplyr::bind_rows(ready4class::make_pt_ready4class_constructor(make_s3_lgl =
                                                                                 "list",
                                                                                 "character",
                                                                                 "character") %>% list(),
-                                                                   vals_ls = list(#a_YouthvarsProfile = YouthvarsProfile(),
-                                                                                       #domain_unwtd_var_nms_chr = NA_character_,
-                                                                                       domain_wtd_var_nms_chr = "paste0(\"vD\",1:6)",
+                                                                   vals_ls = list(list(domain_wtd_var_nms_chr = "paste0(\"vD\",1:6)",
                                                                                        instrument_dict_r3 = "get_aqol6d_scrg_dict()",
                                                                                        instrument_nm_1L_chr = "'Assessment of Quality of Life (6 Dimension)'",
                                                                                        #instrument_version_1L_chr = NA_character_,
@@ -96,15 +93,29 @@ y <- dplyr::bind_rows(ready4class::make_pt_ready4class_constructor(make_s3_lgl =
                                                                                        scrg_dss_ls = "get_aqol6d_scrg_dss()",
                                                                                        total_wtd_var_nm_1L_chr = "'aqol6d_total_w'",
                                                                                        total_unwtd_var_nm_1L_chr = "'aqol6d_total_c'"
-                                                                                       ),
-                                                                   class_desc_chr = "A dataset and the required information to implement an AQoL-6D scoring algorithm.",
-                                                                   parent_class_chr = "ScorzProfile",
-                                                                   inc_clss_ls = list("ScorzProfile"))#,
-                      # ready4class::make_pt_ready4class_constructor(make_s3_lgl = FALSE,
-                      #                                              name_stub_chr = "Aqol6Adol",
-                      #                                              vals_ls = list(list(instrument_version_1L_chr = "Adolescent")),
-                      #                                              class_desc_chr = "A dataset and the required information to implement an AQoL-6D scoring algorithm.",
-                      #                                              parent_class_chr = "ScorzAqol6")
+                                                                                       )),
+                                                                   class_desc_chr = "A dataset and metadata to support implementation of an AQoL-6D scoring algorithm.",
+                                                                   parent_class_chr = "ScorzProfile",#"Ready4Module"#"
+                                                                   inc_clss_ls = list("ScorzProfile")
+                                                                   ),
+                      ready4class::make_pt_ready4class_constructor(make_s3_lgl = FALSE,
+                                                                   name_stub_chr = "Aqol6Adol",
+                                                                   slots_ls = list("instrument_version_1L_chr") %>% list(),
+                                                                   pt_ls = list("character") %>% list(),
+                                                                   vals_ls = list(list(instrument_version_1L_chr = "'Adolescent'")),
+                                                                   class_desc_chr = "A dataset and metadata to support implementation of a scoring algorithm for the adolescent version of AQoL-6D.",
+                                                                   parent_class_chr = "ScorzAqol6",
+                                                                   inc_clss_ls = list("ScorzAqol6")
+                                                                   ),
+                      ready4class::make_pt_ready4class_constructor(make_s3_lgl = FALSE,
+                                                                   name_stub_chr = "Aqol6Adult",
+                                                                   slots_ls = list("instrument_version_1L_chr") %>% list(),
+                                                                   pt_ls = list("character") %>% list(),
+                                                                   vals_ls = list(list(instrument_version_1L_chr = "'Adult'")),
+                                                                   class_desc_chr = "A dataset and metadata to support implementation of a scoring algorithm for the adult version of AQoL-6D.",
+                                                                   parent_class_chr = "ScorzAqol6",
+                                                                   inc_clss_ls = list("ScorzAqol6")
+                      )
                       ) %>%
   ready4class::ready4class_constructor()
 z <- ready4pack::make_pt_ready4pack_manifest(x,

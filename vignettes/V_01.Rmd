@@ -21,50 +21,105 @@ To derive a health utility score from the raw responses to a multi-attribute uti
 However, to include scoring algorithms in reproducible research workflows, it is desirable to have these algorithms available in open science languages such as R. We therefore developed an R implementatiopn of the adult and adolescent versions of the AQoL-6D scoring algorithms and have made them available as part of the `youthvars` package.
 
 ## Ingest data
-To begin, we ingest our unscored dataset. In this case the dataset is part of a `Ready4useRecord` that we can download from a remote repository.
+To begin, we ingest an unscored dataset as an instance of the `Ready4useRecord` class (from the [ready4use package](https://ready4-dev.github.io/ready4use/)). In this case we download our data from a remote repository.
+
 ```{r}
 x <- ready4use::Ready4useRepos(dv_nm_1L_chr = "fakes",
                                dv_ds_nm_1L_chr = "https://doi.org/10.7910/DVN/W95KED",
                                dv_server_1L_chr = "dataverse.harvard.edu") %>%
-  ingest(fls_to_ingest_chr = "ymh_clinical_dyad_r4")
+  ingest(fls_to_ingest_chr = "ymh_clinical_dyad_r4") %>%
+  procureSlot("b_Ready4useIngest") %>%
+  procure(fl_nm_1L_chr = "ymh_clinical_dyad_r4")
+
 ```
+
+We can inspect our ingested dataset using the `exhibit` method.
+
+```{r}
+exhibit(x)
+```
+
+We now add meta-data that identifies our dataset as being longitudinal using the `YouthvarsSeries` class of the [youthvars package](https://ready4-dev.github.io/youthvars/).
+
+```{r}
+y <- youthvars::YouthvarsSeries(a_Ready4useDyad = x,
+                                id_var_nm_1L_chr = "fkClientID",
+                                timepoint_var_nm_1L_chr = "round",
+                                timepoint_vals_chr = levels(x@ds_tb$round))
+```
+
+We now use the data and meta-data we have created in the previous steps to create an instance of the `ScorzAqol6Adol` class. This class is specifically designed to facilitate scoring of the adolescent version of the AQoL-6D instrument.
+
+```{r}
+z <- ScorzAqol6Adol(a_YouthvarsProfile = y)#,itm_prefix_1L_chr = "aqol6d_q"
+```
+
+By default, instances of the `ScorzAqol6Adol` class are created with a slot specifying a default value for the prefix for AQoL-6D questionnaire item responses.
+```{r}
+z@itm_prefix_1L_chr
+```
+If this default value needs to be updated to match the prefix used in your dataset, use the `renewSlot` method.
+
+```{r}
+# Not run
+# z <- renewSlot(z, slot_nm_1L_chr = "itm_prefix_1L_chr", new_val_xx = "new_prefix")
+```
+
 
 ## Calculating scores
-To calculate AQoL 6D adolescent utility scores, a dataset with all twenty AQoL-6D questionnaire response items must be passed to the `add_adol6d_scores`{.R} function. 
-
-The names of the twenty questionnaire response variables must all have a common prefix and end with the item number. In our replication dataset, they are named "aqol6d_q1", "aqol6d_q2" ... "aqol6d_q20". Details of the common prefix for the AQoL-6D response item variables, the name of the unique individual identifier variable and the desired name for the AQoL-6D adolescent utility score variable to be calculated must also be passed to the `add_adol6d_scores`{.R} function. The function returns an updated dataset, with additional variables that include the intermediate and final calculations for AQoL 6D adolescent utility scores.
+To calculate AQoL 6D adolescent utility scores, use the `renew` method. 
 
 ```{r results='hide', warning=F, message=FALSE}
-scored_data_tb <- add_adol6d_scores(x@b_Ready4useIngest@objects_ls$ymh_clinical_dyad_r4@ds_tb,
-                                              prefix_1L_chr =  "aqol6d_q",
-                                              id_var_nm_1L_chr = "fkClientID",
-                                              wtd_aqol_var_nm_1L_chr = "aqol6d_total_w") 
+z <- renew(z)
 ```
+
+We extract our updated dataset, along with its data-dictionary using the `procureSlot` method.
+
+```{r}
+x <- procureSlot(procureSlot(z,"a_YouthvarsProfile"),
+                 "a_Ready4useDyad")
+```
+
 
 ## Viewing the updated dataset
-Before displaying the updated dataset, it may be desirable to label variables so that their meaning is clearer. The first step to do this is to create a data dictionary that extends to all variables in the updated dataset, by combining a data dictionary for the source (unscored) dataset (in our case `repln_ds_dict_r3`{.R}) with a data dictionary for a template scored dataset (`aqol_scrg_dict_r3`{.R} for this example).
+We can inspect our updated dataset using the `exhibit' method. We can see that the updated dataset now has additional variables that include the intermediate and final calculations for AQoL-6D adolescent utility scores.
 
 ```{r}
-data("aqol_scrg_dict_r3", package = "youthvars")
-dictionary_tb <- ready4::renew(x@b_Ready4useIngest@objects_ls$ymh_clinical_dyad_r4@dictionary_r3,
-                               new_ready4_dict_r3 = aqol_scrg_dict_r3)
+exhibit(x)
 ```
 
-Labels from the new data dictionary can then be added to our updated (scored) dataset.
+## Creating summary plots
+To create plots, we use the `depict` method.
+
+We can summarise all individual items by timepoint.
 
 ```{r}
-scored_data_tb <- scored_data_tb %>%
-  ready4use::add_labels_from_dictionary(dictionary_tb)
-```
-The following lines then print the first six lines of the updated dataset as a table, using variable labels as column names.
-
-```{r scoredds, results='asis'}
-scored_data_tb %>%
-  head() %>%
-  ready4show::print_table(output_type_1L_chr = ifelse(knitr::is_html_output(),"HTML","PDF"),
-                          use_rdocx_1L_lgl = F,
-                          caption_1L_chr = "Replication dataset with AQoL scores", 
-                          use_lbls_as_col_nms_1L_lgl = T, 
-                          mkdn_tbl_ref_1L_chr = "tab:scoredds")
+depict(z, type_1L_chr = "item_by_time")
 ```
 
+We can generate plots of selected items by passing their index number to the `var_idcs_int` argument.
+
+```{r}
+depict(z, type_1L_chr = "item_by_time", var_idcs_int = c(2L))
+```
+We can also plot domain scores by time.
+```{r}
+depict(z, type_1L_chr = "domain_by_time")
+
+```
+```{r}
+depict(z, type_1L_chr = "domain_by_time", var_idcs_int = c(1L))
+```
+Total AQoL-6D scores can also be plotted.
+```{r}
+depict(z, type_1L_chr = "total_by_time")
+
+```
+Composite plots can be generated as well, though these are not currently optimised to reliably produce quality plots suitable for publication.
+
+```{r}
+depict(z, type_1L_chr = "comp_item_by_time")
+```
+```{r}
+depict(z, type_1L_chr = "comp_domain_by_time")
+```

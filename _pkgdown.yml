@@ -13,3 +13,9 @@ reference:
 - contents:
   - ScorzProfile
   - ScorzAqol6
+  - ScorzAqol6Adol
+  - ScorzAqol6Adult
+- title: "Methods"
+- contents:
+  - depict-ScorzProfile
+  - renew-ScorzAqol6Adol
