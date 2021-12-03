@@ -13,6 +13,7 @@
 #' @rdname depict-methods
 #' @aliases depict,ScorzProfile-method
 #' @export 
+#' @importFrom youthvars make_itm_resp_plts make_sub_tot_plts
 #' @importFrom dplyr select
 #' @importFrom purrr discard map
 #' @importFrom ready4 depict
@@ -27,7 +28,7 @@ methods::setMethod("depict", "ScorzProfile", function (x, heights_int = NA_integ
                 heights_int <- c(20L, 1L)
             if (is.na(plot_rows_cols_pair_int[1])) 
                 plot_rows_cols_pair_int <- c(5L, 4L)
-            plt_xx <- make_itm_resp_plts(x@a_YouthvarsProfile@a_Ready4useDyad@ds_tb, 
+            plt_xx <- youthvars::make_itm_resp_plts(x@a_YouthvarsProfile@a_Ready4useDyad@ds_tb, 
                 col_nms_chr = names(dplyr::select(x@a_YouthvarsProfile@a_Ready4useDyad@ds_tb, 
                   starts_with(x@itm_prefix_1L_chr))), lbl_nms_chr = x@itm_labels_chr, 
                 plot_rows_cols_pair_int = plot_rows_cols_pair_int, 
@@ -39,7 +40,7 @@ methods::setMethod("depict", "ScorzProfile", function (x, heights_int = NA_integ
                 heights_int <- c(10L, 1L)
             if (is.na(plot_rows_cols_pair_int[1])) 
                 plot_rows_cols_pair_int <- c(3L, 2L)
-            plt_xx <- make_sub_tot_plts(x@a_YouthvarsProfile@a_Ready4useDyad@ds_tb, 
+            plt_xx <- youthvars::make_sub_tot_plts(x@a_YouthvarsProfile@a_Ready4useDyad@ds_tb, 
                 col_nms_chr = x@domain_wtd_var_nms_chr, plot_rows_cols_pair_int = plot_rows_cols_pair_int, 
                 round_var_nm_1L_chr = x@a_YouthvarsProfile@timepoint_var_nm_1L_chr, 
                 heights_int = heights_int, y_label_1L_chr = y_label_1L_chr, 
