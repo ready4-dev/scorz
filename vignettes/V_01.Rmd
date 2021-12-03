@@ -36,7 +36,8 @@ x <- ready4use::Ready4useRepos(dv_nm_1L_chr = "fakes",
 We can inspect our ingested dataset using the `exhibit` method.
 
 ```{r}
-exhibit(x)
+exhibit(x,
+        display_1L_chr = "head")
 ```
 
 We now add meta-data that identifies our dataset as being longitudinal using the `YouthvarsSeries` class of the [youthvars package](https://ready4-dev.github.io/youthvars/).
@@ -85,7 +86,8 @@ x <- procureSlot(procureSlot(z,"a_YouthvarsProfile"),
 We can inspect our updated dataset using the `exhibit' method. We can see that the updated dataset now has additional variables that include the intermediate and final calculations for AQoL-6D adolescent utility scores.
 
 ```{r}
-exhibit(x)
+exhibit(x,
+        display_1L_chr = "head")
 ```
 
 ## Creating summary plots
