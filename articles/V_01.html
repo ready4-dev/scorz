@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scorz</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9022</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9023</span>
       </span>
     </div>
 
@@ -102,7 +102,7 @@
 <h2 id="aqol-6d-scoring">AQoL-6D scoring<a class="anchor" aria-label="anchor" href="#aqol-6d-scoring"></a>
 </h2>
 <p>To derive a health utility score from the raw responses to a multi-attribute utility instrument it is necessary to implement a scoring algorithm. Scoring algorithms for the Assessment of Quality of Life Six Dimension (AQoL-6D) are publicly available in SPSS format (<a href="https://www.aqol.com.au/index.php/scoring-algorithms" class="external-link uri">https://www.aqol.com.au/index.php/scoring-algorithms</a>).</p>
-<p>However, to include scoring algorithms in reproducible research workflows, it is desirable to have these algorithms available in open science languages such as R. We therefore developed an R implementatiopn of the adult and adolescent versions of the AQoL-6D scoring algorithms and have made them available as part of the <code>youthvars</code> package.</p>
+<p>However, to include scoring algorithms in reproducible research workflows, it is desirable to have these algorithms available in open science languages such as R. We therefore developed an R implementation of the adult and adolescent versions of the AQoL-6D scoring algorithms and have made them available as part of the <code>youthvars</code> package.</p>
 </div>
 <div class="section level2">
 <h2 id="ingest-data">Ingest data<a class="anchor" aria-label="anchor" href="#ingest-data"></a>
@@ -112,11 +112,15 @@
 <code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">ready4use</span><span class="fu">::</span><span class="fu"><a href="https://ready4-dev.github.io/ready4use/reference/Ready4useRepos-class.html" class="external-link">Ready4useRepos</a></span><span class="op">(</span>dv_nm_1L_chr <span class="op">=</span> <span class="st">"fakes"</span>,
                                dv_ds_nm_1L_chr <span class="op">=</span> <span class="st">"https://doi.org/10.7910/DVN/W95KED"</span>,
                                dv_server_1L_chr <span class="op">=</span> <span class="st">"dataverse.harvard.edu"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://ready4-dev.github.io/ready4/reference/ingest-methods.html" class="external-link">ingest</a></span><span class="op">(</span>fls_to_ingest_chr <span class="op">=</span> <span class="st">"ymh_clinical_dyad_r4"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://ready4-dev.github.io/ready4/reference/procureSlot-methods.html" class="external-link">procureSlot</a></span><span class="op">(</span><span class="st">"b_Ready4useIngest"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://ready4-dev.github.io/ready4/reference/procure-methods.html" class="external-link">procure</a></span><span class="op">(</span>fl_nm_1L_chr <span class="op">=</span> <span class="st">"ymh_clinical_dyad_r4"</span><span class="op">)</span></code></pre></div>
-<p>We can inspect our ingested dataset using the <code>exhibit</code> method.</p>
+  <span class="fu"><a href="https://ready4-dev.github.io/ready4/reference/ingest-methods.html" class="external-link">ingest</a></span><span class="op">(</span>fls_to_ingest_chr <span class="op">=</span> <span class="st">"ymh_clinical_dyad_r4"</span><span class="op">)</span> </code></pre></div>
+<p>We extract the element of <code>x</code> we are interested in - a dataset / data-dictionary pair (an instance of the <code>Ready4useDyad</code> class). To make the dataset easier to interpret, we can add labels from the dictionary.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">x</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://ready4-dev.github.io/ready4/reference/procureSlot-methods.html" class="external-link">procureSlot</a></span><span class="op">(</span><span class="st">"b_Ready4useIngest"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://ready4-dev.github.io/ready4/reference/procure-methods.html" class="external-link">procure</a></span><span class="op">(</span>fl_nm_1L_chr <span class="op">=</span> <span class="st">"ymh_clinical_dyad_r4"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://ready4-dev.github.io/ready4/reference/renew-methods.html" class="external-link">renew</a></span><span class="op">(</span>type_1L_chr <span class="op">=</span> <span class="st">"label"</span><span class="op">)</span></code></pre></div>
+<p>We can now inspect our ingested dataset using the <code>exhibit</code> method.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ready4-dev.github.io/ready4/reference/exhibit-methods.html" class="external-link">exhibit</a></span><span class="op">(</span><span class="va">x</span>,
         display_1L_chr <span class="op">=</span> <span class="st">"head"</span><span class="op">)</span></code></pre></div>
 <table class="table  lightable-paper lightable-hover" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;border-bottom: 0;'>
@@ -125,133 +129,133 @@ Dataset
 </caption>
 <thead><tr>
 <th style="text-align:left;">
-fkClientID
+Unique client identifier
 </th>
 <th style="text-align:right;">
-round
+Round of data collection
 </th>
 <th style="text-align:right;">
-d_interview_date
+Date of data collection
 </th>
 <th style="text-align:right;">
-d_age
+Age
 </th>
 <th style="text-align:right;">
-d_gender
+Gender
 </th>
 <th style="text-align:right;">
-d_sex_birth_s
+Sex at birth
 </th>
 <th style="text-align:left;">
-d_sexual_ori_s
+Sexual orientation
 </th>
 <th style="text-align:right;">
-d_ATSI
+Aboriginal or Torres Strait Islander
 </th>
 <th style="text-align:right;">
-d_country_bir_s
+Country Of birth
 </th>
 <th style="text-align:right;">
-d_english_home
+Speaks English at home
 </th>
 <th style="text-align:right;">
-d_english_native
+Native English speaker
 </th>
 <th style="text-align:right;">
-d_studying_working
+Education and employment status
 </th>
 <th style="text-align:left;">
-d_relation_s
+Relationship status
 </th>
 <th style="text-align:right;">
-s_centre
+Service centre name
 </th>
 <th style="text-align:right;">
-c_p_diag_s
+Primary diagnosis
 </th>
 <th style="text-align:right;">
-c_clinical_staging_s
+Clinical stage
 </th>
 <th style="text-align:right;">
-k6_total
+Kessler Psychological Distress Scale (6 Dimension)
 </th>
 <th style="text-align:right;">
-phq9_total
+Patient Health Questionnaire
 </th>
 <th style="text-align:left;">
-bads_total
+Behavioural Activation for Depression Scale
 </th>
 <th style="text-align:right;">
-gad7_total
+Generalised Anxiety Disorder Scale
 </th>
 <th style="text-align:right;">
-oasis_total
+Overall Anxiety Severity and Impairment Scale
 </th>
 <th style="text-align:right;">
-scared_total
+Screen for Child Anxiety Related Disorders
 </th>
 <th style="text-align:right;">
-c_sofas
+Social and Occupational Functioning Assessment Scale
 </th>
 <th style="text-align:right;">
-aqol6d_q1
+Assessment of Quality of Life (6 Dimension) question 1
 </th>
 <th style="text-align:left;">
-aqol6d_q2
+Assessment of Quality of Life (6 Dimension) question 2
 </th>
 <th style="text-align:right;">
-aqol6d_q3
+Assessment of Quality of Life (6 Dimension) question 3
 </th>
 <th style="text-align:right;">
-aqol6d_q4
+Assessment of Quality of Life (6 Dimension) question 4
 </th>
 <th style="text-align:right;">
-aqol6d_q5
+Assessment of Quality of Life (6 Dimension) question 5
 </th>
 <th style="text-align:right;">
-aqol6d_q6
+Assessment of Quality of Life (6 Dimension) question 6
 </th>
 <th style="text-align:right;">
-aqol6d_q7
+Assessment of Quality of Life (6 Dimension) question 7
 </th>
 <th style="text-align:left;">
-aqol6d_q8
+Assessment of Quality of Life (6 Dimension) question 8
 </th>
 <th style="text-align:right;">
-aqol6d_q9
+Assessment of Quality of Life (6 Dimension) question 9
 </th>
 <th style="text-align:right;">
-aqol6d_q10
+Assessment of Quality of Life (6 Dimension) question 10
 </th>
 <th style="text-align:right;">
-aqol6d_q11
+Assessment of Quality of Life (6 Dimension) question 11
 </th>
 <th style="text-align:right;">
-aqol6d_q12
+Assessment of Quality of Life (6 Dimension) question 12
 </th>
 <th style="text-align:right;">
-aqol6d_q13
+Assessment of Quality of Life (6 Dimension) question 13
 </th>
 <th style="text-align:left;">
-aqol6d_q14
+Assessment of Quality of Life (6 Dimension) question 14
 </th>
 <th style="text-align:right;">
-aqol6d_q15
+Assessment of Quality of Life (6 Dimension) question 15
 </th>
 <th style="text-align:right;">
-aqol6d_q16
+Assessment of Quality of Life (6 Dimension) question 16
 </th>
 <th style="text-align:right;">
-aqol6d_q17
+Assessment of Quality of Life (6 Dimension) question 17
 </th>
 <th style="text-align:right;">
-aqol6d_q18
+Assessment of Quality of Life (6 Dimension) question 18
 </th>
 <th style="text-align:right;">
-aqol6d_q19
+Assessment of Quality of Life (6 Dimension) question 19
 </th>
 <th style="text-align:left;">
-aqol6d_q20
+Assessment of Quality of Life (6 Dimension) question 20
 </th>
 </tr></thead>
 <tbody>
@@ -1049,21 +1053,21 @@ Anxiety
 </tr></tfoot>
 </table>
 <p>We now add meta-data that identifies our dataset as being longitudinal using the <code>YouthvarsSeries</code> class of the <a href="https://ready4-dev.github.io/youthvars/" class="external-link">youthvars package</a>.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu">youthvars</span><span class="fu">::</span><span class="fu"><a href="https://ready4-dev.github.io/youthvars/reference/YouthvarsSeries-class.html" class="external-link">YouthvarsSeries</a></span><span class="op">(</span>a_Ready4useDyad <span class="op">=</span> <span class="va">x</span>,
                                 id_var_nm_1L_chr <span class="op">=</span> <span class="st">"fkClientID"</span>,
                                 timepoint_var_nm_1L_chr <span class="op">=</span> <span class="st">"round"</span>,
                                 timepoint_vals_chr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">x</span><span class="op">@</span><span class="va">ds_tb</span><span class="op">$</span><span class="va">round</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>We now use the data and meta-data we have created in the previous steps to create an instance of the <code>ScorzAqol6Adol</code> class. This class is specifically designed to facilitate scoring of the adolescent version of the AQoL-6D instrument.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">z</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ScorzAqol6Adol-class.html">ScorzAqol6Adol</a></span><span class="op">(</span>a_YouthvarsProfile <span class="op">=</span> <span class="va">y</span><span class="op">)</span></code></pre></div>
-<p>By default, instances of the <code>ScorzAqol6Adol</code> class are created with a slot specifying a default value for the prefix for AQoL-6D questionnaire item responses.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">z</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ScorzAqol6Adol-class.html">ScorzAqol6Adol</a></span><span class="op">(</span>a_YouthvarsProfile <span class="op">=</span> <span class="va">y</span><span class="op">)</span></code></pre></div>
+<p>By default, instances of the <code>ScorzAqol6Adol</code> class are created with a slot specifying a value for the prefix for AQoL-6D questionnaire item responses.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ready4-dev.github.io/ready4/reference/procureSlot-methods.html" class="external-link">procureSlot</a></span><span class="op">(</span><span class="va">z</span>,
             slot_nm_1L_chr <span class="op">=</span> <span class="st">"itm_prefix_1L_chr"</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## [1] "aqol6d_q"</span></code></pre>
 <p>If this default value needs to be updated to match the prefix used in your dataset, use the <code>renewSlot</code> method.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Not run</span>
 <span class="co"># z &lt;- renewSlot(z, slot_nm_1L_chr = "itm_prefix_1L_chr", new_val_xx = "new_prefix")</span></code></pre></div>
 </div>
@@ -1071,10 +1075,10 @@ Anxiety
 <h2 id="calculating-scores">Calculating scores<a class="anchor" aria-label="anchor" href="#calculating-scores"></a>
 </h2>
 <p>To calculate AQoL 6D adolescent utility scores, use the <code>renew</code> method.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">z</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ready4-dev.github.io/ready4/reference/renew-methods.html" class="external-link">renew</a></span><span class="op">(</span><span class="va">z</span><span class="op">)</span></code></pre></div>
 <p>We extract our updated dataset, along with its data-dictionary using the <code>procureSlot</code> method.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ready4-dev.github.io/ready4/reference/procureSlot-methods.html" class="external-link">procureSlot</a></span><span class="op">(</span><span class="fu"><a href="https://ready4-dev.github.io/ready4/reference/procureSlot-methods.html" class="external-link">procureSlot</a></span><span class="op">(</span><span class="va">z</span>,<span class="st">"a_YouthvarsProfile"</span><span class="op">)</span>,
                  <span class="st">"a_Ready4useDyad"</span><span class="op">)</span></code></pre></div>
 </div>
@@ -1082,7 +1086,7 @@ Anxiety
 <h2 id="viewing-the-updated-dataset">Viewing the updated dataset<a class="anchor" aria-label="anchor" href="#viewing-the-updated-dataset"></a>
 </h2>
 <p>We can inspect our updated dataset using the `exhibit’ method. We can see that the updated dataset now has additional variables that include the intermediate and final calculations for AQoL-6D adolescent utility scores.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ready4-dev.github.io/ready4/reference/exhibit-methods.html" class="external-link">exhibit</a></span><span class="op">(</span><span class="va">x</span>,
         display_1L_chr <span class="op">=</span> <span class="st">"head"</span><span class="op">)</span></code></pre></div>
 <table class="table  lightable-paper lightable-hover" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;border-bottom: 0;'>
@@ -2860,26 +2864,24 @@ Anxiety
 </h2>
 <p>To create plots, we use the <code>depict</code> method.</p>
 <p>We can create a list of summary plots by timepoint for all individual items.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">plot_ls</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ready4-dev.github.io/ready4/reference/depict-methods.html" class="external-link">depict</a></span><span class="op">(</span><span class="va">z</span>, type_1L_chr <span class="op">=</span> <span class="st">"item_by_time"</span><span class="op">)</span></code></pre></div>
 <p>We can then select a desired item’s summary plot by using its index number.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">plot_ls</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></code></pre></div>
-<p><img src="V_01_files/figure-html/unnamed-chunk-12-1.png" width="600px"> Alternatively, we can generate individual plots by passing the item index number to the <code>var_idcs_int</code> argument of <code>depict</code>.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://ready4-dev.github.io/ready4/reference/depict-methods.html" class="external-link">depict</a></span><span class="op">(</span><span class="va">z</span>, type_1L_chr <span class="op">=</span> <span class="st">"item_by_time"</span>, var_idcs_int <span class="op">=</span> <span class="fl">2L</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## [[1]]</span></code></pre>
+<code class="sourceCode R"><span class="va">plot_ls</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></code></pre></div>
 <p><img src="V_01_files/figure-html/unnamed-chunk-13-1.png" width="600px"></p>
+<p>Alternatively, we can generate individual plots by passing the item index number to the <code>var_idcs_int</code> argument of <code>depict</code>.</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ready4-dev.github.io/ready4/reference/depict-methods.html" class="external-link">depict</a></span><span class="op">(</span><span class="va">z</span>, type_1L_chr <span class="op">=</span> <span class="st">"item_by_time"</span>, var_idcs_int <span class="op">=</span> <span class="fl">2L</span><span class="op">)</span></code></pre></div>
+<p><img src="V_01_files/figure-html/unnamed-chunk-14-1.png" width="600px"></p>
 <p>We can also plot domain scores by time.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ready4-dev.github.io/ready4/reference/depict-methods.html" class="external-link">depict</a></span><span class="op">(</span><span class="va">z</span>, type_1L_chr <span class="op">=</span> <span class="st">"domain_by_time"</span>, var_idcs_int <span class="op">=</span> <span class="fl">1L</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## [[1]]</span></code></pre>
-<p><img src="V_01_files/figure-html/unnamed-chunk-14-1.png" width="600px"></p>
-<p>Total AQoL-6D scores can also be plotted using the same approach, where <code>var_idcs_int = 1L</code> is used to plot the weighted total distribution and <code>var_idcs_int = 2L</code> is used for plotting the unweighted total.</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://ready4-dev.github.io/ready4/reference/depict-methods.html" class="external-link">depict</a></span><span class="op">(</span><span class="va">z</span>, type_1L_chr <span class="op">=</span> <span class="st">"total_by_time"</span>, var_idcs_int <span class="op">=</span> <span class="fl">1L</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## [[1]]</span></code></pre>
 <p><img src="V_01_files/figure-html/unnamed-chunk-15-1.png" width="600px"></p>
+<p>Total AQoL-6D scores can also be plotted using the same approach, where <code>var_idcs_int = 1L</code> is used to plot the weighted total distribution and <code>var_idcs_int = 2L</code> is used for plotting the unweighted total.</p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ready4-dev.github.io/ready4/reference/depict-methods.html" class="external-link">depict</a></span><span class="op">(</span><span class="va">z</span>, type_1L_chr <span class="op">=</span> <span class="st">"total_by_time"</span>, var_idcs_int <span class="op">=</span> <span class="fl">1L</span><span class="op">)</span></code></pre></div>
+<p><img src="V_01_files/figure-html/unnamed-chunk-16-1.png" width="600px"></p>
 <!-- Composite plots can be generated as well, though these are not currently optimised to reliably produce quality plots suitable for publication. -->
 <!-- ```{r itemsfig, fig.cap="AQoL-6D item responses", out.width = "600px", results='hide',fig.keep='all'} -->
 <!-- depict(z, type_1L_chr = "comp_item_by_time") -->
