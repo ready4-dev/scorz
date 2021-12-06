@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scorz</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9020</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9022</span>
       </span>
     </div>
 
@@ -1056,10 +1056,11 @@ Anxiety
                                 timepoint_vals_chr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">x</span><span class="op">@</span><span class="va">ds_tb</span><span class="op">$</span><span class="va">round</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>We now use the data and meta-data we have created in the previous steps to create an instance of the <code>ScorzAqol6Adol</code> class. This class is specifically designed to facilitate scoring of the adolescent version of the AQoL-6D instrument.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">z</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ScorzAqol6Adol-class.html">ScorzAqol6Adol</a></span><span class="op">(</span>a_YouthvarsProfile <span class="op">=</span> <span class="va">y</span><span class="op">)</span><span class="co">#,itm_prefix_1L_chr = "aqol6d_q"</span></code></pre></div>
+<code class="sourceCode R"><span class="va">z</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ScorzAqol6Adol-class.html">ScorzAqol6Adol</a></span><span class="op">(</span>a_YouthvarsProfile <span class="op">=</span> <span class="va">y</span><span class="op">)</span></code></pre></div>
 <p>By default, instances of the <code>ScorzAqol6Adol</code> class are created with a slot specifying a default value for the prefix for AQoL-6D questionnaire item responses.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">z</span><span class="op">@</span><span class="va">itm_prefix_1L_chr</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://ready4-dev.github.io/ready4/reference/procureSlot-methods.html" class="external-link">procureSlot</a></span><span class="op">(</span><span class="va">z</span>,
+            slot_nm_1L_chr <span class="op">=</span> <span class="st">"itm_prefix_1L_chr"</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## [1] "aqol6d_q"</span></code></pre>
 <p>If this default value needs to be updated to match the prefix used in your dataset, use the <code>renewSlot</code> method.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
@@ -2858,214 +2859,34 @@ Anxiety
 <h2 id="creating-summary-plots">Creating summary plots<a class="anchor" aria-label="anchor" href="#creating-summary-plots"></a>
 </h2>
 <p>To create plots, we use the <code>depict</code> method.</p>
-<p>We can summarise all individual items by timepoint.</p>
+<p>We can create a list of summary plots by timepoint for all individual items.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://ready4-dev.github.io/ready4/reference/depict-methods.html" class="external-link">depict</a></span><span class="op">(</span><span class="va">z</span>, type_1L_chr <span class="op">=</span> <span class="st">"item_by_time"</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## [[1]]</span>
-<span class="co">## [[1]][[1]]</span></code></pre>
-<pre><code><span class="co">## Don't know how to automatically pick scale for object of type labelled/integer. Defaulting to continuous.</span></code></pre>
-<p><img src="V_01_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
-<pre><code><span class="co">## </span>
-<span class="co">## </span>
-<span class="co">## [[2]]</span>
-<span class="co">## [[2]][[1]]</span></code></pre>
-<pre><code><span class="co">## Don't know how to automatically pick scale for object of type labelled/integer. Defaulting to continuous.</span></code></pre>
-<p><img src="V_01_files/figure-html/unnamed-chunk-11-2.png" width="700"></p>
-<pre><code><span class="co">## </span>
-<span class="co">## </span>
-<span class="co">## [[3]]</span>
-<span class="co">## [[3]][[1]]</span></code></pre>
-<pre><code><span class="co">## Don't know how to automatically pick scale for object of type labelled/integer. Defaulting to continuous.</span></code></pre>
-<p><img src="V_01_files/figure-html/unnamed-chunk-11-3.png" width="700"></p>
-<pre><code><span class="co">## </span>
-<span class="co">## </span>
-<span class="co">## [[4]]</span>
-<span class="co">## [[4]][[1]]</span></code></pre>
-<pre><code><span class="co">## Don't know how to automatically pick scale for object of type labelled/integer. Defaulting to continuous.</span></code></pre>
-<p><img src="V_01_files/figure-html/unnamed-chunk-11-4.png" width="700"></p>
-<pre><code><span class="co">## </span>
-<span class="co">## </span>
-<span class="co">## [[5]]</span>
-<span class="co">## [[5]][[1]]</span></code></pre>
-<pre><code><span class="co">## Don't know how to automatically pick scale for object of type labelled/integer. Defaulting to continuous.</span></code></pre>
-<p><img src="V_01_files/figure-html/unnamed-chunk-11-5.png" width="700"></p>
-<pre><code><span class="co">## </span>
-<span class="co">## </span>
-<span class="co">## [[6]]</span>
-<span class="co">## [[6]][[1]]</span></code></pre>
-<pre><code><span class="co">## Don't know how to automatically pick scale for object of type labelled/integer. Defaulting to continuous.</span></code></pre>
-<p><img src="V_01_files/figure-html/unnamed-chunk-11-6.png" width="700"></p>
-<pre><code><span class="co">## </span>
-<span class="co">## </span>
-<span class="co">## [[7]]</span>
-<span class="co">## [[7]][[1]]</span></code></pre>
-<pre><code><span class="co">## Don't know how to automatically pick scale for object of type labelled/integer. Defaulting to continuous.</span></code></pre>
-<p><img src="V_01_files/figure-html/unnamed-chunk-11-7.png" width="700"></p>
-<pre><code><span class="co">## </span>
-<span class="co">## </span>
-<span class="co">## [[8]]</span>
-<span class="co">## [[8]][[1]]</span></code></pre>
-<pre><code><span class="co">## Don't know how to automatically pick scale for object of type labelled/integer. Defaulting to continuous.</span></code></pre>
-<p><img src="V_01_files/figure-html/unnamed-chunk-11-8.png" width="700"></p>
-<pre><code><span class="co">## </span>
-<span class="co">## </span>
-<span class="co">## [[9]]</span>
-<span class="co">## [[9]][[1]]</span></code></pre>
-<pre><code><span class="co">## Don't know how to automatically pick scale for object of type labelled/integer. Defaulting to continuous.</span></code></pre>
-<p><img src="V_01_files/figure-html/unnamed-chunk-11-9.png" width="700"></p>
-<pre><code><span class="co">## </span>
-<span class="co">## </span>
-<span class="co">## [[10]]</span>
-<span class="co">## [[10]][[1]]</span></code></pre>
-<pre><code><span class="co">## Don't know how to automatically pick scale for object of type labelled/integer. Defaulting to continuous.</span></code></pre>
-<p><img src="V_01_files/figure-html/unnamed-chunk-11-10.png" width="700"></p>
-<pre><code><span class="co">## </span>
-<span class="co">## </span>
-<span class="co">## [[11]]</span>
-<span class="co">## [[11]][[1]]</span></code></pre>
-<pre><code><span class="co">## Don't know how to automatically pick scale for object of type labelled/integer. Defaulting to continuous.</span></code></pre>
-<p><img src="V_01_files/figure-html/unnamed-chunk-11-11.png" width="700"></p>
-<pre><code><span class="co">## </span>
-<span class="co">## </span>
-<span class="co">## [[12]]</span>
-<span class="co">## [[12]][[1]]</span></code></pre>
-<pre><code><span class="co">## Don't know how to automatically pick scale for object of type labelled/integer. Defaulting to continuous.</span></code></pre>
-<p><img src="V_01_files/figure-html/unnamed-chunk-11-12.png" width="700"></p>
-<pre><code><span class="co">## </span>
-<span class="co">## </span>
-<span class="co">## [[13]]</span>
-<span class="co">## [[13]][[1]]</span></code></pre>
-<pre><code><span class="co">## Don't know how to automatically pick scale for object of type labelled/integer. Defaulting to continuous.</span></code></pre>
-<p><img src="V_01_files/figure-html/unnamed-chunk-11-13.png" width="700"></p>
-<pre><code><span class="co">## </span>
-<span class="co">## </span>
-<span class="co">## [[14]]</span>
-<span class="co">## [[14]][[1]]</span></code></pre>
-<pre><code><span class="co">## Don't know how to automatically pick scale for object of type labelled/integer. Defaulting to continuous.</span></code></pre>
-<p><img src="V_01_files/figure-html/unnamed-chunk-11-14.png" width="700"></p>
-<pre><code><span class="co">## </span>
-<span class="co">## </span>
-<span class="co">## [[15]]</span>
-<span class="co">## [[15]][[1]]</span></code></pre>
-<pre><code><span class="co">## Don't know how to automatically pick scale for object of type labelled/integer. Defaulting to continuous.</span></code></pre>
-<p><img src="V_01_files/figure-html/unnamed-chunk-11-15.png" width="700"></p>
-<pre><code><span class="co">## </span>
-<span class="co">## </span>
-<span class="co">## [[16]]</span>
-<span class="co">## [[16]][[1]]</span></code></pre>
-<pre><code><span class="co">## Don't know how to automatically pick scale for object of type labelled/integer. Defaulting to continuous.</span></code></pre>
-<p><img src="V_01_files/figure-html/unnamed-chunk-11-16.png" width="700"></p>
-<pre><code><span class="co">## </span>
-<span class="co">## </span>
-<span class="co">## [[17]]</span>
-<span class="co">## [[17]][[1]]</span></code></pre>
-<pre><code><span class="co">## Don't know how to automatically pick scale for object of type labelled/integer. Defaulting to continuous.</span></code></pre>
-<p><img src="V_01_files/figure-html/unnamed-chunk-11-17.png" width="700"></p>
-<pre><code><span class="co">## </span>
-<span class="co">## </span>
-<span class="co">## [[18]]</span>
-<span class="co">## [[18]][[1]]</span></code></pre>
-<pre><code><span class="co">## Don't know how to automatically pick scale for object of type labelled/integer. Defaulting to continuous.</span></code></pre>
-<p><img src="V_01_files/figure-html/unnamed-chunk-11-18.png" width="700"></p>
-<pre><code><span class="co">## </span>
-<span class="co">## </span>
-<span class="co">## [[19]]</span>
-<span class="co">## [[19]][[1]]</span></code></pre>
-<pre><code><span class="co">## Don't know how to automatically pick scale for object of type labelled/integer. Defaulting to continuous.</span></code></pre>
-<p><img src="V_01_files/figure-html/unnamed-chunk-11-19.png" width="700"></p>
-<pre><code><span class="co">## </span>
-<span class="co">## </span>
-<span class="co">## [[20]]</span>
-<span class="co">## [[20]][[1]]</span></code></pre>
-<pre><code><span class="co">## Don't know how to automatically pick scale for object of type labelled/integer. Defaulting to continuous.</span></code></pre>
-<p><img src="V_01_files/figure-html/unnamed-chunk-11-20.png" width="700"></p>
-<p>We can generate plots of selected items by passing their index number to the <code>var_idcs_int</code> argument.</p>
-<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://ready4-dev.github.io/ready4/reference/depict-methods.html" class="external-link">depict</a></span><span class="op">(</span><span class="va">z</span>, type_1L_chr <span class="op">=</span> <span class="st">"item_by_time"</span>, var_idcs_int <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2L</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## [[1]]</span>
-<span class="co">## [[1]][[1]]</span></code></pre>
-<pre><code><span class="co">## Don't know how to automatically pick scale for object of type labelled/integer. Defaulting to continuous.</span></code></pre>
-<p><img src="V_01_files/figure-html/unnamed-chunk-12-1.png" width="700"> We can also plot domain scores by time.</p>
-<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://ready4-dev.github.io/ready4/reference/depict-methods.html" class="external-link">depict</a></span><span class="op">(</span><span class="va">z</span>, type_1L_chr <span class="op">=</span> <span class="st">"domain_by_time"</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## [[1]]</span>
-<span class="co">## [[1]][[1]]</span></code></pre>
-<p><img src="V_01_files/figure-html/unnamed-chunk-13-1.png" width="700"></p>
-<pre><code><span class="co">## </span>
-<span class="co">## </span>
-<span class="co">## [[2]]</span>
-<span class="co">## [[2]][[1]]</span></code></pre>
-<p><img src="V_01_files/figure-html/unnamed-chunk-13-2.png" width="700"></p>
-<pre><code><span class="co">## </span>
-<span class="co">## </span>
-<span class="co">## [[3]]</span>
-<span class="co">## [[3]][[1]]</span></code></pre>
-<p><img src="V_01_files/figure-html/unnamed-chunk-13-3.png" width="700"></p>
-<pre><code><span class="co">## </span>
-<span class="co">## </span>
-<span class="co">## [[4]]</span>
-<span class="co">## [[4]][[1]]</span></code></pre>
-<p><img src="V_01_files/figure-html/unnamed-chunk-13-4.png" width="700"></p>
-<pre><code><span class="co">## </span>
-<span class="co">## </span>
-<span class="co">## [[5]]</span>
-<span class="co">## [[5]][[1]]</span></code></pre>
-<p><img src="V_01_files/figure-html/unnamed-chunk-13-5.png" width="700"></p>
-<pre><code><span class="co">## </span>
-<span class="co">## </span>
-<span class="co">## [[6]]</span>
-<span class="co">## [[6]][[1]]</span></code></pre>
-<p><img src="V_01_files/figure-html/unnamed-chunk-13-6.png" width="700"></p>
-<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://ready4-dev.github.io/ready4/reference/depict-methods.html" class="external-link">depict</a></span><span class="op">(</span><span class="va">z</span>, type_1L_chr <span class="op">=</span> <span class="st">"domain_by_time"</span>, var_idcs_int <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1L</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## [[1]]</span>
-<span class="co">## [[1]][[1]]</span></code></pre>
-<p><img src="V_01_files/figure-html/unnamed-chunk-14-1.png" width="700"> Total AQoL-6D scores can also be plotted.</p>
-<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://ready4-dev.github.io/ready4/reference/depict-methods.html" class="external-link">depict</a></span><span class="op">(</span><span class="va">z</span>, type_1L_chr <span class="op">=</span> <span class="st">"total_by_time"</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## [[1]]</span>
-<span class="co">## [[1]][[1]]</span></code></pre>
-<p><img src="V_01_files/figure-html/unnamed-chunk-15-1.png" width="700"></p>
-<pre><code><span class="co">## </span>
-<span class="co">## </span>
-<span class="co">## [[2]]</span>
-<span class="co">## [[2]][[1]]</span></code></pre>
-<p><img src="V_01_files/figure-html/unnamed-chunk-15-2.png" width="700"> Composite plots can be generated as well, though these are not currently optimised to reliably produce quality plots suitable for publication.</p>
-<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://ready4-dev.github.io/ready4/reference/depict-methods.html" class="external-link">depict</a></span><span class="op">(</span><span class="va">z</span>, type_1L_chr <span class="op">=</span> <span class="st">"comp_item_by_time"</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## Don't know how to automatically pick scale for object of type labelled/integer. Defaulting to continuous.</span>
-<span class="co">## Don't know how to automatically pick scale for object of type labelled/integer. Defaulting to continuous.</span>
-<span class="co">## Don't know how to automatically pick scale for object of type labelled/integer. Defaulting to continuous.</span>
-<span class="co">## Don't know how to automatically pick scale for object of type labelled/integer. Defaulting to continuous.</span>
-<span class="co">## Don't know how to automatically pick scale for object of type labelled/integer. Defaulting to continuous.</span>
-<span class="co">## Don't know how to automatically pick scale for object of type labelled/integer. Defaulting to continuous.</span>
-<span class="co">## Don't know how to automatically pick scale for object of type labelled/integer. Defaulting to continuous.</span>
-<span class="co">## Don't know how to automatically pick scale for object of type labelled/integer. Defaulting to continuous.</span>
-<span class="co">## Don't know how to automatically pick scale for object of type labelled/integer. Defaulting to continuous.</span>
-<span class="co">## Don't know how to automatically pick scale for object of type labelled/integer. Defaulting to continuous.</span>
-<span class="co">## Don't know how to automatically pick scale for object of type labelled/integer. Defaulting to continuous.</span>
-<span class="co">## Don't know how to automatically pick scale for object of type labelled/integer. Defaulting to continuous.</span>
-<span class="co">## Don't know how to automatically pick scale for object of type labelled/integer. Defaulting to continuous.</span>
-<span class="co">## Don't know how to automatically pick scale for object of type labelled/integer. Defaulting to continuous.</span>
-<span class="co">## Don't know how to automatically pick scale for object of type labelled/integer. Defaulting to continuous.</span>
-<span class="co">## Don't know how to automatically pick scale for object of type labelled/integer. Defaulting to continuous.</span>
-<span class="co">## Don't know how to automatically pick scale for object of type labelled/integer. Defaulting to continuous.</span>
-<span class="co">## Don't know how to automatically pick scale for object of type labelled/integer. Defaulting to continuous.</span>
-<span class="co">## Don't know how to automatically pick scale for object of type labelled/integer. Defaulting to continuous.</span>
-<span class="co">## Don't know how to automatically pick scale for object of type labelled/integer. Defaulting to continuous.</span>
-<span class="co">## Don't know how to automatically pick scale for object of type labelled/integer. Defaulting to continuous.</span></code></pre>
-<p><img src="V_01_files/figure-html/unnamed-chunk-16-1.png" width="700"></p>
-<pre><code><span class="co">## TableGrob (2 x 1) "arrange": 2 grobs</span>
-<span class="co">##   z     cells    name              grob</span>
-<span class="co">## 1 1 (1-1,1-1) arrange    gtable[layout]</span>
-<span class="co">## 2 2 (2-2,1-1) arrange gtable[guide-box]</span></code></pre>
-<div class="sourceCode" id="cb71"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://ready4-dev.github.io/ready4/reference/depict-methods.html" class="external-link">depict</a></span><span class="op">(</span><span class="va">z</span>, type_1L_chr <span class="op">=</span> <span class="st">"comp_domain_by_time"</span><span class="op">)</span></code></pre></div>
-<p><img src="V_01_files/figure-html/unnamed-chunk-17-1.png" width="700"></p>
-<pre><code><span class="co">## TableGrob (2 x 1) "arrange": 2 grobs</span>
-<span class="co">##   z     cells    name              grob</span>
-<span class="co">## 1 1 (1-1,1-1) arrange    gtable[layout]</span>
-<span class="co">## 2 2 (2-2,1-1) arrange gtable[guide-box]</span></code></pre>
+<code class="sourceCode R"><span class="va">plot_ls</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ready4-dev.github.io/ready4/reference/depict-methods.html" class="external-link">depict</a></span><span class="op">(</span><span class="va">z</span>, type_1L_chr <span class="op">=</span> <span class="st">"item_by_time"</span><span class="op">)</span></code></pre></div>
+<p>We can then select a desired item’s summary plot by using its index number.</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">plot_ls</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></code></pre></div>
+<p><img src="V_01_files/figure-html/unnamed-chunk-12-1.png" width="600px"> Alternatively, we can generate individual plots by passing the item index number to the <code>var_idcs_int</code> argument of <code>depict</code>.</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ready4-dev.github.io/ready4/reference/depict-methods.html" class="external-link">depict</a></span><span class="op">(</span><span class="va">z</span>, type_1L_chr <span class="op">=</span> <span class="st">"item_by_time"</span>, var_idcs_int <span class="op">=</span> <span class="fl">2L</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">## [[1]]</span></code></pre>
+<p><img src="V_01_files/figure-html/unnamed-chunk-13-1.png" width="600px"></p>
+<p>We can also plot domain scores by time.</p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ready4-dev.github.io/ready4/reference/depict-methods.html" class="external-link">depict</a></span><span class="op">(</span><span class="va">z</span>, type_1L_chr <span class="op">=</span> <span class="st">"domain_by_time"</span>, var_idcs_int <span class="op">=</span> <span class="fl">1L</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">## [[1]]</span></code></pre>
+<p><img src="V_01_files/figure-html/unnamed-chunk-14-1.png" width="600px"></p>
+<p>Total AQoL-6D scores can also be plotted using the same approach, where <code>var_idcs_int = 1L</code> is used to plot the weighted total distribution and <code>var_idcs_int = 2L</code> is used for plotting the unweighted total.</p>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ready4-dev.github.io/ready4/reference/depict-methods.html" class="external-link">depict</a></span><span class="op">(</span><span class="va">z</span>, type_1L_chr <span class="op">=</span> <span class="st">"total_by_time"</span>, var_idcs_int <span class="op">=</span> <span class="fl">1L</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">## [[1]]</span></code></pre>
+<p><img src="V_01_files/figure-html/unnamed-chunk-15-1.png" width="600px"></p>
+<!-- Composite plots can be generated as well, though these are not currently optimised to reliably produce quality plots suitable for publication. -->
+<!-- ```{r itemsfig, fig.cap="AQoL-6D item responses", out.width = "600px", results='hide',fig.keep='all'} -->
+<!-- depict(z, type_1L_chr = "comp_item_by_time") -->
+<!-- ``` -->
+<!-- ```{r domainsfig, fig.cap="AQoL-6D weighted domain scores", out.width = "600px", results='hide', fig.keep='all'} -->
+<!-- depict(z, type_1L_chr = "comp_domain_by_time") -->
+<!-- ``` -->
 </div>
   </div>
 
@@ -3086,7 +2907,7 @@ Anxiety
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.0.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
 </div>
 
       </footer>
