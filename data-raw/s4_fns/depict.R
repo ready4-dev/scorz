@@ -63,5 +63,6 @@ depict_ScorzProfile <- function(x,
                             var_nms_chr = .x))
     }
   }
+  plt_xx
   return(plt_xx)
 }

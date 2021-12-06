@@ -69,5 +69,6 @@ methods::setMethod("depict", "ScorzProfile", function (x, heights_int = NA_integ
                 var_nms_chr = .x))
         }
     }
+    plt_xx
     return(plt_xx)
 })
