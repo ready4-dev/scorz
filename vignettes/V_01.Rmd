@@ -85,18 +85,11 @@ To calculate AQoL 6D adolescent utility scores, use the `renew` method.
 z <- renew(z)
 ```
 
-We extract our updated dataset, along with its data-dictionary using the `procureSlot` method.
-
-```{r}
-x <- procureSlot(procureSlot(z,"a_YouthvarsProfile"),
-                 "a_Ready4useDyad")
-```
-
 ## Viewing the updated dataset
-We can inspect our updated dataset using the `exhibit' method. We can see that the updated dataset now has additional variables that include the intermediate and final calculations for AQoL-6D adolescent utility scores.
+We can inspect our updated dataset using the `exhibit` method. We can see that the updated dataset now has additional variables that include the intermediate and final calculations for AQoL-6D adolescent utility scores.
 
 ```{r}
-exhibit(x,
+exhibit(z,
         display_1L_chr = "head")
 ```
 
@@ -133,12 +126,12 @@ Total AQoL-6D scores can also be plotted using the same approach, where `var_idc
 depict(z, type_1L_chr = "total_by_time", var_idcs_int = 1L)
 ```
 
-<!-- Composite plots can be generated as well, though these are not currently optimised to reliably produce quality plots suitable for publication. -->
+Composite plots can be generated as well, though these are not currently optimised to reliably produce quality plots suitable for publication.
 
-<!-- ```{r itemsfig, fig.cap="AQoL-6D item responses", out.width = "600px", results='hide',fig.keep='all'} -->
-<!-- depict(z, type_1L_chr = "comp_item_by_time") -->
-<!-- ``` -->
+```{r itemsfig, fig.cap="AQoL-6D item responses", out.width = "600px", results='hide',fig.keep='all'}
+depict(z, type_1L_chr = "comp_item_by_time")
+```
 
-<!-- ```{r domainsfig, fig.cap="AQoL-6D weighted domain scores", out.width = "600px", results='hide', fig.keep='all'} -->
-<!-- depict(z, type_1L_chr = "comp_domain_by_time") -->
-<!-- ``` -->
+```{r domainsfig, fig.cap="AQoL-6D weighted domain scores", out.width = "600px", results='hide', fig.keep='all'}
+depict(z, type_1L_chr = "comp_domain_by_time")
+```
