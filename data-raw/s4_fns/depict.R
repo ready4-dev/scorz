@@ -61,6 +61,8 @@ depict_ScorzProfile <- function(x,
         purrr::map(~ depict(procureSlot(x,"a_YouthvarsProfile"),
                             type_1L_chr = "by_time",
                             var_nms_chr = .x))
+      if(length(var_idcs_int) == 1)
+        plt_xx <- plt_xx[[1]]
     }
   }
   plt_xx

@@ -15,10 +15,11 @@ vignette: >
 ```{r warning=FALSE, message=FALSE}
 library(scorz)
 ```
+
 ## AQoL-6D scoring
 To derive a health utility score from the raw responses to a multi-attribute utility instrument it is necessary to implement a scoring algorithm. Scoring algorithms for the Assessment of Quality of Life Six Dimension (AQoL-6D) are publicly available in SPSS format (https://www.aqol.com.au/index.php/scoring-algorithms). 
 
-However, to include scoring algorithms in reproducible research workflows, it is desirable to have these algorithms available in open science languages such as R. We therefore developed an R implementatiopn of the adult and adolescent versions of the AQoL-6D scoring algorithms and have made them available as part of the `youthvars` package.
+However, to include scoring algorithms in reproducible research workflows, it is desirable to have these algorithms available in open science languages such as R. We therefore developed an R implementation of the adult and adolescent versions of the AQoL-6D scoring algorithms and have made them available as part of the `youthvars` package.
 
 ## Ingest data
 To begin, we ingest an unscored dataset as an instance of the `Ready4useRecord` class (from the [ready4use package](https://ready4-dev.github.io/ready4use/)). In this case we download our data from a remote repository.
@@ -27,13 +28,20 @@ To begin, we ingest an unscored dataset as an instance of the `Ready4useRecord` 
 x <- ready4use::Ready4useRepos(dv_nm_1L_chr = "fakes",
                                dv_ds_nm_1L_chr = "https://doi.org/10.7910/DVN/W95KED",
                                dv_server_1L_chr = "dataverse.harvard.edu") %>%
-  ingest(fls_to_ingest_chr = "ymh_clinical_dyad_r4") %>%
-  procureSlot("b_Ready4useIngest") %>%
-  procure(fl_nm_1L_chr = "ymh_clinical_dyad_r4")
+  ingest(fls_to_ingest_chr = "ymh_clinical_dyad_r4") 
 
 ```
 
-We can inspect our ingested dataset using the `exhibit` method.
+We extract the element of `x` we are interested in - a dataset / data-dictionary pair (an instance of the `Ready4useDyad` class). To make the dataset easier to interpret, we can add labels from the dictionary.
+
+```{r}
+x <- x %>%
+  procureSlot("b_Ready4useIngest") %>%
+  procure(fl_nm_1L_chr = "ymh_clinical_dyad_r4") %>%
+  renew(type_1L_chr = "label")
+```
+
+We can now inspect our ingested dataset using the `exhibit` method.
 
 ```{r}
 exhibit(x,
@@ -55,7 +63,8 @@ We now use the data and meta-data we have created in the previous steps to creat
 z <- ScorzAqol6Adol(a_YouthvarsProfile = y)
 ```
 
-By default, instances of the `ScorzAqol6Adol` class are created with a slot specifying a default value for the prefix for AQoL-6D questionnaire item responses.
+By default, instances of the `ScorzAqol6Adol` class are created with a slot specifying a value for the prefix for AQoL-6D questionnaire item responses.
+
 ```{r}
 procureSlot(z,
             slot_nm_1L_chr = "itm_prefix_1L_chr")
@@ -105,6 +114,7 @@ We can then select a desired item's summary plot by using its index number.
 ```{r, out.width = "600px"}
 plot_ls[[1]]
 ```
+
 Alternatively, we can generate individual plots by passing the item index number to the `var_idcs_int` argument of `depict`.
 
 ```{r, out.width = "600px"}
