@@ -52,12 +52,14 @@ y <- youthvars::YouthvarsSeries(a_Ready4useDyad = x,
 We now use the data and meta-data we have created in the previous steps to create an instance of the `ScorzAqol6Adol` class. This class is specifically designed to facilitate scoring of the adolescent version of the AQoL-6D instrument.
 
 ```{r}
-z <- ScorzAqol6Adol(a_YouthvarsProfile = y)#,itm_prefix_1L_chr = "aqol6d_q"
+z <- ScorzAqol6Adol(a_YouthvarsProfile = y)
 ```
 
 By default, instances of the `ScorzAqol6Adol` class are created with a slot specifying a default value for the prefix for AQoL-6D questionnaire item responses.
 ```{r}
-z@itm_prefix_1L_chr
+procureSlot(z,
+            slot_nm_1L_chr = "itm_prefix_1L_chr")
+
 ```
 If this default value needs to be updated to match the prefix used in your dataset, use the `renewSlot` method.
 
@@ -81,7 +83,6 @@ x <- procureSlot(procureSlot(z,"a_YouthvarsProfile"),
                  "a_Ready4useDyad")
 ```
 
-
 ## Viewing the updated dataset
 We can inspect our updated dataset using the `exhibit' method. We can see that the updated dataset now has additional variables that include the intermediate and final calculations for AQoL-6D adolescent utility scores.
 
@@ -93,35 +94,41 @@ exhibit(x,
 ## Creating summary plots
 To create plots, we use the `depict` method.
 
-We can summarise all individual items by timepoint.
+We can create a list of summary plots by timepoint for all individual items.
 
 ```{r}
-depict(z, type_1L_chr = "item_by_time")
+plot_ls <- depict(z, type_1L_chr = "item_by_time")
 ```
 
-We can generate plots of selected items by passing their index number to the `var_idcs_int` argument.
+We can then select a desired item's summary plot by using its index number.
 
-```{r}
-depict(z, type_1L_chr = "item_by_time", var_idcs_int = c(2L))
+```{r, out.width = "600px"}
+plot_ls[[1]]
 ```
+Alternatively, we can generate individual plots by passing the item index number to the `var_idcs_int` argument of `depict`.
+
+```{r, out.width = "600px"}
+depict(z, type_1L_chr = "item_by_time", var_idcs_int = 2L)
+```
+
 We can also plot domain scores by time.
-```{r}
-depict(z, type_1L_chr = "domain_by_time")
 
+```{r, out.width = "600px"}
+depict(z, type_1L_chr = "domain_by_time", var_idcs_int = 1L)
 ```
-```{r}
-depict(z, type_1L_chr = "domain_by_time", var_idcs_int = c(1L))
-```
-Total AQoL-6D scores can also be plotted.
-```{r}
-depict(z, type_1L_chr = "total_by_time")
 
-```
-Composite plots can be generated as well, though these are not currently optimised to reliably produce quality plots suitable for publication.
+Total AQoL-6D scores can also be plotted using the same approach, where `var_idcs_int = 1L` is used to plot the weighted total distribution and `var_idcs_int = 2L` is used for plotting the unweighted total.
 
-```{r}
-depict(z, type_1L_chr = "comp_item_by_time")
+```{r, out.width = "600px"}
+depict(z, type_1L_chr = "total_by_time", var_idcs_int = 1L)
 ```
-```{r}
-depict(z, type_1L_chr = "comp_domain_by_time")
-```
+
+<!-- Composite plots can be generated as well, though these are not currently optimised to reliably produce quality plots suitable for publication. -->
+
+<!-- ```{r itemsfig, fig.cap="AQoL-6D item responses", out.width = "600px", results='hide',fig.keep='all'} -->
+<!-- depict(z, type_1L_chr = "comp_item_by_time") -->
+<!-- ``` -->
+
+<!-- ```{r domainsfig, fig.cap="AQoL-6D weighted domain scores", out.width = "600px", results='hide', fig.keep='all'} -->
+<!-- depict(z, type_1L_chr = "comp_domain_by_time") -->
+<!-- ``` -->

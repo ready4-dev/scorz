@@ -21,5 +21,4 @@ This development version of the scorz package has been made available as part of
 
 A brief overview of the intended use of `scorz` classes and methods is available in the following article:
 
-
 - [AQoL-6D (Adolescent) Health Utility Scoring](V_01.html)

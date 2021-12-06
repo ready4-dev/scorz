@@ -1,18 +1,25 @@
 depict_ScorzProfile <- function(x,
                                 heights_int = NA_integer_,
                                 plot_rows_cols_pair_int = NA_integer_,
+                                tfmn_1L_chr = "title",
                                 type_1L_chr = "item_by_time",
                                 y_label_1L_chr = "",
                                 var_idcs_int = NA_integer_,
                                 ...){
+
+  y <- procureSlot(procureSlot(x,"a_YouthvarsProfile"),
+                        "a_Ready4useDyad") %>%
+    ready4::renew(tfmn_1L_chr = tfmn_1L_chr) %>%
+    ready4::renew(tfmn_1L_chr = tfmn_1L_chr,
+                  type_1L_chr = "case")
   if(endsWith(type_1L_chr,"by_time") & "timepoint_var_nm_1L_chr" %in% slotNames(x@a_YouthvarsProfile)){
     if(type_1L_chr == "comp_item_by_time"){
       if(is.na(heights_int[1]))
         heights_int <- c(20L, 1L)
       if(is.na(plot_rows_cols_pair_int[1]))
         plot_rows_cols_pair_int <- c(5L,4L)
-      plt_xx <- youthvars::make_itm_resp_plts(x@a_YouthvarsProfile@a_Ready4useDyad@ds_tb,
-                                              col_nms_chr = names(dplyr::select(x@a_YouthvarsProfile@a_Ready4useDyad@ds_tb,
+      plt_xx <- youthvars::make_itm_resp_plts(y@ds_tb,
+                                              col_nms_chr = names(dplyr::select(y@ds_tb,
                                                                                 starts_with(x@itm_prefix_1L_chr))),
                                               lbl_nms_chr = x@itm_labels_chr,
                                               plot_rows_cols_pair_int = plot_rows_cols_pair_int,
@@ -27,7 +34,7 @@ depict_ScorzProfile <- function(x,
         heights_int <- c(10L, 1L)
       if(is.na(plot_rows_cols_pair_int[1]))
         plot_rows_cols_pair_int <- c(3L,2L)
-      plt_xx <- youthvars::make_sub_tot_plts(x@a_YouthvarsProfile@a_Ready4useDyad@ds_tb,
+      plt_xx <- youthvars::make_sub_tot_plts(y@ds_tb,
                                              col_nms_chr = x@domain_wtd_var_nms_chr,
                                              plot_rows_cols_pair_int = plot_rows_cols_pair_int,
                                              round_var_nm_1L_chr = x@a_YouthvarsProfile@timepoint_var_nm_1L_chr,
@@ -37,7 +44,7 @@ depict_ScorzProfile <- function(x,
     }
     if(type_1L_chr %in% c("domain_by_time","item_by_time","total_by_time")){
       if(type_1L_chr == "item_by_time"){
-        var_nms_chr <- names(dplyr::select(x@a_YouthvarsProfile@a_Ready4useDyad@ds_tb,
+        var_nms_chr <- names(dplyr::select(y@ds_tb,
                                            starts_with(x@itm_prefix_1L_chr)))
       }
       if(type_1L_chr == "domain_by_time"){
@@ -49,8 +56,9 @@ depict_ScorzProfile <- function(x,
       }
       if(is.na(var_idcs_int[1]))
         var_idcs_int <- 1:length(var_nms_chr)
+      x@a_YouthvarsProfile@a_Ready4useDyad <- y # Modify when callNextMethod resolved in youthvars mthd
       plt_xx <- var_nms_chr[var_idcs_int] %>%
-        purrr::map(~ depict(x@a_YouthvarsProfile,
+        purrr::map(~ depict(procureSlot(x,"a_YouthvarsProfile"),
                             type_1L_chr = "by_time",
                             var_nms_chr = .x))
     }

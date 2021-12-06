@@ -9,6 +9,7 @@
   x,
   heights_int = NA_integer_,
   plot_rows_cols_pair_int = NA_integer_,
+  tfmn_1L_chr = "title",
   type_1L_chr = "item_by_time",
   y_label_1L_chr = "",
   var_idcs_int = NA_integer_,
@@ -21,6 +22,8 @@
 \item{heights_int}{Heights (an integer vector), Default: NA}
 
 \item{plot_rows_cols_pair_int}{Plot rows columns pair (an integer vector), Default: NA}
+
+\item{tfmn_1L_chr}{Transformation (a character vector of length one), Default: 'title'}
 
 \item{type_1L_chr}{Type (a character vector of length one), Default: 'item_by_time'}
 
