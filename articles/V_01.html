@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scorz</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9025</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9027</span>
       </span>
     </div>
 
@@ -107,17 +107,16 @@
 <div class="section level2">
 <h2 id="ingest-data">Ingest data<a class="anchor" aria-label="anchor" href="#ingest-data"></a>
 </h2>
-<p>To begin, we ingest an unscored dataset as an instance of the <code>Ready4useRecord</code> class (from the <a href="https://ready4-dev.github.io/ready4use/" class="external-link">ready4use package</a>). In this case we download our data from a remote repository.</p>
+<p>To begin, we ingest an unscored dataset as an instance of the <code>Ready4useDyad</code> class (from the <a href="https://ready4-dev.github.io/ready4use/" class="external-link">ready4use package</a>). In this case we download our data from a remote repository.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">ready4use</span><span class="fu">::</span><span class="fu"><a href="https://ready4-dev.github.io/ready4use/reference/Ready4useRepos-class.html" class="external-link">Ready4useRepos</a></span><span class="op">(</span>dv_nm_1L_chr <span class="op">=</span> <span class="st">"fakes"</span>,
                                dv_ds_nm_1L_chr <span class="op">=</span> <span class="st">"https://doi.org/10.7910/DVN/W95KED"</span>,
                                dv_server_1L_chr <span class="op">=</span> <span class="st">"dataverse.harvard.edu"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://ready4-dev.github.io/ready4/reference/ingest-methods.html" class="external-link">ingest</a></span><span class="op">(</span>fls_to_ingest_chr <span class="op">=</span> <span class="st">"ymh_clinical_dyad_r4"</span><span class="op">)</span> </code></pre></div>
-<p>We extract the element of <code>x</code> we are interested in - a dataset / data-dictionary pair (an instance of the <code>Ready4useDyad</code> class). To make the dataset easier to interpret, we can add labels from the dictionary.</p>
+  <span class="fu"><a href="https://ready4-dev.github.io/ready4/reference/ingest-methods.html" class="external-link">ingest</a></span><span class="op">(</span>fls_to_ingest_chr <span class="op">=</span> <span class="st">"ymh_clinical_dyad_r4"</span>,
+         metadata_1L_lgl <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> </code></pre></div>
+<p>To make the ingested dataset easier to interpret, we can add labels from the dictionary.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">x</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://ready4-dev.github.io/ready4/reference/procureSlot-methods.html" class="external-link">procureSlot</a></span><span class="op">(</span><span class="st">"b_Ready4useIngest"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://ready4-dev.github.io/ready4/reference/procure-methods.html" class="external-link">procure</a></span><span class="op">(</span>fl_nm_1L_chr <span class="op">=</span> <span class="st">"ymh_clinical_dyad_r4"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="https://ready4-dev.github.io/ready4/reference/renew-methods.html" class="external-link">renew</a></span><span class="op">(</span>type_1L_chr <span class="op">=</span> <span class="st">"label"</span><span class="op">)</span></code></pre></div>
 <p>We can now inspect our ingested dataset using the <code>exhibit</code> method.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
