@@ -2,6 +2,27 @@
 # devtools::load_all()
 library(youthvars)
 devtools::load_all()
+ScorzAqol6()->a
+
+maui_params_ls <- make_maui_params_ls(maui_domains_pfxs_1L_chr = "eq5dq_",
+                                      maui_itm_short_nms_chr = c("Mobility", "Self-care", "Activities","Pain","Anxiety"),
+                                      maui_scoring_fn = function(data_tb,
+                                                                 maui_item_pfx_1L_chr,
+                                                                 id_var_nm_1L_chr,
+                                                                 utl_wtd_var_nm_1L_chr,
+                                                                 utl_unwtd_var_nm_1L_chr){
+                                        require(eq5d)
+                                        data_tb %>%
+                                          dplyr::rename_with(~stringr::str_replace(.x,maui_item_pfx_1L_chr,""),
+                                                             dplyr::starts_with(maui_item_pfx_1L_chr)) %>%
+                                          dplyr::mutate(`:=`(!!rlang::sym(utl_wtd_var_nm_1L_chr),
+                                                             eq5d::eq5d(., country="UK", version = "5L", type = "CW"))) %>%
+                                          dplyr::rename_with(~paste0(maui_item_pfx_1L_chr,.x),c("MO","SC","UA","PD","AD")) %>%
+                                          dplyr::mutate(`:=`(!!rlang::sym(utl_unwtd_var_nm_1L_chr),                                          rowSums(dplyr::across(dplyr::starts_with(maui_item_pfx_1L_chr))))) %>%
+                                          dplyr::filter(!is.na(!!rlang::sym(utl_unwtd_var_nm_1L_chr)))
+                                      },
+                                      short_and_long_nm = c("EQ-5D",
+                                                            "EuroQol - Five Dimension"))
 # library(scorz)
 # a <- ingest(Ready4useRepos(gh_repo_1L_chr = "ready4-dev/scorz",
 #                            gh_tag_1L_chr = "Documentation_0.0"),
@@ -102,57 +123,57 @@ devtools::load_all()
 # depict(z, type_1L_chr = "comp_domain_by_time")
 ##
 ## MIGRATE TO SPECIFIC
-ScorzModelSpec <- methods::setClass("ScorzModelSpec", #youthvars
-                                    contains = "Ready4Module",
-                                    slots = c(a_ScorzProfile = "ScorzProfile",
-                                              candidate_predrs_chr = "character",
-                                              depnt_var_nm_1L_chr = "character",
-                                              depnt_var_max_val_1L_dbl = "numeric"),
-                                    prototype =  list(a_ScorzProfile = ScorzProfile(),
-                                                      candidate_predrs_chr = NA_character_,
-                                                      depnt_var_nm_1L_chr = NA_character_,
-                                                      depnt_var_max_val_1L_dbl = Inf))
-exhibit_ScorzModelSpec <- function(x,
-                                   captions_chr = character(0),
-                                   method_chr = c("pearson", "spearman"),
-                                   mkdn_tbl_refs_chr = NULL,
-                                   output_type_1L_chr = "HTML",
-                                   type_1L_chr = "correlation",
-                                   timepoints_int = NA_integer_){
-  if(type_1L_chr == "correlation"){
-    if(is.na(timepoints_int)){
-      if("timepoint_vals_chr" %in% slotNames(x@a_ScorzProfile@a_YouthvarsProfile)){
-        timepoints_int <- 1:length(x@a_ScorzProfile@a_YouthvarsProfile@timepoint_vals_chr) %>% as.integer()
-      }else{
-        timepoints_int <- 1
-      }
-    }
-    if(identical(character(0), captions_chr)){
-      captions_chr <- paste0("Correlations at ",
-                             x@a_ScorzProfile@a_YouthvarsProfile@timepoint_vals_chr[timepoints_int])
-    }
-    1:length(timepoints_int) %>%
-      purrr::map(~
-                   transform_ds_for_tstng(x@a_ScorzProfile@a_YouthvarsProfile@a_Ready4useDyad@ds_tb,
-                                          depnt_var_nm_1L_chr = x@depnt_var_nm_1L_chr,
-                                          depnt_var_max_val_1L_dbl = x@depnt_var_max_val_1L_dbl,
-                                          candidate_predrs_chr = x@candidate_predrs_chr,
-                                          round_var_nm_1L_chr = ifelse("timepoint_var_nm_1L_chr" %in% slotNames(x@a_ScorzProfile@a_YouthvarsProfile),
-                                                                       x@a_ScorzProfile@a_YouthvarsProfile@timepoint_var_nm_1L_chr,
-                                                                       NA_character_),
-                                          round_val_1L_chr = ifelse("timepoint_vals_chr" %in% slotNames(x@a_ScorzProfile@a_YouthvarsProfile),
-                                                                    x@a_ScorzProfile@a_YouthvarsProfile@timepoint_vals_chr[timepoints_int[.x]],
-                                                                    NA_character_))  %>%
-                   make_corstars_tbl_xx(caption_1L_chr = captions_chr[.x],
-                                        mkdn_tbl_ref_1L_chr = mkdn_tbl_refs_chr[.x],
-                                        method_chr = method_chr,
-                                        result_chr = output_type_1L_chr
-                   ))
-  }
-}
-methods::setMethod("exhibit",
-                   methods::className("ScorzModelSpec"#, package = "ready4use"
-                   ),
-                   exhibit_ScorzModelSpec)
+# ScorzModelSpec <- methods::setClass("ScorzModelSpec", #youthvars
+#                                     contains = "Ready4Module",
+#                                     slots = c(a_ScorzProfile = "ScorzProfile",
+#                                               candidate_predrs_chr = "character",
+#                                               depnt_var_nm_1L_chr = "character",
+#                                               depnt_var_max_val_1L_dbl = "numeric"),
+#                                     prototype =  list(a_ScorzProfile = ScorzProfile(),
+#                                                       candidate_predrs_chr = NA_character_,
+#                                                       depnt_var_nm_1L_chr = NA_character_,
+#                                                       depnt_var_max_val_1L_dbl = Inf))
+# exhibit_ScorzModelSpec <- function(x,
+#                                    captions_chr = character(0),
+#                                    method_chr = c("pearson", "spearman"),
+#                                    mkdn_tbl_refs_chr = NULL,
+#                                    output_type_1L_chr = "HTML",
+#                                    type_1L_chr = "correlation",
+#                                    timepoints_int = NA_integer_){
+#   if(type_1L_chr == "correlation"){
+#     if(is.na(timepoints_int)){
+#       if("timepoint_vals_chr" %in% slotNames(x@a_ScorzProfile@a_YouthvarsProfile)){
+#         timepoints_int <- 1:length(x@a_ScorzProfile@a_YouthvarsProfile@timepoint_vals_chr) %>% as.integer()
+#       }else{
+#         timepoints_int <- 1
+#       }
+#     }
+#     if(identical(character(0), captions_chr)){
+#       captions_chr <- paste0("Correlations at ",
+#                              x@a_ScorzProfile@a_YouthvarsProfile@timepoint_vals_chr[timepoints_int])
+#     }
+#     1:length(timepoints_int) %>%
+#       purrr::map(~
+#                    transform_ds_for_tstng(x@a_ScorzProfile@a_YouthvarsProfile@a_Ready4useDyad@ds_tb,
+#                                           depnt_var_nm_1L_chr = x@depnt_var_nm_1L_chr,
+#                                           depnt_var_max_val_1L_dbl = x@depnt_var_max_val_1L_dbl,
+#                                           candidate_predrs_chr = x@candidate_predrs_chr,
+#                                           round_var_nm_1L_chr = ifelse("timepoint_var_nm_1L_chr" %in% slotNames(x@a_ScorzProfile@a_YouthvarsProfile),
+#                                                                        x@a_ScorzProfile@a_YouthvarsProfile@timepoint_var_nm_1L_chr,
+#                                                                        NA_character_),
+#                                           round_val_1L_chr = ifelse("timepoint_vals_chr" %in% slotNames(x@a_ScorzProfile@a_YouthvarsProfile),
+#                                                                     x@a_ScorzProfile@a_YouthvarsProfile@timepoint_vals_chr[timepoints_int[.x]],
+#                                                                     NA_character_))  %>%
+#                    make_corstars_tbl_xx(caption_1L_chr = captions_chr[.x],
+#                                         mkdn_tbl_ref_1L_chr = mkdn_tbl_refs_chr[.x],
+#                                         method_chr = method_chr,
+#                                         result_chr = output_type_1L_chr
+#                    ))
+#   }
+# }
+# methods::setMethod("exhibit",
+#                    methods::className("ScorzModelSpec"#, package = "ready4use"
+#                    ),
+#                    exhibit_ScorzModelSpec)
 
 #

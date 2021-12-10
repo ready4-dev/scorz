@@ -115,7 +115,46 @@ y <- dplyr::bind_rows(ready4class::make_pt_ready4class_constructor(make_s3_lgl =
                                                                    class_desc_chr = "A dataset and metadata to support implementation of a scoring algorithm for the adult version of AQoL-6D.",
                                                                    parent_class_chr = "ScorzAqol6",
                                                                    inc_clss_ls = list("ScorzAqol6")
-                      )
+                      ),
+                      ready4class::make_pt_ready4class_constructor(make_s3_lgl = FALSE,
+                                                                   name_stub_chr = "EuroQol5",
+                                                                   slots_ls = list("a_YouthvarsProfile",
+                                                                                   "domain_unwtd_var_nms_chr",
+                                                                                   "domain_wtd_var_nms_chr",
+                                                                                   "instrument_dict_r3",
+                                                                                   "instrument_nm_1L_chr",
+                                                                                   "instrument_version_1L_chr",
+                                                                                   "itm_labels_chr",
+                                                                                   "itm_prefix_1L_chr",
+                                                                                   "scrg_dss_ls",
+                                                                                   "total_wtd_var_nm_1L_chr",
+                                                                                   "total_unwtd_var_nm_1L_chr"
+                                                                   ) %>% list(),
+                                                                   pt_ls = list("YouthvarsProfile",
+                                                                                "character",
+                                                                                "character",
+                                                                                "ready4use_dictionary",
+                                                                                "character",
+                                                                                "character",
+                                                                                "character",
+                                                                                "character",
+                                                                                "list",
+                                                                                "character",
+                                                                                "character") %>% list(),
+                                                                   vals_ls = list(list(domain_wtd_var_nms_chr = "c(\"Mobility\", \"Self-care\", \"Activities\",\"Pain\",\"Anxiety\")",
+                                                                                       instrument_dict_r3 = "make_eq5d_dict()",
+                                                                                       instrument_nm_1L_chr = "'EuroQol EQ-5D'",
+                                                                                       #instrument_version_1L_chr = NA_character_,
+                                                                                       itm_labels_chr = "c(\"Mobility\", \"Self-care\", \"Activities\",\"Pain\",\"Anxiety\")",
+                                                                                       itm_prefix_1L_chr =  "'eq5dq_'",
+                                                                                       #scrg_dss_ls = "get_aqol6d_scrg_dss()",
+                                                                                       total_wtd_var_nm_1L_chr = "'eq5d_total_w'",
+                                                                                       total_unwtd_var_nm_1L_chr = "'eq5d_total_c'"
+                                                                   )),
+                                                                   class_desc_chr = "A dataset and metadata to support implementation of an EQ-5D scoring algorithm.",
+                                                                   parent_class_chr = "ScorzProfile",#"Ready4Module"#"
+                                                                   inc_clss_ls = list("ScorzProfile")
+                      ),
                       ) %>%
   ready4class::ready4class_constructor()
 z <- ready4pack::make_pt_ready4pack_manifest(x,

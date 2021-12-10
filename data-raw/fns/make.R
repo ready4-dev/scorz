@@ -87,3 +87,10 @@ make_domain_items_ls <- function (domain_qs_lup_tb, item_pfx_1L_chr)
                                                    .x)) %>% stats::setNames(domains_chr)
   return(domain_items_ls)
 }
+make_eq5d_dict <- function(){
+  eq5d_dict_r3 <- ready4use::ready4use_dictionary(ready4use::make_pt_ready4use_dictionary(var_nm_chr = paste0("eq5dq_",1:5),
+                                                                          var_ctg_chr = "multi-attribute utility instrument question",
+                                                                          var_desc_chr = paste0("EuroQol EQ-5D item question",1:5),
+                                                                          var_type_chr = "integer"))
+  return(eq5d_dict_r3)
+}
