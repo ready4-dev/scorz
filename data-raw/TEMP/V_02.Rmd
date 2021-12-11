@@ -1,5 +1,5 @@
 ---
-title: "AQoL-6D (Adolescent) Health Utility Scoring"
+title: "EQ-5D Health Utility Scoring"
 output: 
   rmarkdown::html_vignette:
     toc: true
@@ -7,7 +7,7 @@ output:
     highlight: null
     number_sections: yes
 vignette: >
-  %\VignetteIndexEntry{AQoL-6D (Adolescent) Health Utility Scoring}
+  %\VignetteIndexEntry{EQ-5D Health Utility Scoring}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -16,10 +16,8 @@ vignette: >
 library(scorz)
 ```
 
-## AQoL-6D scoring
-To derive a health utility score from the raw responses to a multi-attribute utility instrument it is necessary to implement a scoring algorithm. Scoring algorithms for the Assessment of Quality of Life Six Dimension (AQoL-6D) are publicly available in SPSS format (https://www.aqol.com.au/index.php/scoring-algorithms). 
-
-However, to include scoring algorithms in reproducible research workflows, it is desirable to have these algorithms available in open science languages such as R. We therefore developed an R implementation of the adult and adolescent versions of the AQoL-6D scoring algorithms and have made them available as part of the `scorz` package.
+## EQ-5D scoring
+The [eq5d package](https://github.com/fragla/eq5d) provides a toolkit for scoring EQ-5D health utility. The  `scorz` package contains a class and methods that integrate eq5d package tools with [the ready4 framework](https://www.ready4-dev.com/) for open and modular mental health system models.
 
 ## Ingest data
 To begin, we ingest an unscored dataset as an instance of the `Ready4useDyad` class (from the [ready4use package](https://ready4-dev.github.io/ready4use/)). In this case we download our data from a remote repository.
@@ -28,7 +26,7 @@ To begin, we ingest an unscored dataset as an instance of the `Ready4useDyad` cl
 x <- ready4use::Ready4useRepos(dv_nm_1L_chr = "fakes",
                                dv_ds_nm_1L_chr = "https://doi.org/10.7910/DVN/W95KED",
                                dv_server_1L_chr = "dataverse.harvard.edu") %>%
-  ingest(fls_to_ingest_chr = "ymh_clinical_dyad_r4",
+  ingest(fls_to_ingest_chr = "ymh_eq5d_dyad_r4",
          metadata_1L_lgl = F) 
 
 ```
@@ -51,15 +49,15 @@ We now add meta-data that identifies our dataset as being longitudinal using the
 
 ```{r}
 y <- youthvars::YouthvarsSeries(a_Ready4useDyad = x,
-                                id_var_nm_1L_chr = "fkClientID",
-                                timepoint_var_nm_1L_chr = "round",
-                                timepoint_vals_chr = levels(x@ds_tb$round))
+                                id_var_nm_1L_chr = "uid",
+                                timepoint_var_nm_1L_chr = "Timepoint",
+                                timepoint_vals_chr = unique(x@ds_tb$Timepoint))
 ```
 
 We now use the data and meta-data we have created in the previous steps to create an instance of the `ScorzAqol6Adol` class. This class is specifically designed to facilitate scoring of the adolescent version of the AQoL-6D instrument.
 
 ```{r}
-z <- ScorzAqol6Adol(a_YouthvarsProfile = y)
+z <- ScorzEur Aqol6Adol(a_YouthvarsProfile = y)
 ```
 
 By default, instances of the `ScorzAqol6Adol` class are created with a slot specifying a value for the prefix for AQoL-6D questionnaire item responses.

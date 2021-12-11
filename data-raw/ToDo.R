@@ -2,9 +2,18 @@
 # devtools::load_all()
 library(youthvars)
 devtools::load_all()
-ScorzAqol6()->a
+x <- ready4use::Ready4useRepos(dv_nm_1L_chr = "fakes",
+                    dv_ds_nm_1L_chr = "https://doi.org/10.7910/DVN/HJXYKQ",
+                    dv_server_1L_chr = "dataverse.harvard.edu")
+objects_ls <- ingest(x,
+                     fls_to_ingest_chr = c("eq5d_ds_tb","eq5d_ds_dict"),
+                     metadata_1L_lgl = F)
+ScorzEuroQol5() -> a
+a@itm_labels_chr
+renew_ScorzEuroqol5 <- function(x){
 
-maui_params_ls <- make_maui_params_ls(maui_domains_pfxs_1L_chr = "eq5dq_",
+}
+maui_params_ls <- make_maui_params_ls(maui_domains_pfxs_1L_chr = "eq5dq_", # NEEDS TO BE SAME ORDER AS SHORT NAMES
                                       maui_itm_short_nms_chr = c("Mobility", "Self-care", "Activities","Pain","Anxiety"),
                                       maui_scoring_fn = function(data_tb,
                                                                  maui_item_pfx_1L_chr,
