@@ -14,12 +14,12 @@
 #' @importFrom ready4 renew
 methods::setMethod("renew", "ScorzAqol6Adol", function (x, label_ds_1L_lgl = T, type_1L_chr = "score") 
 {
+    y <- x@a_YouthvarsProfile@a_Ready4useDyad
+    y <- renew(y, type_1L_chr = "unlabel")
     if (type_1L_chr == "score") {
         if (identical(x@scrg_dss_ls, list(list()))) {
             x@scrg_dss_ls <- get_aqol6d_scrg_dss()
         }
-        y <- x@a_YouthvarsProfile@a_Ready4useDyad
-        y <- renew(y, type_1L_chr = "unlabel")
         select_chr <- setdiff(names(y@ds_tb), x@instrument_dict_r3$var_nm_chr[!x@instrument_dict_r3$var_nm_chr %>% 
             startsWith(x@itm_prefix_1L_chr)] %>% as.vector())
         y@ds_tb <- y@ds_tb %>% dplyr::select(tidyselect::all_of(select_chr))
@@ -28,8 +28,48 @@ methods::setMethod("renew", "ScorzAqol6Adol", function (x, label_ds_1L_lgl = T, 
             total_aqol_var_nm_1L_chr = x@total_unwtd_var_nm_1L_chr, 
             wtd_aqol_var_nm_1L_chr = x@total_wtd_var_nm_1L_chr)
         y@dictionary_r3 <- ready4::renew(y@dictionary_r3, new_ready4_dict_r3 = x@instrument_dict_r3)
-        if (label_ds_1L_lgl) 
-            y <- renew(y)
+    }
+    if (label_ds_1L_lgl) 
+        y <- renew(y)
+    if (type_1L_chr == "score") {
+        x@a_YouthvarsProfile@a_Ready4useDyad <- y
+    }
+    return(x)
+})
+#' 
+#' Renew an instance of a class by updating it with new data
+#' @name renew-ScorzEuroQol5
+#' @description renew method applied to ScorzEuroQol5
+#' @param x An object of class ScorzEuroQol5
+#' @param label_ds_1L_lgl Label dataset (a logical vector of length one), Default: T
+#' @param type_1L_chr Type (a character vector of length one), Default: 'score'
+#' @return x (An object of class ScorzEuroQol5)
+#' @rdname renew-methods
+#' @aliases renew,ScorzEuroQol5-method
+#' @export 
+#' @importFrom dplyr rename_with mutate across filter
+#' @importFrom rlang sym
+#' @importFrom eq5d eq5d
+#' @importFrom ready4 renew
+methods::setMethod("renew", "ScorzEuroQol5", function (x, label_ds_1L_lgl = T, type_1L_chr = "score") 
+{
+    y <- x@a_YouthvarsProfile@a_Ready4useDyad
+    y <- renew(y, type_1L_chr = "unlabel")
+    if (type_1L_chr == "score") {
+        y@ds_tb <- y@ds_tb %>% dplyr::rename_with(~c("MO", "SC", 
+            "UA", "PD", "AD"), x@itm_var_nms_chr) %>% dplyr::mutate(`:=`(!!rlang::sym(x@total_wtd_var_nm_1L_chr), 
+            eq5d::eq5d(., country = x@country_1L_chr, version = x@instrument_version_1L_chr, 
+                type = x@type_1L_chr))) %>% dplyr::rename_with(~x@itm_var_nms_chr, 
+            c("MO", "SC", "UA", "PD", "AD")) %>% dplyr::mutate(`:=`(!!rlang::sym(x@total_unwtd_var_nm_1L_chr), 
+            rowSums(dplyr::across(x@itm_var_nms_chr)))) %>% dplyr::filter(!is.na(!!rlang::sym(x@total_unwtd_var_nm_1L_chr)))
+        instrument_dict_r3 <- x@instrument_dict_r3
+        instrument_dict_r3$var_nm_chr <- c(x@itm_var_nms_chr, 
+            x@total_unwtd_var_nm_1L_chr, x@total_wtd_var_nm_1L_chr)
+        y@dictionary_r3 <- ready4::renew(y@dictionary_r3, new_ready4_dict_r3 = instrument_dict_r3)
+    }
+    if (label_ds_1L_lgl) 
+        y <- renew(y)
+    if (type_1L_chr == "score") {
         x@a_YouthvarsProfile@a_Ready4useDyad <- y
     }
     return(x)

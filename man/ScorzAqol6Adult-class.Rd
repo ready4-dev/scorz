@@ -15,6 +15,8 @@ A dataset and metadata to support implementation of a scoring algorithm for the 
 
 \item{\code{a_YouthvarsProfile}}{(an instance of the YouthvarsProfile class)}
 
+\item{\code{country_1L_chr}}{Country (a character vector of length one)}
+
 \item{\code{domain_unwtd_var_nms_chr}}{Domain unweighted variable names (a character vector)}
 
 \item{\code{domain_wtd_var_nms_chr}}{Domain weighted variable names (a character vector)}
@@ -22,6 +24,8 @@ A dataset and metadata to support implementation of a scoring algorithm for the 
 \item{\code{instrument_dict_r3}}{Instrument dictionary (a ready4 S3)}
 
 \item{\code{instrument_nm_1L_chr}}{Instrument name (a character vector of length one)}
+
+\item{\code{instrument_short_nm_1L_chr}}{Instrument short name (a character vector of length one)}
 
 \item{\code{itm_labels_chr}}{Item labels (a character vector)}
 

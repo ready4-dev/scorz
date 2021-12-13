@@ -13,6 +13,8 @@ A dataset and metadata to support implementation of an EQ-5D scoring algorithm.
 \describe{
 \item{\code{a_YouthvarsProfile}}{(an instance of the YouthvarsProfile class)}
 
+\item{\code{country_1L_chr}}{Country (a character vector of length one)}
+
 \item{\code{domain_unwtd_var_nms_chr}}{Domain unweighted variable names (a character vector)}
 
 \item{\code{domain_wtd_var_nms_chr}}{Domain weighted variable names (a character vector)}
@@ -21,17 +23,23 @@ A dataset and metadata to support implementation of an EQ-5D scoring algorithm.
 
 \item{\code{instrument_nm_1L_chr}}{Instrument name (a character vector of length one)}
 
+\item{\code{instrument_short_nm_1L_chr}}{Instrument short name (a character vector of length one)}
+
 \item{\code{instrument_version_1L_chr}}{Instrument version (a character vector of length one)}
 
 \item{\code{itm_labels_chr}}{Item labels (a character vector)}
 
 \item{\code{itm_prefix_1L_chr}}{Item prefix (a character vector of length one)}
 
+\item{\code{itm_var_nms_chr}}{Item variable names (a character vector)}
+
 \item{\code{scrg_dss_ls}}{Scoring datasets (a list)}
 
 \item{\code{total_wtd_var_nm_1L_chr}}{Total weighted variable name (a character vector of length one)}
 
 \item{\code{total_unwtd_var_nm_1L_chr}}{Total unweighted variable name (a character vector of length one)}
+
+\item{\code{type_1L_chr}}{Type (a character vector of length one)}
 
 \item{\code{dissemination_1L_chr}}{Dissemination (a character vector of length one)}
 }}

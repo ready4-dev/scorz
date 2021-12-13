@@ -19,6 +19,7 @@ library(scorz)
 ```
 This development version of the scorz package has been made available as part of the process of testing and documenting the package. 
 
-A brief overview of the intended use of `scorz` classes and methods is available in the following article:
+A brief overview of the intended use of `scorz` classes and methods is available in the following articleS:
 
 - [AQoL-6D (Adolescent) Health Utility Scoring](V_01.html)
+- [EQ-5D Health Utility Scoring](V_02.html)

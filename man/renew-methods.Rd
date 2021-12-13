@@ -3,12 +3,16 @@
 \name{renew-ScorzAqol6Adol}
 \alias{renew-ScorzAqol6Adol}
 \alias{renew,ScorzAqol6Adol-method}
+\alias{renew-ScorzEuroQol5}
+\alias{renew,ScorzEuroQol5-method}
 \title{Renew an instance of a class by updating it with new data}
 \usage{
 \S4method{renew}{ScorzAqol6Adol}(x, label_ds_1L_lgl = T, type_1L_chr = "score")
+
+\S4method{renew}{ScorzEuroQol5}(x, label_ds_1L_lgl = T, type_1L_chr = "score")
 }
 \arguments{
-\item{x}{An object of class ScorzAqol6Adol}
+\item{x}{An object of class ScorzEuroQol5}
 
 \item{label_ds_1L_lgl}{Label dataset (a logical vector of length one), Default: T}
 
@@ -16,7 +20,11 @@
 }
 \value{
 x (An object of class ScorzAqol6Adol)
+
+x (An object of class ScorzEuroQol5)
 }
 \description{
 renew method applied to ScorzAqol6Adol
+
+renew method applied to ScorzEuroQol5
 }

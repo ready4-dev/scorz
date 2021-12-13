@@ -12,6 +12,8 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+Note: **This vignette is illustrated with fake data**. The dataset explored in this example should not be used to inform decision-making. Some of the methods illustrated in this AQoL-6D vignette can also be used to score other health utility instruments - see [a vignette about scoring EQ-5D](V_02.html).
+
 ```{r warning=FALSE, message=FALSE}
 library(scorz)
 ```
@@ -30,7 +32,6 @@ x <- ready4use::Ready4useRepos(dv_nm_1L_chr = "fakes",
                                dv_server_1L_chr = "dataverse.harvard.edu") %>%
   ingest(fls_to_ingest_chr = "ymh_clinical_dyad_r4",
          metadata_1L_lgl = F) 
-
 ```
 
 To make the ingested dataset easier to interpret, we can add labels from the dictionary.

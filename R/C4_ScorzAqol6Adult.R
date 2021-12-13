@@ -5,10 +5,12 @@
 #' @include C4_ScorzAqol6.R
 #' @slot instrument_version_1L_chr Instrument version (a character vector of length one)
 #' @slot a_YouthvarsProfile  (an instance of the YouthvarsProfile class)
+#' @slot country_1L_chr Country (a character vector of length one)
 #' @slot domain_unwtd_var_nms_chr Domain unweighted variable names (a character vector)
 #' @slot domain_wtd_var_nms_chr Domain weighted variable names (a character vector)
 #' @slot instrument_dict_r3 Instrument dictionary (a ready4 S3)
 #' @slot instrument_nm_1L_chr Instrument name (a character vector of length one)
+#' @slot instrument_short_nm_1L_chr Instrument short name (a character vector of length one)
 #' @slot itm_labels_chr Item labels (a character vector)
 #' @slot itm_prefix_1L_chr Item prefix (a character vector of length one)
 #' @slot scrg_dss_ls Scoring datasets (a list)
@@ -21,7 +23,7 @@
 #' @exportClass ScorzAqol6Adult
 ScorzAqol6Adult <- methods::setClass("ScorzAqol6Adult",
 contains = "ScorzAqol6",
-slots = c(instrument_version_1L_chr = "character",a_YouthvarsProfile = "YouthvarsProfile",domain_unwtd_var_nms_chr = "character",domain_wtd_var_nms_chr = "character",instrument_dict_r3 = "ready4use_dictionary",instrument_nm_1L_chr = "character",itm_labels_chr = "character",itm_prefix_1L_chr = "character",scrg_dss_ls = "list",total_wtd_var_nm_1L_chr = "character",total_unwtd_var_nm_1L_chr = "character",dissemination_1L_chr = "character"),
+slots = c(instrument_version_1L_chr = "character",a_YouthvarsProfile = "YouthvarsProfile",country_1L_chr = "character",domain_unwtd_var_nms_chr = "character",domain_wtd_var_nms_chr = "character",instrument_dict_r3 = "ready4use_dictionary",instrument_nm_1L_chr = "character",instrument_short_nm_1L_chr = "character",itm_labels_chr = "character",itm_prefix_1L_chr = "character",scrg_dss_ls = "list",total_wtd_var_nm_1L_chr = "character",total_unwtd_var_nm_1L_chr = "character",dissemination_1L_chr = "character"),
 prototype =  list(instrument_version_1L_chr = 'Adult'))
 
 

@@ -1,0 +1,80 @@
+---
+title: "EQ-5D Health Utility Scoring"
+output: 
+  rmarkdown::html_vignette:
+    toc: true
+  pdf_document:
+    highlight: null
+    number_sections: yes
+vignette: >
+  %\VignetteIndexEntry{EQ-5D Health Utility Scoring}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+Note: **This vignette is illustrated with fake data**. The dataset explored in this example should not be used to inform decision-making. Some of the methods illustrated in this EQ-5D vignette are described in more detail in [a vignette about scoring AQoL-6D health utility](V_01.html).
+
+```{r warning=FALSE, message=FALSE}
+library(scorz)
+```
+
+## EQ-5D scoring
+The [eq5d package](https://github.com/fragla/eq5d) provides a toolkit for scoring EQ-5D health utility. The  `scorz` package contains a class and methods that integrate eq5d package tools with [the ready4 framework](https://www.ready4-dev.com/) for open and modular mental health system models.
+
+## Ingest and describe data
+To begin, we ingest an unscored dataset and its data dictionary as a [Ready4useDyad](https://ready4-dev.github.io/ready4use/articles/V_02.html). We then add additional details about the dataset (unique identifier and data-collection round variable name and values) by converting the ingested data to a (YouthvarsSeries)[https://ready4-dev.github.io/youthvars/articles/V_02.html] instance.
+
+```{r}
+x <- ready4use::Ready4useRepos(dv_nm_1L_chr = "fakes",
+                               dv_ds_nm_1L_chr = "https://doi.org/10.7910/DVN/W95KED",
+                               dv_server_1L_chr = "dataverse.harvard.edu") %>%
+  ingest(fls_to_ingest_chr = "ymh_eq5d_dyad_r4",
+         metadata_1L_lgl = F) 
+x <- youthvars::YouthvarsSeries(a_Ready4useDyad = x,
+                                id_var_nm_1L_chr = "uid",
+                                timepoint_var_nm_1L_chr = "Timepoint",
+                                timepoint_vals_chr = unique(x@ds_tb$Timepoint))
+```
+
+We now use the data and meta-data we have created in the previous steps to create an instance of the `ScorzEuroQol5` class. Important arguments to specify when creating a `ScorzEuroQol5` instance are `country_1L_chr` (the country preference weights to use), `instrument_version_1L_chr` (instrument version) and the `itm_var_nms_chr` (item variable names - **these must be in the exact order that corresponds to the Movement, Self-care, Usual Activities, Pain/Discomfort and Anxiety Depression domains**).
+
+```{r}
+y <- ScorzEuroQol5(a_YouthvarsProfile = x,
+                   country_1L_chr = "UK",
+                   instrument_version_1L_chr = "5L",
+                   itm_var_nms_chr = c("eq5dq_MO", "eq5dq_SC", "eq5dq_UA", "eq5dq_PD", "eq5dq_AD"))
+```
+
+## Calculating scores
+To calculate EQ-5D adolescent utility scores, use the `renew` method. 
+
+```{r results='hide', warning=F, message=FALSE}
+y <- renew(y)
+```
+
+## Viewing the updated dataset
+We can inspect our updated dataset using the `exhibit` method. 
+
+```{r}
+exhibit(y,
+        display_1L_chr = "head")
+```
+
+## Creating summary plots
+To create plots, we use the `depict` method, supplying the index number of the domain we wish to plot.
+
+```{r, out.width = "600px"}
+depict(y, type_1L_chr = "domain_by_time", var_idcs_int = 5L)
+```
+
+Total EQ-5D scores can also be plotted using the same approach, where `var_idcs_int = 1L` is used to plot the weighted total distribution.
+
+```{r, out.width = "600px"}
+depict(y, type_1L_chr = "total_by_time", var_idcs_int = 1L)
+```
+
+A composite plot can also be generated.
+
+```{r domainsfig, fig.cap="EQ-5D weighted domain scores", out.width = "600px", results='hide', fig.keep='all'}
+depict(y, type_1L_chr = "comp_domain_by_time")
+```

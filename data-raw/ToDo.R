@@ -8,11 +8,12 @@ x <- ready4use::Ready4useRepos(dv_nm_1L_chr = "fakes",
 objects_ls <- ingest(x,
                      fls_to_ingest_chr = c("eq5d_ds_tb","eq5d_ds_dict"),
                      metadata_1L_lgl = F)
-ScorzEuroQol5() -> a
-a@itm_labels_chr
-renew_ScorzEuroqol5 <- function(x){
-
-}
+y <- youthvars::YouthvarsSeries(a_Ready4useDyad = x,
+                                id_var_nm_1L_chr = "fkClientID",
+                                timepoint_var_nm_1L_chr = "round",
+                                timepoint_vals_chr = levels(x@ds_tb$round))
+z <- ScorzEuroQol5()
+y@
 maui_params_ls <- make_maui_params_ls(maui_domains_pfxs_1L_chr = "eq5dq_", # NEEDS TO BE SAME ORDER AS SHORT NAMES
                                       maui_itm_short_nms_chr = c("Mobility", "Self-care", "Activities","Pain","Anxiety"),
                                       maui_scoring_fn = function(data_tb,
