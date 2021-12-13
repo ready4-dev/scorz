@@ -1,38 +1,38 @@
 ####
 # devtools::load_all()
-library(youthvars)
-devtools::load_all()
-x <- ready4use::Ready4useRepos(dv_nm_1L_chr = "fakes",
-                    dv_ds_nm_1L_chr = "https://doi.org/10.7910/DVN/HJXYKQ",
-                    dv_server_1L_chr = "dataverse.harvard.edu")
-objects_ls <- ingest(x,
-                     fls_to_ingest_chr = c("eq5d_ds_tb","eq5d_ds_dict"),
-                     metadata_1L_lgl = F)
-y <- youthvars::YouthvarsSeries(a_Ready4useDyad = x,
-                                id_var_nm_1L_chr = "fkClientID",
-                                timepoint_var_nm_1L_chr = "round",
-                                timepoint_vals_chr = levels(x@ds_tb$round))
-z <- ScorzEuroQol5()
-y@
-maui_params_ls <- make_maui_params_ls(maui_domains_pfxs_1L_chr = "eq5dq_", # NEEDS TO BE SAME ORDER AS SHORT NAMES
-                                      maui_itm_short_nms_chr = c("Mobility", "Self-care", "Activities","Pain","Anxiety"),
-                                      maui_scoring_fn = function(data_tb,
-                                                                 maui_item_pfx_1L_chr,
-                                                                 id_var_nm_1L_chr,
-                                                                 utl_wtd_var_nm_1L_chr,
-                                                                 utl_unwtd_var_nm_1L_chr){
-                                        require(eq5d)
-                                        data_tb %>%
-                                          dplyr::rename_with(~stringr::str_replace(.x,maui_item_pfx_1L_chr,""),
-                                                             dplyr::starts_with(maui_item_pfx_1L_chr)) %>%
-                                          dplyr::mutate(`:=`(!!rlang::sym(utl_wtd_var_nm_1L_chr),
-                                                             eq5d::eq5d(., country="UK", version = "5L", type = "CW"))) %>%
-                                          dplyr::rename_with(~paste0(maui_item_pfx_1L_chr,.x),c("MO","SC","UA","PD","AD")) %>%
-                                          dplyr::mutate(`:=`(!!rlang::sym(utl_unwtd_var_nm_1L_chr),                                          rowSums(dplyr::across(dplyr::starts_with(maui_item_pfx_1L_chr))))) %>%
-                                          dplyr::filter(!is.na(!!rlang::sym(utl_unwtd_var_nm_1L_chr)))
-                                      },
-                                      short_and_long_nm = c("EQ-5D",
-                                                            "EuroQol - Five Dimension"))
+# library(youthvars)
+# devtools::load_all()
+# x <- ready4use::Ready4useRepos(dv_nm_1L_chr = "fakes",
+#                     dv_ds_nm_1L_chr = "https://doi.org/10.7910/DVN/HJXYKQ",
+#                     dv_server_1L_chr = "dataverse.harvard.edu")
+# objects_ls <- ingest(x,
+#                      fls_to_ingest_chr = c("eq5d_ds_tb","eq5d_ds_dict"),
+#                      metadata_1L_lgl = F)
+# y <- youthvars::YouthvarsSeries(a_Ready4useDyad = x,
+#                                 id_var_nm_1L_chr = "fkClientID",
+#                                 timepoint_var_nm_1L_chr = "round",
+#                                 timepoint_vals_chr = levels(x@ds_tb$round))
+# z <- ScorzEuroQol5()
+# y@
+# maui_params_ls <- make_maui_params_ls(maui_domains_pfxs_1L_chr = "eq5dq_", # NEEDS TO BE SAME ORDER AS SHORT NAMES
+#                                       maui_itm_short_nms_chr = c("Mobility", "Self-care", "Activities","Pain","Anxiety"),
+#                                       maui_scoring_fn = function(data_tb,
+#                                                                  maui_item_pfx_1L_chr,
+#                                                                  id_var_nm_1L_chr,
+#                                                                  utl_wtd_var_nm_1L_chr,
+#                                                                  utl_unwtd_var_nm_1L_chr){
+#                                         require(eq5d)
+#                                         data_tb %>%
+#                                           dplyr::rename_with(~stringr::str_replace(.x,maui_item_pfx_1L_chr,""),
+#                                                              dplyr::starts_with(maui_item_pfx_1L_chr)) %>%
+#                                           dplyr::mutate(`:=`(!!rlang::sym(utl_wtd_var_nm_1L_chr),
+#                                                              eq5d::eq5d(., country="UK", version = "5L", type = "CW"))) %>%
+#                                           dplyr::rename_with(~paste0(maui_item_pfx_1L_chr,.x),c("MO","SC","UA","PD","AD")) %>%
+#                                           dplyr::mutate(`:=`(!!rlang::sym(utl_unwtd_var_nm_1L_chr),                                          rowSums(dplyr::across(dplyr::starts_with(maui_item_pfx_1L_chr))))) %>%
+#                                           dplyr::filter(!is.na(!!rlang::sym(utl_unwtd_var_nm_1L_chr)))
+#                                       },
+#                                       short_and_long_nm = c("EQ-5D",
+#                                                             "EuroQol - Five Dimension"))
 # library(scorz)
 # a <- ingest(Ready4useRepos(gh_repo_1L_chr = "ready4-dev/scorz",
 #                            gh_tag_1L_chr = "Documentation_0.0"),
