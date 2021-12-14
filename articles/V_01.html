@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scorz</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9036</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9037</span>
       </span>
     </div>
 
@@ -2868,32 +2868,48 @@ Anxiety
 <p>We can then select a desired item’s summary plot by using its index number.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">plot_ls</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></code></pre></div>
-<p><img src="V_01_files/figure-html/unnamed-chunk-12-1.png" width="600px"></p>
+<div class="figure">
+<img src="V_01_files/figure-html/item1fig-1.png" alt="AQoL-6D Item 1 scores by data-collection round" width="600px"><p class="caption">
+AQoL-6D Item 1 scores by data-collection round
+</p>
+</div>
 <p>Alternatively, we can generate individual plots by passing the item index number to the <code>var_idcs_int</code> argument of <code>depict</code>.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ready4-dev.github.io/ready4/reference/depict-methods.html" class="external-link">depict</a></span><span class="op">(</span><span class="va">z</span>, type_1L_chr <span class="op">=</span> <span class="st">"item_by_time"</span>, var_idcs_int <span class="op">=</span> <span class="fl">2L</span><span class="op">)</span></code></pre></div>
-<p><img src="V_01_files/figure-html/unnamed-chunk-13-1.png" width="600px"></p>
+<div class="figure">
+<img src="V_01_files/figure-html/item2fig-1.png" alt="AQoL-6D Item 2 scores by data-collection round" width="600px"><p class="caption">
+AQoL-6D Item 2 scores by data-collection round
+</p>
+</div>
 <p>We can also plot domain scores by time.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ready4-dev.github.io/ready4/reference/depict-methods.html" class="external-link">depict</a></span><span class="op">(</span><span class="va">z</span>, type_1L_chr <span class="op">=</span> <span class="st">"domain_by_time"</span>, var_idcs_int <span class="op">=</span> <span class="fl">1L</span><span class="op">)</span></code></pre></div>
-<p><img src="V_01_files/figure-html/unnamed-chunk-14-1.png" width="600px"></p>
+<div class="figure">
+<img src="V_01_files/figure-html/domain1fig-1.png" alt="AQoL-6D Independet Living Domain weighted scores by data-collection round" width="600px"><p class="caption">
+AQoL-6D Independet Living Domain weighted scores by data-collection round
+</p>
+</div>
 <p>Total AQoL-6D scores can also be plotted using the same approach, where <code>var_idcs_int = 1L</code> is used to plot the weighted total distribution and <code>var_idcs_int = 2L</code> is used for plotting the unweighted total.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ready4-dev.github.io/ready4/reference/depict-methods.html" class="external-link">depict</a></span><span class="op">(</span><span class="va">z</span>, type_1L_chr <span class="op">=</span> <span class="st">"total_by_time"</span>, var_idcs_int <span class="op">=</span> <span class="fl">1L</span><span class="op">)</span></code></pre></div>
-<p><img src="V_01_files/figure-html/unnamed-chunk-15-1.png" width="600px"></p>
+<div class="figure">
+<img src="V_01_files/figure-html/totalsfig-1.png" alt="AQoL-6D item total weighted scores by data-collection round" width="600px"><p class="caption">
+AQoL-6D item total weighted scores by data-collection round
+</p>
+</div>
 <p>Composite plots can be generated as well, though these are not currently optimised to reliably produce quality plots suitable for publication.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ready4-dev.github.io/ready4/reference/depict-methods.html" class="external-link">depict</a></span><span class="op">(</span><span class="va">z</span>, type_1L_chr <span class="op">=</span> <span class="st">"comp_item_by_time"</span><span class="op">)</span></code></pre></div>
 <div class="figure">
-<img src="V_01_files/figure-html/itemsfig-1.png" alt="AQoL-6D item responses" width="600px"><p class="caption">
-AQoL-6D item responses
+<img src="V_01_files/figure-html/itemsfig-1.png" alt="AQoL-6D item responses by data-collection round" width="600px"><p class="caption">
+AQoL-6D item responses by data-collection round
 </p>
 </div>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ready4-dev.github.io/ready4/reference/depict-methods.html" class="external-link">depict</a></span><span class="op">(</span><span class="va">z</span>, type_1L_chr <span class="op">=</span> <span class="st">"comp_domain_by_time"</span><span class="op">)</span></code></pre></div>
 <div class="figure">
-<img src="V_01_files/figure-html/domainsfig-1.png" alt="AQoL-6D weighted domain scores" width="600px"><p class="caption">
-AQoL-6D weighted domain scores
+<img src="V_01_files/figure-html/domainsfig-1.png" alt="AQoL-6D weighted domain scores by data-collection round" width="600px"><p class="caption">
+AQoL-6D weighted domain scores by data-collection round
 </p>
 </div>
 </div>

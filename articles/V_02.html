@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scorz</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9036</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9037</span>
       </span>
     </div>
 
@@ -613,20 +613,28 @@ Not studying or working
 <div class="section level2">
 <h2 id="creating-summary-plots">Creating summary plots<a class="anchor" aria-label="anchor" href="#creating-summary-plots"></a>
 </h2>
-<p>To create plots, we use the <code>depict</code> method, supplying the index number of the domain we wish to plot.</p>
+<p>To create plots, we use the <code>depict</code> method, supplying the index number of the dimension we wish to plot.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ready4-dev.github.io/ready4/reference/depict-methods.html" class="external-link">depict</a></span><span class="op">(</span><span class="va">y</span>, type_1L_chr <span class="op">=</span> <span class="st">"domain_by_time"</span>, var_idcs_int <span class="op">=</span> <span class="fl">5L</span><span class="op">)</span></code></pre></div>
-<p><img src="V_02_files/figure-html/unnamed-chunk-6-1.png" width="600px"></p>
+<div class="figure">
+<img src="V_02_files/figure-html/adfig-1.png" alt="EQ-5D Anxiety / Depression Dimension scores by time" width="600px"><p class="caption">
+EQ-5D Anxiety / Depression Dimension scores by time
+</p>
+</div>
 <p>Total EQ-5D scores can also be plotted using the same approach, where <code>var_idcs_int = 1L</code> is used to plot the weighted total distribution.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ready4-dev.github.io/ready4/reference/depict-methods.html" class="external-link">depict</a></span><span class="op">(</span><span class="va">y</span>, type_1L_chr <span class="op">=</span> <span class="st">"total_by_time"</span>, var_idcs_int <span class="op">=</span> <span class="fl">1L</span><span class="op">)</span></code></pre></div>
-<p><img src="V_02_files/figure-html/unnamed-chunk-7-1.png" width="600px"></p>
+<div class="figure">
+<img src="V_02_files/figure-html/totalsfig-1.png" alt="EQ-5D total weighted utility scores by time" width="600px"><p class="caption">
+EQ-5D total weighted utility scores by time
+</p>
+</div>
 <p>A composite plot can also be generated.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ready4-dev.github.io/ready4/reference/depict-methods.html" class="external-link">depict</a></span><span class="op">(</span><span class="va">y</span>, type_1L_chr <span class="op">=</span> <span class="st">"comp_domain_by_time"</span><span class="op">)</span></code></pre></div>
 <div class="figure">
-<img src="V_02_files/figure-html/domainsfig-1.png" alt="EQ-5D weighted domain scores" width="600px"><p class="caption">
-EQ-5D weighted domain scores
+<img src="V_02_files/figure-html/domainsfig-1.png" alt="EQ-5D weighted domain scores by time" width="600px"><p class="caption">
+EQ-5D weighted domain scores by time
 </p>
 </div>
 </div>
