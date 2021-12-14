@@ -61,20 +61,20 @@ exhibit(y,
 ```
 
 ## Creating summary plots
-To create plots, we use the `depict` method, supplying the index number of the domain we wish to plot.
+To create plots, we use the `depict` method, supplying the index number of the dimension we wish to plot.
 
-```{r, out.width = "600px"}
+```{r adfig, fig.cap="EQ-5D Anxiety / Depression Dimension scores by time", out.width = "600px"}
 depict(y, type_1L_chr = "domain_by_time", var_idcs_int = 5L)
 ```
 
 Total EQ-5D scores can also be plotted using the same approach, where `var_idcs_int = 1L` is used to plot the weighted total distribution.
 
-```{r, out.width = "600px"}
+```{r totalsfig, fig.cap="EQ-5D total weighted utility scores by time", out.width = "600px"}
 depict(y, type_1L_chr = "total_by_time", var_idcs_int = 1L)
 ```
 
 A composite plot can also be generated.
 
-```{r domainsfig, fig.cap="EQ-5D weighted domain scores", out.width = "600px", results='hide', fig.keep='all'}
+```{r domainsfig, fig.cap="EQ-5D weighted domain scores by time", out.width = "600px", results='hide', fig.keep='all'}
 depict(y, type_1L_chr = "comp_domain_by_time")
 ```

@@ -104,34 +104,34 @@ plot_ls <- depict(z, type_1L_chr = "item_by_time")
 
 We can then select a desired item's summary plot by using its index number.
 
-```{r, out.width = "600px"}
+```{r item1fig, fig.cap="AQoL-6D Item 1 scores by data-collection round", out.width = "600px"}
 plot_ls[[1]]
 ```
 
 Alternatively, we can generate individual plots by passing the item index number to the `var_idcs_int` argument of `depict`.
 
-```{r, out.width = "600px"}
+```{r item2fig, fig.cap="AQoL-6D Item 2 scores by data-collection round", out.width = "600px"}
 depict(z, type_1L_chr = "item_by_time", var_idcs_int = 2L)
 ```
 
 We can also plot domain scores by time.
 
-```{r, out.width = "600px"}
+```{r domain1fig, fig.cap="AQoL-6D Independet Living Domain weighted scores by data-collection round", , out.width = "600px"}
 depict(z, type_1L_chr = "domain_by_time", var_idcs_int = 1L)
 ```
 
 Total AQoL-6D scores can also be plotted using the same approach, where `var_idcs_int = 1L` is used to plot the weighted total distribution and `var_idcs_int = 2L` is used for plotting the unweighted total.
 
-```{r, out.width = "600px"}
+```{r totalsfig, fig.cap="AQoL-6D item total weighted scores by data-collection round", out.width = "600px"}
 depict(z, type_1L_chr = "total_by_time", var_idcs_int = 1L)
 ```
 
 Composite plots can be generated as well, though these are not currently optimised to reliably produce quality plots suitable for publication.
 
-```{r itemsfig, fig.cap="AQoL-6D item responses", out.width = "600px", results='hide',fig.keep='all'}
+```{r itemsfig, fig.cap="AQoL-6D item responses by data-collection round", out.width = "600px", results='hide',fig.keep='all'}
 depict(z, type_1L_chr = "comp_item_by_time")
 ```
 
-```{r domainsfig, fig.cap="AQoL-6D weighted domain scores", out.width = "600px", results='hide', fig.keep='all'}
+```{r domainsfig, fig.cap="AQoL-6D weighted domain scores by data-collection round", out.width = "600px", results='hide', fig.keep='all'}
 depict(z, type_1L_chr = "comp_domain_by_time")
 ```
