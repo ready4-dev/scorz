@@ -51,7 +51,7 @@ exhibit(x,
 We now add meta-data that identifies our dataset as being longitudinal using the `YouthvarsSeries` class of the [youthvars package](https://ready4-dev.github.io/youthvars/).
 
 ```{r}
-y <- youthvars::YouthvarsSeries(a_Ready4useDyad = x,
+x <- youthvars::YouthvarsSeries(a_Ready4useDyad = x,
                                 id_var_nm_1L_chr = "fkClientID",
                                 timepoint_var_nm_1L_chr = "round",
                                 timepoint_vals_chr = levels(x@ds_tb$round))
@@ -60,13 +60,13 @@ y <- youthvars::YouthvarsSeries(a_Ready4useDyad = x,
 We now use the data and meta-data we have created in the previous steps to create an instance of the `ScorzAqol6Adol` class. This class is specifically designed to facilitate scoring of the adolescent version of the AQoL-6D instrument.
 
 ```{r}
-z <- ScorzAqol6Adol(a_YouthvarsProfile = y)
+y <- ScorzAqol6Adol(a_YouthvarsProfile = x)
 ```
 
 By default, instances of the `ScorzAqol6Adol` class are created with a slot specifying a value for the prefix for AQoL-6D questionnaire item responses.
 
 ```{r}
-procureSlot(z,
+procureSlot(y,
             slot_nm_1L_chr = "itm_prefix_1L_chr")
 
 ```
@@ -74,7 +74,7 @@ If this default value needs to be updated to match the prefix used in your datas
 
 ```{r}
 # Not run
-# z <- renewSlot(z, slot_nm_1L_chr = "itm_prefix_1L_chr", new_val_xx = "new_prefix")
+# y <- renewSlot(y, slot_nm_1L_chr = "itm_prefix_1L_chr", new_val_xx = "new_prefix")
 ```
 
 
@@ -82,14 +82,14 @@ If this default value needs to be updated to match the prefix used in your datas
 To calculate AQoL 6D adolescent utility scores, use the `renew` method. 
 
 ```{r results='hide', warning=F, message=FALSE}
-z <- renew(z)
+y <- renew(y)
 ```
 
 ## Viewing the updated dataset
 We can inspect our updated dataset using the `exhibit` method. We can see that the updated dataset now has additional variables that include the intermediate and final calculations for AQoL-6D adolescent utility scores.
 
 ```{r}
-exhibit(z,
+exhibit(y,
         display_1L_chr = "head")
 ```
 
@@ -99,7 +99,7 @@ To create plots, we use the `depict` method.
 We can create a list of summary plots by timepoint for all individual items.
 
 ```{r}
-plot_ls <- depict(z, type_1L_chr = "item_by_time")
+plot_ls <- depict(y, type_1L_chr = "item_by_time")
 ```
 
 We can then select a desired item's summary plot by using its index number.
@@ -111,27 +111,40 @@ plot_ls[[1]]
 Alternatively, we can generate individual plots by passing the item index number to the `var_idcs_int` argument of `depict`.
 
 ```{r item2fig, fig.cap="AQoL-6D Item 2 scores by data-collection round", out.width = "600px"}
-depict(z, type_1L_chr = "item_by_time", var_idcs_int = 2L)
+depict(y, type_1L_chr = "item_by_time", var_idcs_int = 2L)
 ```
 
 We can also plot domain scores by time.
 
 ```{r domain1fig, fig.cap="AQoL-6D Independet Living Domain weighted scores by data-collection round", , out.width = "600px"}
-depict(z, type_1L_chr = "domain_by_time", var_idcs_int = 1L)
+depict(y, type_1L_chr = "domain_by_time", var_idcs_int = 1L)
 ```
 
 Total AQoL-6D scores can also be plotted using the same approach, where `var_idcs_int = 1L` is used to plot the weighted total distribution and `var_idcs_int = 2L` is used for plotting the unweighted total.
 
 ```{r totalsfig, fig.cap="AQoL-6D item total weighted scores by data-collection round", out.width = "600px"}
-depict(z, type_1L_chr = "total_by_time", var_idcs_int = 1L)
+depict(y, type_1L_chr = "total_by_time", var_idcs_int = 1L)
 ```
 
 Composite plots can be generated as well, though these are not currently optimised to reliably produce quality plots suitable for publication.
 
 ```{r itemsfig, fig.cap="AQoL-6D item responses by data-collection round", out.width = "600px", results='hide',fig.keep='all'}
-depict(z, type_1L_chr = "comp_item_by_time")
+depict(y, type_1L_chr = "comp_item_by_time")
 ```
 
 ```{r domainsfig, fig.cap="AQoL-6D weighted domain scores by data-collection round", out.width = "600px", results='hide', fig.keep='all'}
-depict(z, type_1L_chr = "comp_domain_by_time")
+depict(y, type_1L_chr = "comp_domain_by_time")
 ```
+
+## Share output
+We can now publicly share our scored dataset and its associated metadata, using `Ready4useRepos` and its `share` method [as described in a vignette from the ready4use package](https://ready4-dev.github.io/ready4use/articles/V_01.html).
+
+```{r eval=F}
+z <- ready4use::Ready4useRepos(gh_repo_1L_chr = "ready4-dev/scorz", # Replace with details of your repo.
+                               gh_tag_1L_chr = "Documentation_0.0") # You must have write permissions.
+z <- share(z,
+           obj_to_share_xx = y,
+           fl_nm_1L_chr = "ymh_ScorzAqol6Adol")
+```
+`y` is now available for download as the file `ymh_ScorzAqol6Adol.RDS` from the ["Documentation_0.0" release of the scorz package](https://github.com/ready4-dev/scorz/releases/tag/Documentation_0.0).
+

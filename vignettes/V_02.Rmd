@@ -78,3 +78,16 @@ A composite plot can also be generated.
 ```{r domainsfig, fig.cap="EQ-5D weighted domain scores by time", out.width = "600px", results='hide', fig.keep='all'}
 depict(y, type_1L_chr = "comp_domain_by_time")
 ```
+
+## Share output
+We can now publicly share our scored dataset and its associated metadata, using `Ready4useRepos` and its `share` method [as described in a vignette from the ready4use package](https://ready4-dev.github.io/ready4use/articles/V_01.html).
+
+```{r eval=F}
+z <- ready4use::Ready4useRepos(gh_repo_1L_chr = "ready4-dev/scorz", # Replace with details of your repo.
+                               gh_tag_1L_chr = "Documentation_0.0") # You must have write permissions.
+z <- share(z,
+           obj_to_share_xx = y,
+           fl_nm_1L_chr = "ymh_ScorzEuroQol5")
+```
+
+`y` is now available for download as the file `ymh_ScorzEuroQol5.RDS` from the ["Documentation_0.0" release of the scorz package](https://github.com/ready4-dev/scorz/releases/tag/Documentation_0.0).
