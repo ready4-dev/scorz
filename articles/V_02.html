@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scorz</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9037</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9038</span>
       </span>
     </div>
 
@@ -637,6 +637,18 @@ EQ-5D total weighted utility scores by time
 EQ-5D weighted domain scores by time
 </p>
 </div>
+</div>
+<div class="section level2">
+<h2 id="share-output">Share output<a class="anchor" aria-label="anchor" href="#share-output"></a>
+</h2>
+<p>We can now publicly share our scored dataset and its associated metadata, using <code>Ready4useRepos</code> and its <code>share</code> method <a href="https://ready4-dev.github.io/ready4use/articles/V_01.html" class="external-link">as described in a vignette from the ready4use package</a>.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">z</span> <span class="op">&lt;-</span> <span class="fu">ready4use</span><span class="fu">::</span><span class="fu"><a href="https://ready4-dev.github.io/ready4use/reference/Ready4useRepos-class.html" class="external-link">Ready4useRepos</a></span><span class="op">(</span>gh_repo_1L_chr <span class="op">=</span> <span class="st">"ready4-dev/scorz"</span>, <span class="co"># Replace with details of your repo.</span>
+                               gh_tag_1L_chr <span class="op">=</span> <span class="st">"Documentation_0.0"</span><span class="op">)</span> <span class="co"># You must have write permissions.</span>
+<span class="va">z</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ready4-dev.github.io/ready4/reference/share-methods.html" class="external-link">share</a></span><span class="op">(</span><span class="va">z</span>,
+           obj_to_share_xx <span class="op">=</span> <span class="va">y</span>,
+           fl_nm_1L_chr <span class="op">=</span> <span class="st">"ymh_ScorzEuroQol5"</span><span class="op">)</span></code></pre></div>
+<p><code>y</code> is now available for download as the file <code>ymh_ScorzEuroQol5.RDS</code> from the <a href="https://github.com/ready4-dev/scorz/releases/tag/Documentation_0.0" class="external-link">“Documentation_0.0” release of the scorz package</a>.</p>
 </div>
   </div>
 
