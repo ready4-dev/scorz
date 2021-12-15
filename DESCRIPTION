@@ -1,6 +1,6 @@
 Package: scorz
 Title: Derive Summary Scores from Questionnaire Item Responses
-Version: 0.0.0.9037
+Version: 0.0.0.9038
 Authors@R: c(
     person("Matthew", "Hamilton", , "matthew.hamilton@orygen.org.au", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-7407-9194")),
@@ -37,7 +37,7 @@ Imports:
     methods,
     mice,
     purrr,
-    ready4use (>= 0.0.0.9201),
+    ready4use (>= 0.0.0.9203),
     rlang,
     simstudy,
     stats,
@@ -45,7 +45,7 @@ Imports:
     testthat,
     tibble,
     tidyselect,
-    youthvars (>= 0.0.0.9091)
+    youthvars (>= 0.0.0.9092)
 VignetteBuilder: knitr
 Collate: 
     'fn_make.R'
