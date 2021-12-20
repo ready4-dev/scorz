@@ -104,27 +104,21 @@ y <- dplyr::bind_rows(ready4class::make_pt_ready4class_constructor(make_s3_lgl =
                                                                                        total_unwtd_var_nm_1L_chr = "'aqol6d_total_c'"
                                                                                        )),
                                                                    class_desc_chr = "A dataset and metadata to support implementation of an AQoL-6D scoring algorithm.",
-                                                                   parent_class_chr = "ScorzProfile",#"Ready4Module"#"
-                                                                   inc_clss_ls = list("ScorzProfile")
-                                                                   ),
+                                                                   parent_class_chr = "ScorzProfile"),
                       ready4class::make_pt_ready4class_constructor(make_s3_lgl = FALSE,
                                                                    name_stub_chr = "Aqol6Adol",
                                                                    slots_ls = list("instrument_version_1L_chr") %>% list(),
                                                                    pt_ls = list("character") %>% list(),
                                                                    vals_ls = list(list(instrument_version_1L_chr = "'Adolescent'")),
                                                                    class_desc_chr = "A dataset and metadata to support implementation of a scoring algorithm for the adolescent version of AQoL-6D.",
-                                                                   parent_class_chr = "ScorzAqol6",
-                                                                   inc_clss_ls = list("ScorzAqol6")
-                                                                   ),
+                                                                   parent_class_chr = "ScorzAqol6"),
                       ready4class::make_pt_ready4class_constructor(make_s3_lgl = FALSE,
                                                                    name_stub_chr = "Aqol6Adult",
                                                                    slots_ls = list("instrument_version_1L_chr") %>% list(),
                                                                    pt_ls = list("character") %>% list(),
                                                                    vals_ls = list(list(instrument_version_1L_chr = "'Adult'")),
                                                                    class_desc_chr = "A dataset and metadata to support implementation of a scoring algorithm for the adult version of AQoL-6D.",
-                                                                   parent_class_chr = "ScorzAqol6",
-                                                                   inc_clss_ls = list("ScorzAqol6")
-                      ),
+                                                                   parent_class_chr = "ScorzAqol6"),
                       ready4class::make_pt_ready4class_constructor(make_s3_lgl = FALSE,
                                                                    name_stub_chr = "EuroQol5",
                                                                    slots_ls = list("a_YouthvarsProfile",
@@ -171,10 +165,7 @@ y <- dplyr::bind_rows(ready4class::make_pt_ready4class_constructor(make_s3_lgl =
                                                                                        type_1L_chr = "'CW'"
                                                                    )),
                                                                    class_desc_chr = "A dataset and metadata to support implementation of an EQ-5D scoring algorithm.",
-                                                                   parent_class_chr = "ScorzProfile",#"Ready4Module"#"
-                                                                   inc_clss_ls = list("ScorzProfile")
-                      ),
-                      ) %>%
+                                                                   parent_class_chr = "ScorzProfile")) %>%
   ready4class::ready4class_constructor()
 z <- ready4pack::make_pt_ready4pack_manifest(x,
                                              constructor_r3 = y#,
