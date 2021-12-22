@@ -1,11 +1,17 @@
+url: https://ready4-dev.github.io/scorz/
+
+template:
+  bootstrap: 5
+  bootswatch: journal
+
 home:
   links:
   - text: Manual - User (PDF)
     href: https://github.com/ready4-dev/scorz/releases/download/Documentation_0.0/aqol_scrg_dict_r3.RDS
   - text: Manual - Developer (PDF)
     href: https://github.com/ready4-dev/scorz/releases/download/Documentation_0.0/aqol6d_scrg_dss_ls.RDS
-  - text: Project website
-    href:  https://ready4-dev.github.io/ready4/
+  - text: ready4 framework
+    href:  https://www.ready4-dev.com/
 development:
   mode: auto
 reference:

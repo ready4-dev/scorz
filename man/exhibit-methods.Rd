@@ -3,7 +3,7 @@
 \name{exhibit-ScorzProfile}
 \alias{exhibit-ScorzProfile}
 \alias{exhibit,ScorzProfile-method}
-\title{Exhibit features of a class instance by printing to console}
+\title{Exhibit (print to console) an object}
 \usage{
 \S4method{exhibit}{ScorzProfile}(x, type_1L_chr = "ds", ...)
 }

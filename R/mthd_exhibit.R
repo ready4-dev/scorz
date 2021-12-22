@@ -1,5 +1,5 @@
 #' 
-#' Exhibit features of a class instance by printing to console
+#' Exhibit (print to console) an object
 #' @name exhibit-ScorzProfile
 #' @description exhibit method applied to ScorzProfile
 #' @param x An object of class ScorzProfile

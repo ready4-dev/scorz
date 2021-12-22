@@ -14,7 +14,7 @@ x <- ready4fun::make_pkg_desc_ls(pkg_title_1L_chr = "Derive Summary scores from 
                                                   utils::person("National Health and Medical Research Council", role = c( "fnd"))),
                                  urls_chr = c("https://ready4-dev.github.io/scorz/",
                                               "https://github.com/ready4-dev/scorz",
-                                              "https://ready4-dev.github.io/ready4/")) %>%
+                                              "https://www.ready4-dev.com/")) %>%
   ready4fun::make_manifest(addl_pkgs_ls = ready4fun::make_addl_pkgs_ls(depends_chr = "ready4",
                                                                        suggests_chr = "rmarkdown",
                                                                        imports_chr = "knitrBootstrap"),
@@ -173,4 +173,4 @@ z <- ready4pack::make_pt_ready4pack_manifest(x,
 ) %>%
   ready4pack::ready4pack_manifest()
 z <- ready4::author(z)
-# devtools::build_vignettes()
+devtools::build_vignettes()

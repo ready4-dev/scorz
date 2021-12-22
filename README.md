@@ -1,4 +1,4 @@
-# scorz <img src="man/figures/fav120.png" align="right" />
+# scorz
 
 ## Derive Summary Scores from Questionnaire Item Responses
 

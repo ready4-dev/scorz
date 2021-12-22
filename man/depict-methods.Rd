@@ -3,7 +3,7 @@
 \name{depict-ScorzProfile}
 \alias{depict-ScorzProfile}
 \alias{depict,ScorzProfile-method}
-\title{Depict features of an instance of a class by generating a plot}
+\title{Depict (plot) an object}
 \usage{
 \S4method{depict}{ScorzProfile}(
   x,

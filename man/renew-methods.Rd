@@ -5,7 +5,7 @@
 \alias{renew,ScorzAqol6Adol-method}
 \alias{renew-ScorzEuroQol5}
 \alias{renew,ScorzEuroQol5-method}
-\title{Renew an instance of a class by updating it with new data}
+\title{Renew (update) an object}
 \usage{
 \S4method{renew}{ScorzAqol6Adol}(x, label_ds_1L_lgl = T, type_1L_chr = "score")
 
