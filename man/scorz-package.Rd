@@ -4,7 +4,7 @@
 \name{scorz-package}
 \alias{scorz}
 \alias{scorz-package}
-\title{scorz: Derive Summary Scores from Questionnaire Item Responses}
+\title{scorz: Score Questionnaire Item Responses}
 \description{
 \if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
 

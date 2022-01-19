@@ -1,5 +1,5 @@
 #' 
-#' Renew (update) an object
+#' Renew (update) a ready4 framework module (or sub-module)
 #' @name renew-ScorzAqol6Adol
 #' @description renew method applied to ScorzAqol6Adol
 #' @param x An object of class ScorzAqol6Adol
@@ -27,7 +27,7 @@ methods::setMethod("renew", "ScorzAqol6Adol", function (x, label_ds_1L_lgl = T, 
             prefix_1L_chr = x@itm_prefix_1L_chr, id_var_nm_1L_chr = x@a_YouthvarsProfile@id_var_nm_1L_chr, 
             total_aqol_var_nm_1L_chr = x@total_unwtd_var_nm_1L_chr, 
             wtd_aqol_var_nm_1L_chr = x@total_wtd_var_nm_1L_chr)
-        y@dictionary_r3 <- ready4::renew(y@dictionary_r3, new_ready4_dict_r3 = x@instrument_dict_r3)
+        y@dictionary_r3 <- ready4::renew(y@dictionary_r3, new_cases_r3 = x@instrument_dict_r3)
     }
     if (label_ds_1L_lgl) 
         y <- renew(y)
@@ -37,7 +37,7 @@ methods::setMethod("renew", "ScorzAqol6Adol", function (x, label_ds_1L_lgl = T, 
     return(x)
 })
 #' 
-#' Renew (update) an object
+#' Renew (update) a ready4 framework module (or sub-module)
 #' @name renew-ScorzEuroQol5
 #' @description renew method applied to ScorzEuroQol5
 #' @param x An object of class ScorzEuroQol5
@@ -65,7 +65,7 @@ methods::setMethod("renew", "ScorzEuroQol5", function (x, label_ds_1L_lgl = T, t
         instrument_dict_r3 <- x@instrument_dict_r3
         instrument_dict_r3$var_nm_chr <- c(x@itm_var_nms_chr, 
             x@total_unwtd_var_nm_1L_chr, x@total_wtd_var_nm_1L_chr)
-        y@dictionary_r3 <- ready4::renew(y@dictionary_r3, new_ready4_dict_r3 = instrument_dict_r3)
+        y@dictionary_r3 <- ready4::renew(y@dictionary_r3, new_cases_r3 = instrument_dict_r3)
     }
     if (label_ds_1L_lgl) 
         y <- renew(y)

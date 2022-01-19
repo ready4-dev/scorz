@@ -1,5 +1,5 @@
 #' 
-#' Depict (plot) an object
+#' Depict (plot) features of a ready4 framework module (or sub-module)
 #' @name depict-ScorzProfile
 #' @description depict method applied to ScorzProfile
 #' @param x An object of class ScorzProfile

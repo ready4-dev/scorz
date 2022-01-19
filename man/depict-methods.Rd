@@ -3,7 +3,7 @@
 \name{depict-ScorzProfile}
 \alias{depict-ScorzProfile}
 \alias{depict,ScorzProfile-method}
-\title{Depict (plot) an object}
+\title{Depict (plot) features of a ready4 framework module (or sub-module)}
 \usage{
 \S4method{depict}{ScorzProfile}(
   x,

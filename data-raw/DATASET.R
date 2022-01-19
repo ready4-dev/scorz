@@ -2,7 +2,7 @@ library(youthvars)
 library(ready4use)
 fns_env_ls <- ready4fun::read_fns(c("data-raw/fns/","data-raw/mthds/"),
                                   fns_env = new.env(parent = globalenv()))
-x <- ready4fun::make_pkg_desc_ls(pkg_title_1L_chr = "Derive Summary scores from questionnaire item responses" %>% tools::toTitleCase(),
+x <- ready4fun::make_pkg_desc_ls(pkg_title_1L_chr = "Score questionnaire item responses" %>% tools::toTitleCase(),
                                  pkg_desc_1L_chr = "Tools to summarise questionnaire responses from youth mental health collections in a single index measure.
                             The main motivation for this package is to facilitate automated scoring, using published publicly available scoring algorithms, of measures relevant to mental health systems models.
   This development version of the scorz package has been made available as part of the process of testing and documenting the package.

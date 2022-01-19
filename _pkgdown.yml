@@ -7,9 +7,9 @@ template:
 home:
   links:
   - text: Manual - User (PDF)
-    href: https://github.com/ready4-dev/scorz/releases/download/Documentation_0.0/aqol_scrg_dict_r3.RDS
+    href: https://github.com/ready4-dev/scorz/releases/download/Documentation_0.0/scorz_User.pdf
   - text: Manual - Developer (PDF)
-    href: https://github.com/ready4-dev/scorz/releases/download/Documentation_0.0/aqol6d_scrg_dss_ls.RDS
+    href: https://github.com/ready4-dev/scorz/releases/download/Documentation_0.0/scorz_Developer.pdf
   - text: ready4 framework
     href:  https://www.ready4-dev.com/
 development:

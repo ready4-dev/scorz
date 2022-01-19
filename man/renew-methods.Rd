@@ -5,7 +5,7 @@
 \alias{renew,ScorzAqol6Adol-method}
 \alias{renew-ScorzEuroQol5}
 \alias{renew,ScorzEuroQol5-method}
-\title{Renew (update) an object}
+\title{Renew (update) a ready4 framework module (or sub-module)}
 \usage{
 \S4method{renew}{ScorzAqol6Adol}(x, label_ds_1L_lgl = T, type_1L_chr = "score")
 

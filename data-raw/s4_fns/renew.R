@@ -20,7 +20,7 @@ renew_ScorzAqol6Adol <- function(x,
                                  total_aqol_var_nm_1L_chr = x@total_unwtd_var_nm_1L_chr,
                                  wtd_aqol_var_nm_1L_chr = x@total_wtd_var_nm_1L_chr)
     y@dictionary_r3 <- ready4::renew(y@dictionary_r3,
-                                     new_ready4_dict_r3 = x@instrument_dict_r3)
+                                     new_cases_r3 = x@instrument_dict_r3)
   }
   if(label_ds_1L_lgl)
     y <- renew(y)
@@ -53,7 +53,7 @@ renew_ScorzEuroQol5 <- function(x,
                                        x@total_unwtd_var_nm_1L_chr,
                                        x@total_wtd_var_nm_1L_chr)
     y@dictionary_r3 <- ready4::renew(y@dictionary_r3,
-                                     new_ready4_dict_r3 = instrument_dict_r3)
+                                     new_cases_r3 = instrument_dict_r3)
   }
   if(label_ds_1L_lgl)
     y <- renew(y)

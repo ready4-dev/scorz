@@ -1,5 +1,5 @@
 #' 
-#' Exhibit (print to console) an object
+#' Exhibit (print to console) features of a ready4 framework module (or sub-module)
 #' @name exhibit-ScorzProfile
 #' @description exhibit method applied to ScorzProfile
 #' @param x An object of class ScorzProfile
