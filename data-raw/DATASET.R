@@ -1,5 +1,6 @@
-library(youthvars)
+library(ready4show)
 library(ready4use)
+library(youthvars)
 fns_env_ls <- ready4fun::read_fns(c("data-raw/fns/","data-raw/mthds/"),
                                   fns_env = new.env(parent = globalenv()))
 x <- ready4fun::make_pkg_desc_ls(pkg_title_1L_chr = "Score questionnaire item responses" %>% tools::toTitleCase(),
