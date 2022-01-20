@@ -168,9 +168,7 @@ y <- dplyr::bind_rows(ready4class::make_pt_ready4class_constructor(make_s3_lgl =
                                                                    parent_class_chr = "ScorzProfile")) %>%
   ready4class::ready4class_constructor()
 z <- ready4pack::make_pt_ready4pack_manifest(x,
-                                             constructor_r3 = y#,
-                                             # pkg_ds_ls_ls = datasets_ls
-) %>%
+                                             constructor_r3 = y) %>%
   ready4pack::ready4pack_manifest()
 z <- ready4::author(z)
 devtools::build_vignettes()
