@@ -16,7 +16,7 @@ x <- ready4fun::make_pkg_desc_ls(pkg_title_1L_chr = "Score questionnaire item re
                                  urls_chr = c("https://ready4-dev.github.io/scorz/",
                                               "https://github.com/ready4-dev/scorz",
                                               "https://www.ready4-dev.com/")) %>%
-  ready4fun::make_manifest(addl_pkgs_ls = ready4fun::make_addl_pkgs_ls(depends_chr = "ready4",
+  ready4fun::make_manifest(addl_pkgs_ls = ready4fun::make_addl_pkgs_ls(#depends_chr = "ready4",
                                                                        suggests_chr = "rmarkdown",
                                                                        imports_chr = "knitrBootstrap"),
                            build_ignore_ls = ready4fun::make_build_ignore_ls(file_nms_chr = c("initial_setup.R")),
