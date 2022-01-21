@@ -15,6 +15,7 @@ vignette: >
 Note: **This vignette is illustrated with fake data**. The dataset explored in this example should not be used to inform decision-making. Some of the methods illustrated in this EQ-5D vignette are described in more detail in [a vignette about scoring AQoL-6D health utility](V_01.html).
 
 ```{r warning=FALSE, message=FALSE}
+library(ready4)
 library(scorz)
 ```
 
