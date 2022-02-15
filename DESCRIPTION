@@ -1,6 +1,6 @@
 Package: scorz
 Title: Score Questionnaire Item Responses
-Version: 0.0.0.9047
+Version: 0.0.0.9048
 Authors@R: c(
     person("Matthew", "Hamilton", , "matthew.hamilton@orygen.org.au", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-7407-9194")),
@@ -36,8 +36,8 @@ Imports:
     methods,
     mice,
     purrr,
-    ready4 (>= 0.0.0.9086),
-    ready4use (>= 0.0.0.9219),
+    ready4 (>= 0.0.0.9089),
+    ready4use (>= 0.0.0.9220),
     rlang,
     simstudy,
     stats,
@@ -45,7 +45,7 @@ Imports:
     testthat,
     tibble,
     tidyselect,
-    youthvars (>= 0.0.0.9103)
+    youthvars (>= 0.0.0.9104)
 VignetteBuilder: knitr
 Collate: 
     'fn_make.R'
