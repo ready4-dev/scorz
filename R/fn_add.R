@@ -129,8 +129,8 @@ add_aqol6d_items_to_aqol6d_tbs_ls <- function (aqol6d_tbs_ls, aqol_items_prpns_t
                 rowSums(., na.rm = T))) %>% dplyr::arrange(!!rlang::sym(unname(aqol_tots_var_nms_chr["cumulative"]))) %>% 
                 tibble::rowid_to_column("id")
             items_tb <- items_tb %>% dplyr::mutate(aqol6dU = calculate_adol_aqol6dU(items_tb, 
-                aqol6d_scrg_dss_ls = aqol6d_scrg_dss_ls, prefix_1L_chr = prefix_chr["aqol_item"], 
-                id_var_nm_1L_chr = "id"))
+                aqol6d_scrg_dss_ls = aqol6d_scrg_dss_ls, prefix_1L_chr = prefix_chr["aqol_item"] %>% 
+                  unname(), id_var_nm_1L_chr = "id"))
             .x <- .x %>% dplyr::mutate(id = purrr::map_int(aqol6d_total_w, 
                 ~which.min(abs(items_tb$aqol6dU - .x)))) %>% 
                 dplyr::left_join(items_tb)

@@ -40,9 +40,11 @@ add_aqol6d_items_to_aqol6d_tbs_ls <- function (aqol6d_tbs_ls, aqol_items_prpns_t
                                            dplyr::select(-id) %>% dplyr::mutate(`:=`(!!rlang::sym(unname(aqol_tots_var_nms_chr["cumulative"])),
                                                                                      rowSums(., na.rm = T))) %>% dplyr::arrange(!!rlang::sym(unname(aqol_tots_var_nms_chr["cumulative"]))) %>%
                                            tibble::rowid_to_column("id")
-                                         items_tb <- items_tb %>% dplyr::mutate(aqol6dU = calculate_adol_aqol6dU(items_tb,
-                                                                                                                 aqol6d_scrg_dss_ls = aqol6d_scrg_dss_ls,
-                                                                                                                 prefix_1L_chr = prefix_chr["aqol_item"], id_var_nm_1L_chr = "id"))
+                                         items_tb <- items_tb %>%
+                                           dplyr::mutate(aqol6dU = calculate_adol_aqol6dU(items_tb,
+                                                                                          aqol6d_scrg_dss_ls = aqol6d_scrg_dss_ls,
+                                                                                          prefix_1L_chr = prefix_chr["aqol_item"] %>% unname(),
+                                                                                          id_var_nm_1L_chr = "id"))
                                          .x <- .x %>% dplyr::mutate(id = purrr::map_int(aqol6d_total_w,
                                                                                         ~which.min(abs(items_tb$aqol6dU - .x)))) %>%
                                            dplyr::left_join(items_tb)
@@ -144,13 +146,18 @@ add_cors_and_utls_to_aqol6d_tbs_ls <- function (aqol6d_tbs_ls, aqol_scores_pars_
     aqol6d_scrg_dss_ls <- get_aqol6d_scrg_dss()
   }
   aqol6d_tbs_ls <- reorder_tbs_for_target_cors(aqol6d_tbs_ls,
-                                               cor_dbl = temporal_cors_ls[[1]], cor_var_chr = rep(names(temporal_cors_ls)[1],
-                                                                                                  2), id_var_to_rmv_1L_chr = "id") %>% add_uids_to_tbs_ls(prefix_1L_chr = prefix_chr[["uid"]],
-                                                                                                                                                          id_var_nm_1L_chr = id_var_nm_1L_chr)
-  aqol6d_tbs_ls <- aqol6d_tbs_ls %>% add_aqol6d_items_to_aqol6d_tbs_ls(aqol_items_prpns_tbs_ls = aqol_items_prpns_tbs_ls,
-                                                                       aqol6d_scrg_dss_ls = aqol6d_scrg_dss_ls,
-                                                                       prefix_chr = prefix_chr, aqol_tots_var_nms_chr = aqol_tots_var_nms_chr,
-                                                                       id_var_nm_1L_chr = id_var_nm_1L_chr)
+                                               cor_dbl = temporal_cors_ls[[1]],
+                                               cor_var_chr = rep(names(temporal_cors_ls)[1],
+                                                                 2),
+                                               id_var_to_rmv_1L_chr = "id") %>%
+    add_uids_to_tbs_ls(prefix_1L_chr = prefix_chr[["uid"]],
+                       id_var_nm_1L_chr = id_var_nm_1L_chr)
+  aqol6d_tbs_ls <- aqol6d_tbs_ls %>%
+    add_aqol6d_items_to_aqol6d_tbs_ls(aqol_items_prpns_tbs_ls = aqol_items_prpns_tbs_ls,
+                                      aqol6d_scrg_dss_ls = aqol6d_scrg_dss_ls,
+                                      prefix_chr = prefix_chr,
+                                      aqol_tots_var_nms_chr = aqol_tots_var_nms_chr,
+                                      id_var_nm_1L_chr = id_var_nm_1L_chr)
   return(aqol6d_tbs_ls)
 }
 add_dim_disv_to_aqol6d_items_tb <- function (aqol6d_items_tb, domain_items_ls, domains_chr, dim_sclg_con_lup_tb = NULL,
