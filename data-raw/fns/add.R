@@ -150,8 +150,8 @@ add_cors_and_utls_to_aqol6d_tbs_ls <- function (aqol6d_tbs_ls, aqol_scores_pars_
                                                cor_var_chr = rep(names(temporal_cors_ls)[1],
                                                                  2),
                                                id_var_to_rmv_1L_chr = "id") %>%
-    add_uids_to_tbs_ls(prefix_1L_chr = prefix_chr[["uid"]],
-                       id_var_nm_1L_chr = id_var_nm_1L_chr)
+    youthvars::add_uids_to_tbs_ls(prefix_1L_chr = prefix_chr[["uid"]],
+                                  id_var_nm_1L_chr = id_var_nm_1L_chr)
   aqol6d_tbs_ls <- aqol6d_tbs_ls %>%
     add_aqol6d_items_to_aqol6d_tbs_ls(aqol_items_prpns_tbs_ls = aqol_items_prpns_tbs_ls,
                                       aqol6d_scrg_dss_ls = aqol6d_scrg_dss_ls,
