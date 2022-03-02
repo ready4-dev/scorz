@@ -206,7 +206,7 @@ add_aqol6dU_to_aqol6d_tbs_ls <- function (aqol6d_tbs_ls, aqol6d_scrg_dss_ls = NU
 #' @return Assessment of Quality of Life Six Dimension tibbles (a list)
 #' @rdname add_cors_and_utls_to_aqol6d_tbs_ls
 #' @export 
-#' @importFrom youthvars add_uids_to_tbs_ls
+#' @importFrom youthvars reorder_tbs_for_target_cors add_uids_to_tbs_ls
 #' @keywords internal
 add_cors_and_utls_to_aqol6d_tbs_ls <- function (aqol6d_tbs_ls, aqol_scores_pars_ls, aqol_items_prpns_tbs_ls, 
     temporal_cors_ls, prefix_chr, aqol_tots_var_nms_chr, aqol6d_scrg_dss_ls = NULL, 
@@ -215,7 +215,7 @@ add_cors_and_utls_to_aqol6d_tbs_ls <- function (aqol6d_tbs_ls, aqol_scores_pars_
     if (is.null(aqol6d_scrg_dss_ls)) {
         aqol6d_scrg_dss_ls <- get_aqol6d_scrg_dss()
     }
-    aqol6d_tbs_ls <- reorder_tbs_for_target_cors(aqol6d_tbs_ls, 
+    aqol6d_tbs_ls <- youthvars::reorder_tbs_for_target_cors(aqol6d_tbs_ls, 
         cor_dbl = temporal_cors_ls[[1]], cor_var_chr = rep(names(temporal_cors_ls)[1], 
             2), id_var_to_rmv_1L_chr = "id") %>% youthvars::add_uids_to_tbs_ls(prefix_1L_chr = prefix_chr[["uid"]], 
         id_var_nm_1L_chr = id_var_nm_1L_chr)

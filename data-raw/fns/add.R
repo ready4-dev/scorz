@@ -145,7 +145,7 @@ add_cors_and_utls_to_aqol6d_tbs_ls <- function (aqol6d_tbs_ls, aqol_scores_pars_
   if(is.null(aqol6d_scrg_dss_ls)){
     aqol6d_scrg_dss_ls <- get_aqol6d_scrg_dss()
   }
-  aqol6d_tbs_ls <- reorder_tbs_for_target_cors(aqol6d_tbs_ls,
+  aqol6d_tbs_ls <- youthvars::reorder_tbs_for_target_cors(aqol6d_tbs_ls,
                                                cor_dbl = temporal_cors_ls[[1]],
                                                cor_var_chr = rep(names(temporal_cors_ls)[1],
                                                                  2),
