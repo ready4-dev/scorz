@@ -27,8 +27,8 @@ make_aqol6d_adol_pop_tbs_ls <- function (aqol_items_prpns_tbs_ls, aqol_scores_pa
   domain_qs_lup_tb <- aqol6d_scrg_dss_ls$aqol6d_domain_qs_lup_tb
   item_pfx_1L_chr <- prefix_chr[["aqol_item"]]
   uid_pfx_1L_chr <- prefix_chr[["uid"]]
-  aqol6d_adol_pop_tbs_ls <- make_synth_series_tbs_ls(synth_data_spine_ls,
-                                                     series_names_chr = series_names_chr) %>%
+  aqol6d_adol_pop_tbs_ls <- youthvars::make_synth_series_tbs_ls(synth_data_spine_ls,
+                                                                series_names_chr = series_names_chr) %>%
     add_cors_and_utls_to_aqol6d_tbs_ls(aqol_scores_pars_ls = aqol_scores_pars_ls,
                                        aqol_items_prpns_tbs_ls = aqol_items_prpns_tbs_ls,
                                        temporal_cors_ls = temporal_cors_ls,

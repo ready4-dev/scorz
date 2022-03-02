@@ -31,6 +31,7 @@ make_adol_aqol6d_disv_lup <- function (aqol6d_scrg_dss_ls = NULL)
 #' @return Assessment of Quality of Life Six Dimension adolescent pop tibbles (a list)
 #' @rdname make_aqol6d_adol_pop_tbs_ls
 #' @export 
+#' @importFrom youthvars make_synth_series_tbs_ls
 #' @importFrom purrr map
 #' @importFrom dplyr select starts_with everything
 #' @importFrom rlang sym
@@ -47,7 +48,7 @@ make_aqol6d_adol_pop_tbs_ls <- function (aqol_items_prpns_tbs_ls, aqol_scores_pa
     domain_qs_lup_tb <- aqol6d_scrg_dss_ls$aqol6d_domain_qs_lup_tb
     item_pfx_1L_chr <- prefix_chr[["aqol_item"]]
     uid_pfx_1L_chr <- prefix_chr[["uid"]]
-    aqol6d_adol_pop_tbs_ls <- make_synth_series_tbs_ls(synth_data_spine_ls, 
+    aqol6d_adol_pop_tbs_ls <- youthvars::make_synth_series_tbs_ls(synth_data_spine_ls, 
         series_names_chr = series_names_chr) %>% add_cors_and_utls_to_aqol6d_tbs_ls(aqol_scores_pars_ls = aqol_scores_pars_ls, 
         aqol_items_prpns_tbs_ls = aqol_items_prpns_tbs_ls, temporal_cors_ls = temporal_cors_ls, 
         prefix_chr = prefix_chr, aqol_tots_var_nms_chr = synth_data_spine_ls$aqol_tots_var_nms_chr, 
