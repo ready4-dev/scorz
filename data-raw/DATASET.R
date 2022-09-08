@@ -1,4 +1,4 @@
-library(ready4)
+library(ready4fun)
 library(ready4show)
 library(ready4use)
 library(youthvars)
@@ -173,6 +173,4 @@ z <- ready4pack::make_pt_ready4pack_manifest(x,
                                              constructor_r3 = y) %>%
   ready4pack::ready4pack_manifest()
 z <- ready4::author(z)
-ready4::write_citation_cff(packageDescription("scorz"),
-                           citation_chr = readLines("inst/CITATION"))
 devtools::build_vignettes()

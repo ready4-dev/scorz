@@ -3,7 +3,7 @@
 \name{exhibit-ScorzProfile}
 \alias{exhibit-ScorzProfile}
 \alias{exhibit,ScorzProfile-method}
-\title{Exhibit (print to console) features of a ready4 framework module (or sub-module)}
+\title{Exhibit features of a dataset by printing them to the R console}
 \usage{
 \S4method{exhibit}{ScorzProfile}(x, type_1L_chr = "ds", ...)
 }

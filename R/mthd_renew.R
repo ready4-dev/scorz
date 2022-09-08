@@ -1,5 +1,5 @@
 #' 
-#' Renew (update) a ready4 framework module (or sub-module)
+#' Renew values in a dataset
 #' @name renew-ScorzAqol6Adol
 #' @description renew method applied to ScorzAqol6Adol
 #' @param x An object of class ScorzAqol6Adol
@@ -37,7 +37,7 @@ methods::setMethod("renew", "ScorzAqol6Adol", function (x, label_ds_1L_lgl = T, 
     return(x)
 })
 #' 
-#' Renew (update) a ready4 framework module (or sub-module)
+#' Renew values in a dataset
 #' @name renew-ScorzEuroQol5
 #' @description renew method applied to ScorzEuroQol5
 #' @param x An object of class ScorzEuroQol5
