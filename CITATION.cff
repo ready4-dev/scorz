@@ -1,12 +1,12 @@
 cff-version: 1.2.0
-message: "Matthew Hamilton and Caroline Gao  (2022). scorz: Score Questionnaire Item Responses. Version 0.0.0.9052. Zenodo. https://doi.org/10.5281/zenodo.5722708"
+message: "Matthew Hamilton and Caroline Gao  (2022). scorz: Score Questionnaire Item Responses. Version 0.0.0.9053. Zenodo. https://doi.org/10.5281/zenodo.5722708"
 authors:
   - family-names: "Hamilton"
     given-names: "Matthew"
   - family-names: "Gao"
     given-names: "Caroline"
 title: "scorz: Score Questionnaire Item Responses"
-version: 0.0.0.9052
+version: 0.0.0.9053
 doi: 10.5281/zenodo.5722708
-date-released: 2022-03-02
+date-released: 2022-09-13
 url: "https://ready4-dev.github.io/scorz/"
