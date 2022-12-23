@@ -1,6 +1,6 @@
 # scorz
 
-## Score Questionnaire Item Responses
+## Score Ready4 Model Datasets
 
 <!-- badges: start -->
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
@@ -9,8 +9,9 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5722708.svg)](https://doi.org/10.5281/zenodo.5722708)
 <!-- badges: end -->
 
-Tools to summarise questionnaire responses from youth mental
-health collections in a single index measure.  The main motivation for
+Tools to summarise questionnaire responses in a single index
+measure for datasets to be used with the ready4 youth mental health
+systems model (https://www.ready4-dev.com/).  The main motivation for
 this package is to facilitate automated scoring, using published
 publicly available scoring algorithms, of measures relevant to mental
 health systems models.  This development version of the scorz package

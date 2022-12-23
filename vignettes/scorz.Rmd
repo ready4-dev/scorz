@@ -17,6 +17,8 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(scorz)
 ```
+The tools in scorz are designed to make it easier to score items in datasets used in [ready4 - an open source health economic model of the systems shaping mental health and wellbeing in young people](https://www.ready4-dev.com).
+
 This development version of the scorz package has been made available as part of the process of testing and documenting the package. 
 
 A brief overview of the intended use of `scorz` classes and methods is available in the following articleS:

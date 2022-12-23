@@ -12,7 +12,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-Note: **This vignette is illustrated with fake data**. The dataset explored in this example should not be used to inform decision-making. Some of the methods illustrated in this EQ-5D vignette are described in more detail in [a vignette about scoring AQoL-6D health utility](V_01.html).
+Note: **This vignette is illustrated with fake data**. The dataset explored in this example should not be used to inform decision-making. Some of the methods illustrated in this EQ-5D vignette are described in more detail in [a vignette about scoring AQoL-6D health utility](https://ready4-dev.github.io/scorz/articles/V_01.html).
 
 ```{r warning=FALSE, message=FALSE}
 library(ready4)
@@ -20,7 +20,7 @@ library(scorz)
 ```
 
 ## EQ-5D scoring
-The [eq5d package](https://github.com/fragla/eq5d) provides a toolkit for scoring EQ-5D health utility. The  `scorz` package contains a class and methods that integrate eq5d package tools with [the ready4 framework](https://www.ready4-dev.com/) for open and modular mental health system models.
+The [eq5d package](https://github.com/fragla/eq5d) provides a toolkit for scoring EQ-5D health utility. The  `scorz` package contains a class and methods that integrate eq5d package tools and is designed for use with [the ready4 youth mental health systems model](https://www.ready4-dev.com/).
 
 ## Ingest and describe data
 To begin, we ingest an unscored dataset and its data dictionary as a [Ready4useDyad](https://ready4-dev.github.io/ready4use/articles/V_02.html). We then add additional details about the dataset (unique identifier and data-collection round variable name and values) by converting the ingested data to a (YouthvarsSeries)[https://ready4-dev.github.io/youthvars/articles/V_02.html] instance.
@@ -58,7 +58,8 @@ We can inspect our updated dataset using the `exhibit` method.
 
 ```{r}
 exhibit(Y,
-        display_1L_chr = "head")
+        display_1L_chr = "head",
+         scroll_box_args_ls = list(width = "100%"))
 ```
 
 ## Creating summary plots

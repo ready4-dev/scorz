@@ -12,7 +12,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-Note: **This vignette is illustrated with fake data**. The dataset explored in this example should not be used to inform decision-making. Some of the methods illustrated in this AQoL-6D vignette can also be used to score other health utility instruments - see [a vignette about scoring EQ-5D](V_02.html).
+Note: **This vignette is illustrated with fake data**. The dataset explored in this example should not be used to inform decision-making. Some of the methods illustrated in this AQoL-6D vignette can also be used to score other health utility instruments - see [a vignette about scoring EQ-5D](https://ready4-dev.github.io/scorz/articles/V_02.html).
 
 ```{r warning=FALSE, message=FALSE}
 library(ready4)
@@ -46,7 +46,8 @@ We can now inspect our ingested dataset using the `exhibit` method.
 
 ```{r}
 exhibit(X,
-        display_1L_chr = "head")
+        display_1L_chr = "head",
+         scroll_box_args_ls = list(width = "100%"))
 ```
 
 We now add meta-data that identifies our dataset as being longitudinal using the `YouthvarsSeries` class of the [youthvars package](https://ready4-dev.github.io/youthvars/).
@@ -91,7 +92,8 @@ We can inspect our updated dataset using the `exhibit` method. We can see that t
 
 ```{r}
 exhibit(Y,
-        display_1L_chr = "head")
+        display_1L_chr = "head",
+         scroll_box_args_ls = list(width = "100%"))
 ```
 
 ## Creating summary plots
