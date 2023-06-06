@@ -1,6 +1,6 @@
 # scorz
 
-## Score Ready4 Model Datasets
+## Calculate Model Dataset Variable Total Scores
 
 <!-- badges: start -->
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
@@ -10,14 +10,14 @@
 <!-- badges: end -->
 
 Tools to summarise questionnaire responses in a single index
-measure for datasets to be used with the ready4 youth mental health
-systems model (https://www.ready4-dev.com/).  The main motivation for
-this package is to facilitate automated scoring, using published
-publicly available scoring algorithms, of measures relevant to mental
-health systems models.  This development version of the scorz package
-has been made available as part of the process of testing and
-documenting the package.  If you have any questions, please contact
-the authors (matthew.hamilton@orygen.org.au).
+measure for datasets to be used with models developed with the ready4
+framework (https://www.ready4-dev.com/).  The main motivation for this
+package is to facilitate automated scoring, using published publicly
+available scoring algorithms, of measures relevant to mental health
+systems models.  This development version of the scorz package has
+been made available as part of the process of testing and documenting
+the package.  If you have any questions, please contact the authors
+(matthew.hamilton@orygen.org.au).
 
 To install a development version of this software, run the following commands in your R console:
 

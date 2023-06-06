@@ -4,8 +4,8 @@ library(ready4use)
 library(youthvars)
 fns_env_ls <- ready4fun::read_fns(c("data-raw/fns/","data-raw/mthds/"),
                                   fns_env = new.env(parent = globalenv()))
-x <- ready4fun::make_pkg_desc_ls(pkg_title_1L_chr = "Score Ready4 Model Datasets" %>% tools::toTitleCase(),
-                                 pkg_desc_1L_chr = "Tools to summarise questionnaire responses in a single index measure for datasets to be used with the ready4 youth mental health systems model (https://www.ready4-dev.com/).
+x <- ready4fun::make_pkg_desc_ls(pkg_title_1L_chr = "Calculate Model Dataset Variable Total Scores" %>% tools::toTitleCase(),
+                                 pkg_desc_1L_chr = "Tools to summarise questionnaire responses in a single index measure for datasets to be used with models developed with the ready4 framework (https://www.ready4-dev.com/).
                             The main motivation for this package is to facilitate automated scoring, using published publicly available scoring algorithms, of measures relevant to mental health systems models.
   This development version of the scorz package has been made available as part of the process of testing and documenting the package.
                             If you have any questions, please contact the authors (matthew.hamilton@orygen.org.au).",

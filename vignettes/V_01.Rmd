@@ -1,11 +1,12 @@
 ---
 title: "Score AQoL-6D (Adolescent) Health Utility"
-output: 
-  rmarkdown::html_vignette:
-    toc: true
-  pdf_document:
-    highlight: null
-    number_sections: yes
+output: rmarkdown::html_vignette
+# output: 
+#   rmarkdown::html_vignette:
+#     toc: true
+#   pdf_document:
+#     highlight: null
+#     number_sections: yes
 vignette: >
   %\VignetteIndexEntry{Score AQoL-6D (Adolescent) Health Utility}
   %\VignetteEngine{knitr::rmarkdown}

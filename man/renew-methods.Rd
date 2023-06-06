@@ -5,26 +5,50 @@
 \alias{renew,ScorzAqol6Adol-method}
 \alias{renew-ScorzEuroQol5}
 \alias{renew,ScorzEuroQol5-method}
+\alias{renew-ScorzProfile}
+\alias{renew,ScorzProfile-method}
 \title{Renew values in a dataset}
 \usage{
 \S4method{renew}{ScorzAqol6Adol}(x, label_ds_1L_lgl = T, type_1L_chr = "score")
 
 \S4method{renew}{ScorzEuroQol5}(x, label_ds_1L_lgl = T, type_1L_chr = "score")
+
+\S4method{renew}{ScorzProfile}(
+  x,
+  drop_msng_1L_lgl = F,
+  item_type_1L_chr = "numeric",
+  scoring_fn = identity,
+  scorz_args_ls = NULL,
+  label_ds_1L_lgl = T,
+  type_1L_chr = "score"
+)
 }
 \arguments{
-\item{x}{An object of class ScorzEuroQol5}
+\item{x}{An object of class ScorzProfile}
 
 \item{label_ds_1L_lgl}{Label dataset (a logical vector of length one), Default: T}
 
 \item{type_1L_chr}{Type (a character vector of length one), Default: 'score'}
+
+\item{drop_msng_1L_lgl}{Drop missing (a logical vector of length one), Default: F}
+
+\item{item_type_1L_chr}{Item type (a character vector of length one), Default: 'numeric'}
+
+\item{scoring_fn}{Scoring (a function), Default: identity}
+
+\item{scorz_args_ls}{Scorz arguments (a list), Default: NULL}
 }
 \value{
 x (An object of class ScorzAqol6Adol)
 
 x (An object of class ScorzEuroQol5)
+
+x (An object of class ScorzProfile)
 }
 \description{
 renew method applied to ScorzAqol6Adol
 
 renew method applied to ScorzEuroQol5
+
+renew method applied to ScorzProfile
 }

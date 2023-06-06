@@ -105,7 +105,7 @@ add_adol6d_scores <- function (unscored_aqol_tb,
   tfd_aqol_tb <- dplyr::inner_join(tbs_ls[[1]], tbs_ls[[2]]) %>%
     dplyr::select(-match_var_chr) %>%
     dplyr::mutate(!!rlang::sym(total_aqol_var_nm_1L_chr) := rowSums(dplyr::across(dplyr::starts_with(prefix_1L_chr))))
-  tfd_aqol_tb <- tfd_aqol_tb %>% dplyr::filter(!is.na(!!rlang::sym(total_aqol_var_nm_1L_chr)))
+  tfd_aqol_tb <- tfd_aqol_tb %>% dplyr::filter(!is.na(!!rlang::sym(total_aqol_var_nm_1L_chr))) # Nake this step conditional
   return(tfd_aqol_tb)
 }
 add_aqol6dU_to_aqol6d_items_tb <- function (aqol6d_items_tb,

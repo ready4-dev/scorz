@@ -19,8 +19,8 @@ renew_ScorzAqol6Adol <- function(x,
                                  id_var_nm_1L_chr = x@a_YouthvarsProfile@id_var_nm_1L_chr,
                                  total_aqol_var_nm_1L_chr = x@total_unwtd_var_nm_1L_chr,
                                  wtd_aqol_var_nm_1L_chr = x@total_wtd_var_nm_1L_chr)
-    y@dictionary_r3 <- ready4::renew(y@dictionary_r3,
-                                     new_cases_r3 = x@instrument_dict_r3)
+    y@dictionary_r3 <- ready4use::renew.ready4use_dictionary(y@dictionary_r3,
+                                                             new_cases_r3 = x@instrument_dict_r3)
   }
   if(label_ds_1L_lgl)
     y <- renew(y)
@@ -58,6 +58,62 @@ renew_ScorzEuroQol5 <- function(x,
   if(label_ds_1L_lgl)
     y <- renew(y)
   if(type_1L_chr == "score"){
+    x@a_YouthvarsProfile@a_Ready4useDyad <- y
+  }
+  return(x)
+}
+renew_ScorzProfile <- function(x,
+                               drop_msng_1L_lgl = F,
+                               item_type_1L_chr = "numeric",
+                               scoring_fn = identity,
+                               scorz_args_ls = NULL,
+                               label_ds_1L_lgl = T,
+                               type_1L_chr = "score"){
+
+  if(type_1L_chr %in% c("score","score-c","score-w")){
+    if(type_1L_chr == "score"){
+      x <- renew(x,
+                 scoring_fn = scoring_fn,
+                 scorz_args_ls = scorz_args_ls,
+                 label_ds_1L_lgl = label_ds_1L_lgl,
+                 type_1L_chr = "score-w") %>%
+        renew(label_ds_1L_lgl = label_ds_1L_lgl, type_1L_chr = "score-c")
+    }
+    if(type_1L_chr %in% c("score-c","score-w")){
+      y <- x@a_YouthvarsProfile@a_Ready4useDyad
+      y <- renew(y, type_1L_chr = "unlabel")
+    }
+    if(type_1L_chr == "score-c"){
+      y@ds_tb <- y@ds_tb %>%
+        dplyr::mutate(`:=`(!!rlang::sym(x@total_unwtd_var_nm_1L_chr),
+                           rowSums(dplyr::select(.,dplyr::starts_with(x@itm_prefix_1L_chr)))))
+      if(drop_msng_1L_lgl)
+        y@ds_tb <- y@ds_tb  %>%
+          dplyr::filter(!is.na(!!rlang::sym(x@total_unwtd_var_nm_1L_chr)))
+      if(!x@total_unwtd_var_nm_1L_chr %in% x@instrument_dict_r3$var_nm_chr){
+        x@instrument_dict_r3 <- ready4use::renew.ready4use_dictionary(x@instrument_dict_r3,
+                                                                      var_nm_chr = x@total_unwtd_var_nm_1L_chr,
+                                                                      var_ctg_chr = "multi-attribute utility instrument unweighted total score",
+                                                                      var_desc_chr = paste0(x@instrument_nm_1L_chr, " (unweighted total)"),
+                                                                      var_type_chr = item_type_1L_chr)
+      }
+    }
+    if(type_1L_chr == "score-w"){
+      y@ds_tb <- rlang::exec(scoring_fn, y@ds_tb, !!!scorz_args_ls)
+      if(!x@total_wtd_var_nm_1L_chr %in% x@instrument_dict_r3$var_nm_chr){
+        x@instrument_dict_r3 <- ready4use::renew.ready4use_dictionary(x@instrument_dict_r3,
+                                                                      var_nm_chr = x@total_wtd_var_nm_1L_chr,
+                                                                      var_ctg_chr = "health utility",
+                                                                      var_desc_chr = paste0(x@instrument_nm_1L_chr, " total score"),
+                                                                      var_type_chr = item_type_1L_chr)
+      }
+    }
+  }
+  if(type_1L_chr %in% c("score-c","score-w")){
+    y@dictionary_r3 <- ready4use::renew.ready4use_dictionary(y@dictionary_r3,
+                                                             new_cases_r3 = x@instrument_dict_r3)
+    if(label_ds_1L_lgl)
+      y <- renew(y)
     x@a_YouthvarsProfile@a_Ready4useDyad <- y
   }
   return(x)
