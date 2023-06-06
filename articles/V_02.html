@@ -34,7 +34,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">scorz</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.0.0.9054</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.0.0.9055</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -93,7 +93,10 @@
 The dataset explored in this example should not be used to inform
 decision-making. Some of the methods illustrated in this EQ-5D vignette
 are described in more detail in <a href="https://ready4-dev.github.io/scorz/articles/V_01.html">a vignette
-about scoring AQoL-6D health utility</a>.</p>
+about scoring AQoL-6D health utility</a>. Furthermore, the synthetic
+data and model types used in this data have not been optimised for the
+purposes of this example (the models created below perform poorly as a
+result).</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ready4-dev.github.io/ready4/" class="external-link">ready4</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ready4-dev.github.io/scorz/">scorz</a></span><span class="op">)</span></span></code></pre></div>
@@ -635,10 +638,6 @@ Not studying or working
 index number of the dimension we wish to plot.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ready4-dev.github.io/ready4/reference/depict-methods.html" class="external-link">depict</a></span><span class="op">(</span><span class="va">Y</span>, type_1L_chr <span class="op">=</span> <span class="st">"domain_by_time"</span>, var_idcs_int <span class="op">=</span> <span class="fl">5L</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Warning: `stat(width * density)` was deprecated in ggplot2 3.4.0.</span></span>
-<span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Please use `after_stat(width * density)` instead.</span></span>
-<span><span class="co">## <span style="color: #00BBBB;">ℹ</span> The deprecated feature was likely used in the <span style="color: #0000BB;">youthvars</span> package.</span></span>
-<span><span class="co">##   Please report the issue to the authors.</span></span></code></pre>
 <div class="figure">
 <img src="V_02_files/figure-html/adfig-1.png" alt="EQ-5D Anxiety / Depression Dimension scores by time" width="600px"><p class="caption">
 EQ-5D Anxiety / Depression Dimension scores by time
@@ -647,7 +646,7 @@ EQ-5D Anxiety / Depression Dimension scores by time
 <p>Total EQ-5D scores can also be plotted using the same approach, where
 <code>var_idcs_int = 1L</code> is used to plot the weighted total
 distribution.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ready4-dev.github.io/ready4/reference/depict-methods.html" class="external-link">depict</a></span><span class="op">(</span><span class="va">Y</span>, type_1L_chr <span class="op">=</span> <span class="st">"total_by_time"</span>, var_idcs_int <span class="op">=</span> <span class="fl">1L</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="V_02_files/figure-html/totalsfig-1.png" alt="EQ-5D total weighted utility scores by time" width="600px"><p class="caption">
@@ -655,12 +654,15 @@ EQ-5D total weighted utility scores by time
 </p>
 </div>
 <p>A composite plot can also be generated.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ready4-dev.github.io/ready4/reference/depict-methods.html" class="external-link">depict</a></span><span class="op">(</span><span class="va">Y</span>, type_1L_chr <span class="op">=</span> <span class="st">"comp_domain_by_time"</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Warning: The dot-dot notation (`..density..`) was deprecated in ggplot2 3.4.0.</span></span>
 <span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Please use `after_stat(density)` instead.</span></span>
 <span><span class="co">## <span style="color: #00BBBB;">ℹ</span> The deprecated feature was likely used in the <span style="color: #0000BB;">youthvars</span> package.</span></span>
-<span><span class="co">##   Please report the issue to the authors.</span></span></code></pre>
+<span><span class="co">##   Please report the issue to the authors.</span></span>
+<span><span class="co">## <span style="color: #555555;">This warning is displayed once every 8 hours.</span></span></span>
+<span><span class="co">## <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span></span>
+<span><span class="co">## <span style="color: #555555;">generated.</span></span></span></code></pre>
 <div class="figure">
 <img src="V_02_files/figure-html/domainsfig-1.png" alt="EQ-5D weighted domain scores by time" width="600px"><p class="caption">
 EQ-5D weighted domain scores by time
@@ -674,7 +676,7 @@ EQ-5D weighted domain scores by time
 metadata, using <code>Ready4useRepos</code> and its <code>share</code>
 method <a href="https://ready4-dev.github.io/ready4use/articles/V_01.html" class="external-link">as
 described in a vignette from the ready4use package</a>.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">Z</span> <span class="op">&lt;-</span> <span class="fu">ready4use</span><span class="fu">::</span><span class="fu"><a href="https://ready4-dev.github.io/ready4use/reference/Ready4useRepos-class.html" class="external-link">Ready4useRepos</a></span><span class="op">(</span>gh_repo_1L_chr <span class="op">=</span> <span class="st">"ready4-dev/scorz"</span>, <span class="co"># Replace with details of your repo.</span></span>
 <span>                               gh_tag_1L_chr <span class="op">=</span> <span class="st">"Documentation_0.0"</span><span class="op">)</span> <span class="co"># You must have write permissions.</span></span>
 <span><span class="va">Z</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ready4-dev.github.io/ready4/reference/share-methods.html" class="external-link">share</a></span><span class="op">(</span><span class="va">Z</span>,</span>
