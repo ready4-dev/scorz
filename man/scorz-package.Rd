@@ -4,15 +4,15 @@
 \name{scorz-package}
 \alias{scorz}
 \alias{scorz-package}
-\title{scorz: Calculate Model Dataset Variable Total Scores}
+\title{scorz: Score Multi-Attribute Instruments}
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-Tools to summarise questionnaire responses in a single index measure for datasets to be used with models developed with the ready4 framework (https://www.ready4-dev.com/). The main motivation for this package is to facilitate automated scoring, using published publicly available scoring algorithms, of measures relevant to mental health systems models. This development version of the scorz package has been made available as part of the process of testing and documenting the package. If you have any questions, please contact the authors (matthew.hamilton@orygen.org.au).
+Tools to summarise multiple questionnaire responses in a single index measure (e.g. calculating health utility from multi-attribute utility instrument items) for use in models developed with the ready4 framework (https://www.ready4-dev.com/). The main motivation for this package is to facilitate automated scoring, using published publicly available scoring algorithms, of measures relevant to mental health systems models. This development version of the scorz package has been made available as part of the process of testing and documenting the package. If you have any questions, please contact the authors (matthew.hamilton@orygen.org.au).
 
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-Tools to summarise questionnaire responses in a single index measure for datasets to be used with models developed with the ready4 framework (https://www.ready4-dev.com/). The main motivation for this package is to facilitate automated scoring, using published publicly available scoring algorithms, of measures relevant to mental health systems models. This development version of the scorz package has been made available as part of the process of testing and documenting the package. If you have any questions, please contact the authors (matthew.hamilton@orygen.org.au).
+Tools to summarise multiple questionnaire responses in a single index measure (e.g. calculating health utility from multi-attribute utility instrument items) for use in models developed with the ready4 framework (https://www.ready4-dev.com/). The main motivation for this package is to facilitate automated scoring, using published publicly available scoring algorithms, of measures relevant to mental health systems models. This development version of the scorz package has been made available as part of the process of testing and documenting the package. If you have any questions, please contact the authors (matthew.hamilton@orygen.org.au).
 }
 \seealso{
 Useful links:
