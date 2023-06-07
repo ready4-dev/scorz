@@ -1,6 +1,6 @@
 Package: scorz
-Title: Calculate Model Dataset Variable Total Scores
-Version: 0.0.0.9055
+Title: Score Multi-Attribute Instruments
+Version: 0.0.0.9056
 Authors@R: c(
     person("Matthew", "Hamilton", , "matthew.hamilton@orygen.org.au", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-7407-9194")),
@@ -10,15 +10,16 @@ Authors@R: c(
     person("Headspace", role = "fnd"),
     person("National Health and Medical Research Council", role = "fnd")
   )
-Description: Tools to summarise questionnaire responses in a single index
-    measure for datasets to be used with models developed with the ready4
-    framework (https://www.ready4-dev.com/).  The main motivation for this
-    package is to facilitate automated scoring, using published publicly
-    available scoring algorithms, of measures relevant to mental health
-    systems models.  This development version of the scorz package has
-    been made available as part of the process of testing and documenting
-    the package.  If you have any questions, please contact the authors
-    (matthew.hamilton@orygen.org.au).
+Description: Tools to summarise multiple questionnaire responses in a
+    single index measure (e.g. calculating health utility from
+    multi-attribute utility instrument items) for use in models developed
+    with the ready4 framework (https://www.ready4-dev.com/).  The main
+    motivation for this package is to facilitate automated scoring, using
+    published publicly available scoring algorithms, of measures relevant
+    to mental health systems models.  This development version of the
+    scorz package has been made available as part of the process of
+    testing and documenting the package.  If you have any questions,
+    please contact the authors (matthew.hamilton@orygen.org.au).
 License: GPL-3 + file LICENSE
 URL: https://ready4-dev.github.io/scorz/,
     https://github.com/ready4-dev/scorz, https://www.ready4-dev.com/
@@ -47,7 +48,7 @@ Imports:
     testthat,
     tibble,
     tidyselect,
-    youthvars (>= 0.0.0.9116)
+    youthvars (>= 0.0.0.9117)
 VignetteBuilder: knitr
 Collate: 
     'fn_make.R'
