@@ -1,6 +1,6 @@
 Package: scorz
 Title: Score Multi-Attribute Instruments
-Version: 0.0.0.9057
+Version: 0.0.0.9058
 Authors@R: c(
     person("Matthew", "Hamilton", , "matthew.hamilton@orygen.org.au", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-7407-9194")),
@@ -39,7 +39,7 @@ Imports:
     mice,
     purrr,
     ready4 (>= 0.0.0.9117),
-    ready4use (>= 0.0.0.9227),
+    ready4use (>= 0.0.0.9228),
     rlang,
     simstudy,
     stats,
@@ -48,7 +48,7 @@ Imports:
     testthat,
     tibble,
     tidyselect,
-    youthvars (>= 0.0.0.9119)
+    youthvars (>= 0.0.0.9120)
 VignetteBuilder: knitr
 Collate: 
     'fn_make.R'
