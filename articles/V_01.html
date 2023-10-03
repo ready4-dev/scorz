@@ -34,7 +34,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">scorz</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.0.0.9059</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.0.0.9062</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -107,17 +107,17 @@ scoring algorithm. Scoring algorithms for the Assessment of Quality of
 Life Six Dimension (AQoL-6D) are publicly available in SPSS format (<a href="https://www.aqol.com.au/index.php/scoring-algorithms" class="external-link uri">https://www.aqol.com.au/index.php/scoring-algorithms</a>).</p>
 <p>However, to include scoring algorithms in reproducible research
 workflows, it is desirable to have these algorithms available in open
-science languages such as R. We therefore developed an R implementation
-of the adult and adolescent versions of the AQoL-6D scoring algorithms
-and have made them available as part of the <code>scorz</code>
-package.</p>
+science languages such as R. The <code>scorz</code> package includes <a href="https://www.ready4-dev.com/docs/framework/implementation/modularity/#ready4-model-modules" class="external-link">ready4
+framework model modules</a> of <a href="https://www.ready4-dev.com/docs/model/" class="external-link">the ready4 youth mental
+health economic model</a> that provide R implementations of the adult
+and adolescent versions of the AQoL-6D scoring algorithms.</p>
 </div>
 <div class="section level2">
 <h2 id="ingest-data">Ingest data<a class="anchor" aria-label="anchor" href="#ingest-data"></a>
 </h2>
 <p>To begin, we ingest an unscored dataset as an instance of the
-<code>Ready4useDyad</code> class (from the <a href="https://ready4-dev.github.io/ready4use/" class="external-link">ready4use package</a>).
-In this case we download our data from a remote repository.</p>
+<code>Ready4useDyad</code> from the <a href="https://ready4-dev.github.io/ready4use/" class="external-link">ready4use package</a>. In
+this case we download our data from a remote repository.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">X</span> <span class="op">&lt;-</span> <span class="fu">ready4use</span><span class="fu">::</span><span class="fu"><a href="https://ready4-dev.github.io/ready4use/reference/Ready4useRepos-class.html" class="external-link">Ready4useRepos</a></span><span class="op">(</span>dv_nm_1L_chr <span class="op">=</span> <span class="st">"fakes"</span>,</span>
 <span>                               dv_ds_nm_1L_chr <span class="op">=</span> <span class="st">"https://doi.org/10.7910/DVN/W95KED"</span>,</span>
@@ -1067,7 +1067,7 @@ Anxiety
 </table>
 </div>
 <p>We now add meta-data that identifies our dataset as being
-longitudinal using the <code>YouthvarsSeries</code> class of the <a href="https://ready4-dev.github.io/youthvars/" class="external-link">youthvars
+longitudinal using the <code>YouthvarsSeries</code> module of the <a href="https://ready4-dev.github.io/youthvars/" class="external-link">youthvars
 package</a>.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">X</span> <span class="op">&lt;-</span> <span class="fu">youthvars</span><span class="fu">::</span><span class="fu"><a href="https://ready4-dev.github.io/youthvars/reference/YouthvarsSeries-class.html" class="external-link">YouthvarsSeries</a></span><span class="op">(</span>a_Ready4useDyad <span class="op">=</span> <span class="va">X</span>,</span>
