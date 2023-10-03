@@ -1,8 +1,8 @@
 Package: scorz
-Title: Score Multi-Attribute Instruments
-Version: 0.0.0.9059
+Title: Score Multi-Attribute Utility Instruments
+Version: 0.0.0.9060
 Authors@R: c(
-    person("Matthew", "Hamilton", , "matthew.hamilton@orygen.org.au", role = c("aut", "cre"),
+    person("Matthew", "Hamilton", , "matthew.hamilton1@monash.edu", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-7407-9194")),
     person("Caroline", "Gao", , "caroline.gao@orygen.org.au", role = "aut",
            comment = c(ORCID = "0000-0002-0987-2759")),
@@ -12,14 +12,15 @@ Authors@R: c(
   )
 Description: Tools to summarise multiple questionnaire responses in a
     single index measure (e.g. calculating health utility from
-    multi-attribute utility instrument items) for use in models developed
-    with the ready4 framework (https://www.ready4-dev.com/).  The main
-    motivation for this package is to facilitate automated scoring, using
-    published publicly available scoring algorithms, of measures relevant
-    to mental health systems models.  This development version of the
-    scorz package has been made available as part of the process of
-    testing and documenting the package.  If you have any questions,
-    please contact the authors (matthew.hamilton@orygen.org.au).
+    multi-attribute utility instrument items) for use in health economic
+    models developed with the ready4 framework
+    (https://www.ready4-dev.com/).  The main motivation for this package
+    is to facilitate automated scoring, using published publicly available
+    scoring algorithms, of measures relevant to mental health systems
+    models.  This development version of the scorz package has been made
+    available as part of the process of testing and documenting the
+    package.  If you have any questions, please contact the authors
+    (matthew.hamilton1@monash.edu).
 License: GPL-3 + file LICENSE
 URL: https://ready4-dev.github.io/scorz/,
     https://github.com/ready4-dev/scorz, https://www.ready4-dev.com/
@@ -38,8 +39,8 @@ Imports:
     methods,
     mice,
     purrr,
-    ready4 (>= 0.0.0.9118),
-    ready4use (>= 0.0.0.9229),
+    ready4 (>= 0.0.0.9125),
+    ready4use (>= 0.0.0.9231),
     rlang,
     simstudy,
     stats,
@@ -48,7 +49,7 @@ Imports:
     testthat,
     tibble,
     tidyselect,
-    youthvars (>= 0.0.0.9121)
+    youthvars (>= 0.0.0.9122)
 VignetteBuilder: knitr
 Collate: 
     'fn_make.R'
