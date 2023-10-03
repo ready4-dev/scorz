@@ -10,7 +10,7 @@ home:
     href: https://github.com/ready4-dev/scorz/releases/download/Documentation_0.0/scorz_User.pdf
   - text: Manual - Developer (PDF)
     href: https://github.com/ready4-dev/scorz/releases/download/Documentation_0.0/scorz_Developer.pdf
-  - text: Model
+  - text: Framework & Model
     href:  https://www.ready4-dev.com/
 development:
   mode: auto

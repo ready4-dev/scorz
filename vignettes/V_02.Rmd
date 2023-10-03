@@ -21,10 +21,10 @@ library(scorz)
 ```
 
 ## EQ-5D scoring
-The [eq5d package](https://github.com/fragla/eq5d) provides a toolkit for scoring EQ-5D health utility. The  `scorz` package contains a class and methods that integrate eq5d package tools and is designed for use with [the ready4 youth mental health systems model](https://www.ready4-dev.com/).
+The [eq5d package](https://github.com/fragla/eq5d) provides a toolkit for scoring EQ-5D health utility. The  `scorz` package contains [ready4 framework model modules](https://www.ready4-dev.com/docs/framework/implementation/modularity/#ready4-model-modules) that integrate eq5d package tools with [the ready4 youth mental health economic model](https://www.ready4-dev.com/docs/model/).
 
 ## Ingest and describe data
-To begin, we ingest an unscored dataset and its data dictionary as a [Ready4useDyad](https://ready4-dev.github.io/ready4use/articles/V_02.html). We then add additional details about the dataset (unique identifier and data-collection round variable name and values) by converting the ingested data to a (YouthvarsSeries)[https://ready4-dev.github.io/youthvars/articles/V_02.html] instance.
+To begin, we ingest an unscored dataset and its data dictionary as a [Ready4useDyad](https://ready4-dev.github.io/ready4use/articles/V_02.html). We then add additional details about the dataset (unique identifier and data-collection round variable name and values) by converting the ingested data to an instance of the (YouthvarsSeries module)[https://www.ready4-dev.com/docs/model/modules/using-modules/people/add-metadata/].
 
 ```{r}
 X <- ready4use::Ready4useRepos(dv_nm_1L_chr = "fakes",
