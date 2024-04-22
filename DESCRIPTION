@@ -1,6 +1,6 @@
 Package: scorz
 Title: Score Multi-Attribute Utility Instruments
-Version: 0.0.0.9063
+Version: 0.0.0.9064
 Authors@R: c(
     person("Matthew", "Hamilton", , "matthew.hamilton1@monash.edu", role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0000-0001-7407-9194")),
@@ -53,6 +53,9 @@ Imports:
     tibble,
     tidyselect,
     youthvars (>= 0.0.0.9125)
+Depends: 
+    R (>= 2.10)
+LazyData: true
 Collate: 
     'fn_make.R'
     'fn_get.R'
@@ -61,6 +64,8 @@ Collate:
     'C4_ScorzAqol6Adol.R'
     'C4_ScorzAqol6Adult.R'
     'C4_ScorzEuroQol5.R'
+    'db_adol_dim_sclg_eqs_lup.R'
+    'db_aqol6d_adult_vldn_pop_with_STATA_scores_tb.R'
     'fn_add.R'
     'fn_calculate.R'
     'fn_impute.R'
