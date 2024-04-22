@@ -3,7 +3,7 @@
 \name{depict-ScorzProfile}
 \alias{depict-ScorzProfile}
 \alias{depict,ScorzProfile-method}
-\title{Depict (plot) features of a dataset}
+\title{Depict (plot) features of model module data}
 \usage{
 \S4method{depict}{ScorzProfile}(
   x,

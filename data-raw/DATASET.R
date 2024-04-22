@@ -6,11 +6,11 @@ library(youthvars)
 fns_env_ls <- ready4fun::read_fns(c("data-raw/fns/","data-raw/mthds/"),
                                   fns_env = new.env(parent = globalenv()))
 x <- ready4fun::make_pkg_desc_ls(pkg_title_1L_chr = "Score Multi-Attribute Utility Instruments" %>% tools::toTitleCase(),
-                                 pkg_desc_1L_chr = "Modules from the ready4 youth mental health economic model (https://www.ready4-dev.com/docs/model/) that can be used to summarise multiple questionnaire responses in a single index measure.
+                                 pkg_desc_1L_chr = "Modules from the readyforwhatsnext youth mental health economic model (https://readyforwhatsnext.org/) that can be used to summarise multiple questionnaire responses in a single index measure.
                             This package uses publicly available scoring algorithms to calculate health utility from multi-attribute utility instruments and has been developed with the ready4 framework (https://www.ready4-dev.com/).
   This development version of the scorz package has been made available as part of the process of testing and documenting the package.
                             If you have any questions, please contact the authors (matthew.hamilton1@monash.edu).",
-                                 authors_prsn = c(utils::person(given = "Matthew",family = "Hamilton",email = "matthew.hamilton1@monash.edu", role = c("aut", "cre"),comment = c(ORCID = "0000-0001-7407-9194")),
+                                 authors_prsn = c(utils::person(given = "Matthew",family = "Hamilton",email = "matthew.hamilton1@monash.edu", role = c("aut", "cre", "cph"),comment = c(ORCID = "0000-0001-7407-9194")),
                                                   utils::person(given = "Caroline",family = "Gao",email = "caroline.gao@orygen.org.au", role = c("aut"),comment = c(ORCID = "0000-0002-0987-2759")),
                                                   utils::person("Orygen", role = c("cph", "fnd")),
                                                   utils::person("Headspace", role = c( "fnd")),
@@ -23,10 +23,10 @@ x <- ready4fun::make_pkg_desc_ls(pkg_title_1L_chr = "Score Multi-Attribute Utili
                                                                        imports_chr = "knitrBootstrap"),
                            build_ignore_ls = ready4fun::make_build_ignore_ls(file_nms_chr = c("initial_setup.R")),
                            check_type_1L_chr = "ready4",
-                           copyright_holders_chr = "Orygen",
+                           copyright_holders_chr = "Matthew Hamilton and Orygen",
                            custom_dmt_ls = ready4fun::make_custom_dmt_ls(#user_manual_fns_chr = c()
                            ),##
-                           dev_pkgs_chr = c("ready4",
+                           dev_pkgs_chr = c(#"ready4",
                                             "ready4use","ready4show",
                                             "youthvars"),
                            lifecycle_stage_1L_chr = "experimental",
@@ -102,7 +102,7 @@ y <- dplyr::bind_rows(ready4class::make_pt_ready4class_constructor(make_s3_lgl =
                                                                                        #instrument_version_1L_chr = NA_character_,
                                                                                        itm_labels_chr = "make_aqol6d_item_nms()",
                                                                                        itm_prefix_1L_chr =  "'aqol6d_q'",
-                                                                                       scrg_dss_ls = "get_aqol6d_scrg_dss()",
+                                                                                       scrg_dss_ls = "make_aqol6d_scrg_dss()",
                                                                                        total_wtd_var_nm_1L_chr = "'aqol6d_total_w'",
                                                                                        total_unwtd_var_nm_1L_chr = "'aqol6d_total_c'"
                                                                                        )),
@@ -162,7 +162,7 @@ y <- dplyr::bind_rows(ready4class::make_pt_ready4class_constructor(make_s3_lgl =
                                                                                        itm_labels_chr = "c(\"Mobility\", \"Self-care\", \"Usual Activities\",\"Pain-Discomfort\",\"Anxiety-Depression\")",
                                                                                        itm_prefix_1L_chr =  "'eq5dq_'",
                                                                                        itm_var_nms_chr = "c(\"eq5dq_MO\", \"eq5dq_SC\", \"eq5dq_UA\", \"eq5dq_PD\", \"eq5dq_AD\")",
-                                                                                       #scrg_dss_ls = "get_aqol6d_scrg_dss()",
+                                                                                       #scrg_dss_ls = "make_aqol6d_scrg_dss()",
                                                                                        total_wtd_var_nm_1L_chr = "'eq5d_total_w'",
                                                                                        total_unwtd_var_nm_1L_chr = "'eq5d_total_c'",
                                                                                        type_1L_chr = "'CW'"
@@ -170,13 +170,26 @@ y <- dplyr::bind_rows(ready4class::make_pt_ready4class_constructor(make_s3_lgl =
                                                                    class_desc_chr = "A dataset and metadata to support implementation of an EQ-5D scoring algorithm.",
                                                                    parent_class_chr = "ScorzProfile")) %>%
   ready4class::ready4class_constructor()
+aqol6d_scrg_dss_ls <- fns_env_ls$fns_env$get_aqol6d_scrg_dss()
+datasets_ls <- list(
+  aqol6d_scrg_dss_ls$aqol6d_adult_vldn_pop_with_STATA_scores_tb %>%
+    ready4fun::make_pkg_ds_ls(db_1L_chr = "aqol6d_adult_vldn_pop_with_STATA_scores_tb",
+                              title_1L_chr = "STATA comparison validation synthetic population",
+                              desc_1L_chr = "Synthetic population following application of STATA adult scoring algorithm.",
+                              url_1L_chr = "https://www.aqol.com.au/index.php/scoring-algorithms"),
+  aqol6d_scrg_dss_ls$adol_dim_sclg_eqs_lup %>%
+    ready4fun::make_pkg_ds_ls(db_1L_chr = "adol_dim_sclg_eqs_lup",
+                              title_1L_chr = "AQoL6D (adolescent) item worst weightings equations lookup table",
+                              desc_1L_chr = "Dimension scaling equations for adolescent version of AQoL6D scoring algorithm.",
+                              url_1L_chr = "https://www.aqol.com.au/index.php/scoring-algorithms"))
 z <- ready4pack::make_pt_ready4pack_manifest(x,
-                                             constructor_r3 = y) %>%
+                                             constructor_r3 = y,
+                                             pkg_ds_ls_ls = datasets_ls) %>%
   ready4pack::ready4pack_manifest()
 z <- ready4::author(z)
-ready4::write_extra_pkgs_to_actions(consent_1L_chr = "Y")
 write_to_edit_workflow("pkgdown.yaml", consent_1L_chr = "Y") # In other packages, run for "test-coverage.yaml" as well.
-readLines("_pkgdown.yml") %>%
-  stringr::str_replace_all("  - text: Model", "  - text: Framework & Model") %>%
-  writeLines(con = "_pkgdown.yml")
-devtools::build_vignettes()
+write_to_tidy_pkg(z$x_ready4fun_manifest, build_vignettes_1L_lgl = TRUE,
+                  clean_license_1L_lgl = TRUE, consent_1L_chr = "Y",
+                  examples_chr = character(0),
+                  suggest_chr = "pkgload")
+

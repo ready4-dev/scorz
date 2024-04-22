@@ -5,7 +5,7 @@ calculate_adol_aqol6dU <- function (unscored_aqol_tb,
                                     wtd_aqol_var_nm_1L_chr = "aqol6d_total_w")
 {
   if(is.null(aqol6d_scrg_dss_ls)){
-    aqol6d_scrg_dss_ls <- get_aqol6d_scrg_dss()
+    aqol6d_scrg_dss_ls <- make_aqol6d_scrg_dss()
   }
   scored_aqol_tb <- add_adol6d_scores(unscored_aqol_tb,
                                       aqol6d_scrg_dss_ls = aqol6d_scrg_dss_ls,
@@ -19,7 +19,7 @@ calculate_adult_aqol6dU <- function (aqol6d_items_tb,
                                      aqol6d_scrg_dss_ls = NULL)
 {
   if(is.null(aqol6d_scrg_dss_ls))
-    aqol6d_scrg_dss_ls <- get_aqol6d_scrg_dss()
+    aqol6d_scrg_dss_ls <- make_aqol6d_scrg_dss()
   coefs_lup_tb <- aqol6d_scrg_dss_ls$aqol6d_from_8d_coefs_lup_tb
   dim_sclg_con_lup_tb <- aqol6d_scrg_dss_ls$aqol6d_dim_sclg_con_lup_tb
   disvalues_lup_tb <- aqol6d_scrg_dss_ls$aqol6d_adult_disv_lup_tb
@@ -39,6 +39,23 @@ calculate_adult_aqol6dU <- function (aqol6d_items_tb,
   aqol6dU_dbl <- aqol6d_items_tb$aqol6dU
   return(aqol6dU_dbl)
 }
+calculate_aqol4d_dim_disv <- function(domain_1L_chr,
+                                      ds_tb,
+                                      scrg_dss_ls = NULL) {
+  if(is.null(scrg_dss_ls)){
+    scrg_dss_ls <- make_aqol4d_scrg_dss_ls()
+  }
+  domains_chr <- scrg_dss_ls$domain_qs_lup$Domain_chr %>% unique()
+  domains_ls <- domains_chr %>% purrr::map(~ready4::get_from_lup_obj(scrg_dss_ls$domain_qs_lup, match_var_nm_1L_chr = "Domain_chr", match_value_xx = .x, target_var_nm_1L_chr = "Question_int")) %>%
+    stats::setNames(domains_chr)
+  qs_int <- domains_ls[[domain_1L_chr]]
+  coefficients_dbl <- qs_int %>% purrr::map_dbl(~ ready4::get_from_lup_obj(scrg_dss_ls$domain_qs_lup, match_var_nm_1L_chr = "Question_int", match_value_xx = .x, target_var_nm_1L_chr = "Coefficient_dbl"))
+  multiplier_1L_dbl <- ready4::get_from_lup_obj(scrg_dss_ls$dim_multipliers_lup, match_var_nm_1L_chr = "Dimension_chr", match_value_xx = domain_1L_chr, target_var_nm_1L_chr = "Multiplier_dbl")
+  aqol4d_dim_disv_dbl <- ds_tb %>% dplyr::select(paste0("aqol4d_disv_q",qs_int,"_dbl")) %>% purrr::pmap_dbl(~ (multiplier_1L_dbl*(1-(1-coefficients_dbl[1]*..1)*(1-coefficients_dbl[2]*..2)*(1-coefficients_dbl[3]*..3))))
+  return(aqol4d_dim_disv_dbl)
+}
+
+
 calculate_aqol6d_dim_1_disv <- function (dvQs_tb, kD_1L_dbl, w_dbl)
 {
   dvD1_dbl <- purrr::pmap_dbl(dvQs_tb, ~{

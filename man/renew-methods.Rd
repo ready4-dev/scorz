@@ -7,7 +7,7 @@
 \alias{renew,ScorzEuroQol5-method}
 \alias{renew-ScorzProfile}
 \alias{renew,ScorzProfile-method}
-\title{Renew values in a dataset}
+\title{Renew (update) values}
 \usage{
 \S4method{renew}{ScorzAqol6Adol}(x, label_ds_1L_lgl = T, type_1L_chr = "score")
 

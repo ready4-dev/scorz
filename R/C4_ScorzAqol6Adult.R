@@ -8,7 +8,7 @@
 #' @slot country_1L_chr Country (a character vector of length one)
 #' @slot domain_unwtd_var_nms_chr Domain unweighted variable names (a character vector)
 #' @slot domain_wtd_var_nms_chr Domain weighted variable names (a character vector)
-#' @slot instrument_dict_r3 Instrument dictionary (a ready4 S3)
+#' @slot instrument_dict_r3 Instrument dictionary (a ready4 submodule)
 #' @slot instrument_nm_1L_chr Instrument name (a character vector of length one)
 #' @slot instrument_short_nm_1L_chr Instrument short name (a character vector of length one)
 #' @slot itm_labels_chr Item labels (a character vector)

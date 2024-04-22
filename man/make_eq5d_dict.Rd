@@ -7,9 +7,9 @@
 make_eq5d_dict()
 }
 \value{
-EQ5D dictionary (a ready4 S3)
+EQ5D dictionary (a ready4 submodule)
 }
 \description{
-make_eq5d_dict() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make eq5d dictionary. The function returns EQ5D dictionary (a ready4 S3).
+make_eq5d_dict() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make eq5d dictionary. The function returns EQ5D dictionary (a ready4 submodule).
 }
 \keyword{internal}

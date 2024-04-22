@@ -3,7 +3,7 @@
 \name{exhibit-ScorzProfile}
 \alias{exhibit-ScorzProfile}
 \alias{exhibit,ScorzProfile-method}
-\title{Exhibit features of a dataset by printing them to the R console}
+\title{Exhibit features of model module data by printing them to the R console}
 \usage{
 \S4method{exhibit}{ScorzProfile}(x, type_1L_chr = "ds", ...)
 }
@@ -13,6 +13,9 @@
 \item{type_1L_chr}{Type (a character vector of length one), Default: 'ds'}
 
 \item{...}{Additional arguments}
+}
+\value{
+No return value, called for side effects.
 }
 \description{
 exhibit method applied to ScorzProfile

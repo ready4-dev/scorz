@@ -10,11 +10,15 @@ home:
     href: https://github.com/ready4-dev/scorz/releases/download/Documentation_0.0/scorz_User.pdf
   - text: Manual - Developer (PDF)
     href: https://github.com/ready4-dev/scorz/releases/download/Documentation_0.0/scorz_Developer.pdf
-  - text: Framework & Model
+  - text: Model
     href:  https://www.ready4-dev.com/
 development:
   mode: auto
 reference:
+- title: "Datasets"
+- contents:
+  - adol_dim_sclg_eqs_lup
+  - aqol6d_adult_vldn_pop_with_STATA_scores_tb
 - title: "S4 Classes"
 - contents:
   - ScorzProfile

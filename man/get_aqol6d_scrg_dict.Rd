@@ -6,7 +6,10 @@
 \usage{
 get_aqol6d_scrg_dict()
 }
+\value{
+No return value, called for side effects.
+}
 \description{
-get_aqol6d_scrg_dict() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get assessment of quality of life six dimension scoring dictionary. The function is called for its side effects and does not return a value.
+get_aqol6d_scrg_dict() is a Get function that extracts data from an object. Specifically, this function implements an algorithm to get assessment of quality of life six dimension scoring dictionary. The function is called for its side effects and does not return a value.
 }
 \keyword{internal}

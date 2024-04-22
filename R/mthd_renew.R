@@ -1,5 +1,5 @@
 #' 
-#' Renew values in a dataset
+#' Renew (update) values
 #' @name renew-ScorzAqol6Adol
 #' @description renew method applied to ScorzAqol6Adol
 #' @param x An object of class ScorzAqol6Adol
@@ -19,7 +19,7 @@ methods::setMethod("renew", "ScorzAqol6Adol", function (x, label_ds_1L_lgl = T, 
     y <- renew(y, type_1L_chr = "unlabel")
     if (type_1L_chr == "score") {
         if (identical(x@scrg_dss_ls, list(list()))) {
-            x@scrg_dss_ls <- get_aqol6d_scrg_dss()
+            x@scrg_dss_ls <- make_aqol6d_scrg_dss()
         }
         select_chr <- setdiff(names(y@ds_tb), x@instrument_dict_r3$var_nm_chr[!x@instrument_dict_r3$var_nm_chr %>% 
             startsWith(x@itm_prefix_1L_chr)] %>% as.vector())
@@ -39,7 +39,7 @@ methods::setMethod("renew", "ScorzAqol6Adol", function (x, label_ds_1L_lgl = T, 
     return(x)
 })
 #' 
-#' Renew values in a dataset
+#' Renew (update) values
 #' @name renew-ScorzEuroQol5
 #' @description renew method applied to ScorzEuroQol5
 #' @param x An object of class ScorzEuroQol5
@@ -77,7 +77,7 @@ methods::setMethod("renew", "ScorzEuroQol5", function (x, label_ds_1L_lgl = T, t
     return(x)
 })
 #' 
-#' Renew values in a dataset
+#' Renew (update) values
 #' @name renew-ScorzProfile
 #' @description renew method applied to ScorzProfile
 #' @param x An object of class ScorzProfile

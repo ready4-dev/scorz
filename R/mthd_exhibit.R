@@ -1,11 +1,11 @@
 #' 
-#' Exhibit features of a dataset by printing them to the R console
+#' Exhibit features of model module data by printing them to the R console
 #' @name exhibit-ScorzProfile
 #' @description exhibit method applied to ScorzProfile
 #' @param x An object of class ScorzProfile
 #' @param type_1L_chr Type (a character vector of length one), Default: 'ds'
 #' @param ... Additional arguments
-#' @return NULL
+#' @return No return value, called for side effects.
 #' @rdname exhibit-methods
 #' @aliases exhibit,ScorzProfile-method
 #' @export 

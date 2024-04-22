@@ -1,5 +1,5 @@
 #' 
-#' Depict (plot) features of a dataset
+#' Depict (plot) features of model module data
 #' @name depict-ScorzProfile
 #' @description depict method applied to ScorzProfile
 #' @param x An object of class ScorzProfile

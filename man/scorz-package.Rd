@@ -2,17 +2,16 @@
 % Please edit documentation in R/pkg_scorz.R, R/scorz-package.R
 \docType{package}
 \name{scorz-package}
-\alias{scorz}
 \alias{scorz-package}
 \title{scorz: Score Multi-Attribute Utility Instruments}
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-Modules from the ready4 youth mental health economic model (https://www.ready4-dev.com/docs/model/) that can be used to summarise multiple questionnaire responses in a single index measure. This package uses publicly available scoring algorithms to calculate health utility from multi-attribute utility instruments and has been developed with the ready4 framework (https://www.ready4-dev.com/). This development version of the scorz package has been made available as part of the process of testing and documenting the package. If you have any questions, please contact the authors (matthew.hamilton1@monash.edu).
+Modules from the readyforwhatsnext youth mental health economic model (https://readyforwhatsnext.org/) that can be used to summarise multiple questionnaire responses in a single index measure. This package uses publicly available scoring algorithms to calculate health utility from multi-attribute utility instruments and has been developed with the ready4 framework (https://www.ready4-dev.com/). This development version of the scorz package has been made available as part of the process of testing and documenting the package. If you have any questions, please contact the authors (matthew.hamilton1@monash.edu).
 
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-Modules from the ready4 youth mental health economic model (https://www.ready4-dev.com/docs/model/) that can be used to summarise multiple questionnaire responses in a single index measure. This package uses publicly available scoring algorithms to calculate health utility from multi-attribute utility instruments and has been developed with the ready4 framework (https://www.ready4-dev.com/). This development version of the scorz package has been made available as part of the process of testing and documenting the package. If you have any questions, please contact the authors (matthew.hamilton1@monash.edu).
+Modules from the readyforwhatsnext youth mental health economic model (https://readyforwhatsnext.org/) that can be used to summarise multiple questionnaire responses in a single index measure. This package uses publicly available scoring algorithms to calculate health utility from multi-attribute utility instruments and has been developed with the ready4 framework (https://www.ready4-dev.com/). This development version of the scorz package has been made available as part of the process of testing and documenting the package. If you have any questions, please contact the authors (matthew.hamilton1@monash.edu).
 }
 \seealso{
 Useful links:
@@ -32,7 +31,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Matthew Hamilton \email{matthew.hamilton1@monash.edu} (\href{https://orcid.org/0000-0001-7407-9194}{ORCID})
+\strong{Maintainer}: Matthew Hamilton \email{matthew.hamilton1@monash.edu} (\href{https://orcid.org/0000-0001-7407-9194}{ORCID}) [copyright holder]
 
 Authors:
 \itemize{

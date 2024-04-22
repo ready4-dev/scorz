@@ -1,8 +1,92 @@
+add_aqol4d_scores <- function(object_xx,
+                              country_1L_chr = NA_character_,#"Australia",
+                              itm_labels_chr = character(0),
+                              itm_prefix_1L_chr = "aqol4d_q",
+                              keep_all_1L_lgl = F,
+                              scrg_dss_ls = NULL,
+                              tot_unwtd_var_nm_1L_chr = "aqol4d_unwtd_dbl",
+                              utl_var_nm_1L_chr = "aqol4d_utl_dbl"){
+  if(is.null(scrg_dss_ls)){
+    scrg_dss_ls <- make_aqol4d_scrg_dss_ls()
+  }
+  if(identical(itm_labels_chr, character(0))){
+    itm_labels_chr = c("Self-care", "Household tasks", "Mobility",
+                       "Rel's - quality", "Rel's - quantity", "Relationships - role",
+                       "Vision", "Hearing", "Communication",
+                       "Sleep",  "Affect", "Pain")
+  }
+  if(is.data.frame(object_xx)){
+    ds_tb <- object_xx
+    columns_chr <- names(ds_tb)
+    domains_chr <- scrg_dss_ls$domain_qs_lup$Domain_chr %>% unique()
+    domains_ls <- domains_chr %>% purrr::map(~ready4::get_from_lup_obj(scrg_dss_ls$domain_qs_lup, match_var_nm_1L_chr = "Domain_chr", match_value_xx = .x, target_var_nm_1L_chr = "Question_int")) %>%
+      stats::setNames(domains_chr)
+    ds_tb <- purrr::reduce(1:4, .init = ds_tb,
+                           ~ .x %>%
+                             dplyr::mutate(!!rlang::sym(paste0("aqol4d_mssng_", names(domains_ls)[.y],"_int")) := apply(X = is.na(.x %>% dplyr::select(paste0(itm_prefix_1L_chr, domains_ls[[.y]]))), MARGIN = 1, FUN = sum)) %>%
+                             dplyr::mutate(!!rlang::sym(paste0("aqol4d_impt_", names(domains_ls)[.y],"_int")) := .x %>% dplyr::select(paste0(itm_prefix_1L_chr, domains_ls[[.y]])) %>% purrr::pmap_int(~ifelse(any(c(..1,..2,..3) %>% purrr::map_lgl(~is.na(.x))), mean(c(..1,..2,..3), na.rm=T) %>% round %>% as.integer, NA_integer_))) %>%
+                             dplyr::mutate(dplyr::across(paste0(itm_prefix_1L_chr, domains_ls[[.y]]), ~ list(.x, !!rlang::sym(paste0("aqol4d_mssng_", names(domains_ls)[.y], "_int")), !!rlang::sym(paste0("aqol4d_impt_",names(domains_ls)[.y],"_int"))) %>% purrr::pmap_int(~ifelse(is.na(..1) & ..2 <2, ..3, ..1)))))
+    ds_tb <- purrr::reduce(1:4, .init = ds_tb,
+                           ~ .x %>% dplyr::mutate(!!rlang::sym(paste0("aqol4d_unwtd_",names(domains_ls)[.y],"_dbl")) := .x %>% dplyr::select(paste0(itm_prefix_1L_chr, domains_ls[[.y]])) %>% purrr::pmap_dbl(~sum(..1,..2,..3)))) # , na.rm=T
+    ds_tb <- ds_tb %>%
+      dplyr::mutate(!!rlang::sym(tot_unwtd_var_nm_1L_chr) := dplyr::select(ds_tb,paste0("aqol4d_unwtd_",names(domains_ls),"_dbl")) %>% purrr::pmap_dbl(~sum(..1,..2,..3,..4))) #, na.rm=T
+    ds_tb <- purrr::reduce(1:4, .init = ds_tb,
+                           ~ .x %>% dplyr::mutate(!!rlang::sym(paste0("aqol4d_unwtd_",names(domains_ls)[.y],"_dbl")) := !!rlang::sym(paste0("aqol4d_unwtd_",names(domains_ls)[.y],"_dbl")) %>% purrr::map_dbl(~(1- (.x - 3)/(12-3))*100)))
+    ds_tb <- ds_tb %>%
+      dplyr::mutate(!!rlang::sym(tot_unwtd_var_nm_1L_chr) := !!rlang::sym(tot_unwtd_var_nm_1L_chr) %>% purrr::map_dbl(~(1-(.x - 12)/(48-12))*100))
+    ds_tb <- purrr::reduce(1:12, .init = ds_tb,
+                           ~ .x %>% dplyr::mutate(!!rlang::sym(paste0("aqol4d_disv_q",.y,"_dbl")) := !!rlang::sym(paste0(itm_prefix_1L_chr,.y)) %>% purrr::map2_dbl(.y,
+                                                                                                                                                                    ~ ifelse(is.na(.x), NA_real_,
+                                                                                                                                                                             ifelse(!.x %in% 1L:4L, NA_real_,
+                                                                                                                                                                                    ready4::get_from_lup_obj(scrg_dss_ls$item_disvalue_lup, match_var_nm_1L_chr = "Question_chr",
+                                                                                                                                                                                                             match_value_xx = paste0("Q",.y), target_var_nm_1L_chr = paste0("Answer_",.x,"_dbl")))))))
+    ds_tb <- purrr::reduce(domains_chr, .init = ds_tb,
+                           ~ .x %>% dplyr::mutate(!!rlang::sym(paste0("aqol4d_disv_",.y,"_dbl")) := calculate_aqol4d_dim_disv(.y, ds_tb = .x, scrg_dss_ls = scrg_dss_ls) )
+    )
+    ds_tb <- purrr::reduce(domains_chr, .init = ds_tb,
+                           ~ .x %>% dplyr::mutate(!!rlang::sym(paste0("aqol4d_dim_",.y,"_dbl")) := !!rlang::sym(paste0("aqol4d_disv_",.y,"_dbl")) %>% purrr::map_dbl(~1-.x)))
+    ds_tb <- ds_tb  %>% dplyr::mutate(!!rlang::sym(utl_var_nm_1L_chr) := ds_tb %>% dplyr::select(paste0("aqol4d_disv_",domains_chr,"_dbl")) %>% purrr::pmap_dbl(~(scrg_dss_ls$params_lup$Value_dbl[1]* ((1-(scrg_dss_ls$params_lup$Value_dbl[2]*..1))*(1-(scrg_dss_ls$params_lup$Value_dbl[3]*..2))*(1-(scrg_dss_ls$params_lup$Value_dbl[4]*..3))*(1-(scrg_dss_ls$params_lup$Value_dbl[5]*..4)))) + scrg_dss_ls$params_lup$Value_dbl[6]))
+    new_columns_chr <- setdiff(names(ds_tb), columns_chr)
+    ds_tb <- ds_tb %>% dplyr::mutate(aqol4d_imputed_lgl = ds_tb %>% dplyr::select(new_columns_chr[new_columns_chr %>% startsWith("aqol4d_impt_")]) %>% purrr::pmap_lgl(~c(..1,..2,..3,..4) %>% purrr::map_lgl(~!is.na(.x)) %>% any()))
+    ds_tb <- ds_tb %>% dplyr::mutate(aqol4d_complete_lgl = !!rlang::sym(utl_var_nm_1L_chr) %>% purrr::map2_lgl(aqol4d_imputed_lgl, ~ !is.na(.x) && !.y ))
+    new_columns_chr <- c(new_columns_chr,"aqol4d_imputed_lgl","aqol4d_complete_lgl")
+    if(!keep_all_1L_lgl){
+      keep_chr <- c(tot_unwtd_var_nm_1L_chr,utl_var_nm_1L_chr,paste0("aqol4d_unwtd_",domains_chr,"_dbl"),paste0("aqol4d_dim_",domains_chr,"_dbl"),"aqol4d_imputed_lgl","aqol4d_complete_lgl")
+      drop_chr <- setdiff(new_columns_chr,keep_chr)
+      ds_tb <- ds_tb %>% dplyr::select(-tidyselect::all_of(drop_chr))
+    }
+    object_xx <- ds_tb
+  }else{
+    assertthat::assert_that(inherits(object_xx,"YouthvarsProfile"), msg = "object_xx must be either a data.frame or a Youthvars_Profile ready4 module")
+    Y <- object_xx
+    Z <- ScorzProfile(a_YouthvarsProfile = Y,
+                             country_1L_chr = country_1L_chr,
+                             domain_unwtd_var_nms_chr =c("aqol4d_unwtd_IL_dbl", "aqol4d_unwtd_RL_dbl",
+                                                         "aqol4d_unwtd_SN_dbl", "aqol4d_unwtd_MH_dbl"),
+                             domain_wtd_var_nms_chr = paste0("aqol4d_dim_",
+                                                             make_aqol4d_domain_qs_lup()$Domain_chr %>% unique(),"_dbl"),
+                             instrument_dict_r3 = make_aqol4d_dict(),
+                             instrument_nm_1L_chr =  "Assessment of Quality of Life (4 Dimension)",
+                             instrument_short_nm_1L_chr = "AQoL-4D",
+                             itm_labels_chr = itm_labels_chr,
+                             itm_prefix_1L_chr = itm_prefix_1L_chr,
+                             scrg_dss_ls = scrg_dss_ls,
+                             total_wtd_var_nm_1L_chr = utl_var_nm_1L_chr,
+                             total_unwtd_var_nm_1L_chr = tot_unwtd_var_nm_1L_chr)
+    Z <- renew(Z, scoring_fn = add_aqol4d_scores,
+               scorz_args_ls = list(keep_all_1L_lgl = keep_all_1L_lgl, itm_prefix_1L_chr = Z@itm_prefix_1L_chr,
+                                    scrg_dss_ls = Z@scrg_dss_ls, tot_unwtd_var_nm_1L_chr = Z@total_unwtd_var_nm_1L_chr,
+                                    utl_var_nm_1L_chr = Z@total_wtd_var_nm_1L_chr),
+               type_1L_chr = "score-w")
+    object_xx <- Z
+  }
+  return(object_xx)
+}
 add_aqol6d_adol_dim_scrg_eqs <- function (unscored_aqol_tb,
                                           aqol6d_scrg_dss_ls = NULL)
 {
   if(is.null(aqol6d_scrg_dss_ls)){
-    aqol6d_scrg_dss_ls <- get_aqol6d_scrg_dss()
+    aqol6d_scrg_dss_ls <- make_aqol6d_scrg_dss()
   }
   adol_dim_sclg_eqs_lup <- aqol6d_scrg_dss_ls$adol_dim_sclg_eqs_lup
   for (var in adol_dim_sclg_eqs_lup$Dim_scal) {
@@ -21,7 +105,7 @@ add_aqol6d_items_to_aqol6d_tbs_ls <- function (aqol6d_tbs_ls, aqol_items_prpns_t
                                                id_var_nm_1L_chr = "fkClientID", scaling_con_dbl = 5)
 {
   if(is.null(aqol6d_scrg_dss_ls)){
-    aqol6d_scrg_dss_ls <- get_aqol6d_scrg_dss()
+    aqol6d_scrg_dss_ls <- make_aqol6d_scrg_dss()
   }
   updated_aqol6d_tbs_ls <- purrr::map2(aqol6d_tbs_ls, aqol_items_prpns_tbs_ls,
                                        ~{
@@ -67,7 +151,7 @@ add_adol6d_scores <- function (unscored_aqol_tb,
                                wtd_aqol_var_nm_1L_chr = "aqol6d_total_w")
 {
   if(is.null(aqol6d_scrg_dss_ls)){
-    aqol6d_scrg_dss_ls <- get_aqol6d_scrg_dss()
+    aqol6d_scrg_dss_ls <- make_aqol6d_scrg_dss()
   }
   complete_ds_tb <- unscored_aqol_tb
   unscored_aqol_tb <- unscored_aqol_tb %>% dplyr::select(tidyselect::all_of(id_var_nm_1L_chr),
@@ -112,7 +196,7 @@ add_aqol6dU_to_aqol6d_items_tb <- function (aqol6d_items_tb,
                                             coefs_lup_tb = NULL)
 {
   if(is.null(coefs_lup_tb)){
-    aqol6d_scrg_dss_ls <- get_aqol6d_scrg_dss()
+    aqol6d_scrg_dss_ls <- make_aqol6d_scrg_dss()
     coefs_lup_tb <- aqol6d_scrg_dss_ls$aqol6d_from_8d_coefs_lup_tb
   }
   coef_dbl <- coefs_lup_tb[match(c(paste0("vD", 1:6), "Constant"),
@@ -130,7 +214,7 @@ add_aqol6dU_to_aqol6d_tbs_ls <- function (aqol6d_tbs_ls,
                                           id_var_nm_1L_chr)
 {
   if(is.null(aqol6d_scrg_dss_ls)){
-    aqol6d_scrg_dss_ls <- get_aqol6d_scrg_dss()
+    aqol6d_scrg_dss_ls <- make_aqol6d_scrg_dss()
   }
   aqol6d_tbs_ls <- aqol6d_tbs_ls %>% purrr::map(~.x %>% dplyr::mutate(aqol6dU = calculate_adol_aqol6dU(.x,
                                                                                                        aqol6d_scrg_dss_ls = aqol6d_scrg_dss_ls,
@@ -143,7 +227,7 @@ add_cors_and_utls_to_aqol6d_tbs_ls <- function (aqol6d_tbs_ls, aqol_scores_pars_
                                                 id_var_nm_1L_chr = "fkClientID")
 { # FOR FK DATA GENERATION - REORGANISE
   if(is.null(aqol6d_scrg_dss_ls)){
-    aqol6d_scrg_dss_ls <- get_aqol6d_scrg_dss()
+    aqol6d_scrg_dss_ls <- make_aqol6d_scrg_dss()
   }
   aqol6d_tbs_ls <- youthvars::reorder_tbs_for_target_cors(aqol6d_tbs_ls,
                                                cor_dbl = temporal_cors_ls[[1]],
@@ -164,7 +248,7 @@ add_dim_disv_to_aqol6d_items_tb <- function (aqol6d_items_tb, domain_items_ls, d
                                              itm_wrst_wts_lup_tb = NULL)
 {
   if(is.null(dim_sclg_con_lup_tb) | is.null(itm_wrst_wts_lup_tb))
-    aqol6d_scrg_dss_ls <- get_aqol6d_scrg_dss()
+    aqol6d_scrg_dss_ls <- make_aqol6d_scrg_dss()
   if(is.null(dim_sclg_con_lup_tb)){
     dim_sclg_con_lup_tb <- aqol6d_scrg_dss_ls$aqol6d_dim_sclg_con_lup_tb
   }
@@ -193,12 +277,31 @@ add_dim_scores_to_aqol6d_items_tb <- function (aqol6d_items_tb, domain_items_ls)
                                                                                                                                           "vD_dvD", "vD"))
   return(aqol6d_items_tb)
 }
+add_item_totals <- function(ds_tb,
+                            domains_ls = NULL,
+                            domains_prefix_1L_chr = character(0),
+                            domain_tfmn_fn = identity,
+                            items_prefix_1L_chr,
+                            total_var_nm_1L_chr,
+                            total_tfmn_fn = identity,
+                            type_fn = as.integer){
+  vars_to_total_chr <- names(ds_tb)[names(ds_tb) %>% startsWith(items_prefix_1L_chr)]
+  if(!is.null(domains_ls)){
+    suffix_1L_chr <- ifelse(identical(type_fn,as.integer), "_int",ifelse(identical(type_fn, as.double), "_dbl","_num"))
+    ds_tb <- purrr::reduce(1:length(domains_ls), .init = ds_tb,
+                           ~ .x %>% dplyr::mutate(!!rlang::sym(paste0(domains_prefix_1L_chr,names(domains_ls)[.y],suffix_1L_chr)) := .x %>% dplyr::select(paste0(items_prefix_1L_chr,domains_ls[[.y]])) %>% rowSums() %>% domain_tfmn_fn() %>% type_fn()))
+    vars_to_total_chr <- paste0(domains_prefix_1L_chr,names(domains_ls),suffix_1L_chr)
+  }
+  ds_tb <- ds_tb %>%
+    dplyr::mutate(!!rlang::sym(total_var_nm_1L_chr) := ds_tb %>% dplyr::select(tidyselect::all_of(vars_to_total_chr)) %>% rowSums() %>% total_tfmn_fn %>% type_fn())
+  return(ds_tb)
+}
 add_itm_disv_to_aqol6d_itms_tb <- function (aqol6d_items_tb,
                                             disvalues_lup_tb = NULL,
                                             pfx_1L_chr)
 {
   if(is.null(disvalues_lup_tb)){
-    aqol6d_scrg_dss_ls <- get_aqol6d_scrg_dss()
+    aqol6d_scrg_dss_ls <- make_aqol6d_scrg_dss()
 #
 #     utils::data("aqol6d_adult_disv_lup_tb",
 #                 package = "youthvars",
@@ -249,6 +352,123 @@ add_labels_to_aqol6d_tb <- function (aqol6d_tb, labels_chr = NA_character_)
                                                      names(labels_chr))])
   return(aqol6d_tb)
 }
+add_paid_totals <- function(ds_tb,
+                            ctg_var_nm_1L_chr = "PAID_burnout_risk_lgl",
+                            dict_ctg_1L_chr = "PAID",
+                            dictionary_r3 = ready4use::ready4use_dictionary(),
+                            items_prefix_1L_chr = "paid_",
+                            total_var_nm_1L_chr = "PAID_total_dbl",
+                            what_1L_chr = "ds",
+                            ...){
+  ds_tb <- ds_tb %>% add_item_totals(items_prefix_1L_chr = items_prefix_1L_chr, total_var_nm_1L_chr = total_var_nm_1L_chr, total_tfmn_fn = function(x){x * 1.25}, type_fn = as.double)
+  ds_tb <- ds_tb %>% dplyr::mutate(!!rlang::sym(ctg_var_nm_1L_chr) := !!rlang::sym(total_var_nm_1L_chr) %>% purrr::map_lgl(~ ifelse(is.na(.x),NA, .x>=40)))
+  if(what_1L_chr == "dict"){
+    dictionary_r3 <- dplyr::filter(dictionary_r3,startsWith(var_nm_chr, items_prefix_1L_chr))
+    object_xx <- dictionary_r3 %>% ready4use::renew.ready4use_dictionary(var_nm_chr = c(total_var_nm_1L_chr,ctg_var_nm_1L_chr),
+                                                                         var_ctg_chr = dict_ctg_1L_chr,
+                                                                         var_desc_chr = c("PAID total score", "PAID burnout risk"),
+                                                                         var_type_chr = c(total_var_nm_1L_chr,ctg_var_nm_1L_chr) %>%
+                                                                           purrr::map_chr(~ds_tb %>% dplyr::pull(.x) %>% class() %>% purrr::pluck(1)))
+  }else{
+    object_xx <- ds_tb
+  }
+  return(object_xx)
+}
+add_phq4_totals <- function(ds_tb,
+                            ctg_var_nm_1L_chr = "phq4_ctg_fct",
+                            dict_ctg_1L_chr = "PHQ-4",
+                            dictionary_r3 = ready4use::ready4use_dictionary(),
+                            domains_ls = list(anxiety=1:2, depression=3:4),
+                            domains_prefix_1L_chr = "phq4_",
+                            items_prefix_1L_chr = "phq_gad_",
+                            total_var_nm_1L_chr = "phq4_total_int",
+                            what_1L_chr = "ds",
+                            ...){
+  ds_tb <- ds_tb %>% add_item_totals(domains_ls = domains_ls, domains_prefix_1L_chr = domains_prefix_1L_chr, items_prefix_1L_chr = items_prefix_1L_chr, total_var_nm_1L_chr = total_var_nm_1L_chr)
+
+  ds_tb <- ds_tb %>% dplyr::mutate(!!rlang::sym(ctg_var_nm_1L_chr) := !!rlang::sym(paste0(domains_prefix_1L_chr,names(domains_ls)[1],"_int")) %>% purrr::map2_chr(!!rlang::sym(paste0(domains_prefix_1L_chr,names(domains_ls)[2],"_int")),
+                                                                                                                                                                  ~ {
+                                                                                                                                                                    all_chr <- c(ifelse(is.na(.x), NA_character_, ifelse(.x>=3,"Anxiety", "Normal range")),
+                                                                                                                                                                                 ifelse(is.na(.y), NA_character_, ifelse(.y>=3,"Depression", "Normal range"))) %>% unique()
+                                                                                                                                                                    if(length(all_chr)>1){
+                                                                                                                                                                      all_chr <- setdiff(all_chr %>% purrr::discard(is.na),"Normal range")
+                                                                                                                                                                      if(length(all_chr)>1){
+                                                                                                                                                                        all_chr <- "Anxiety and depression"
+                                                                                                                                                                      }
+                                                                                                                                                                    }
+                                                                                                                                                                    all_chr
+                                                                                                                                                                  }) %>% as.factor())
+  if(what_1L_chr == "dict"){
+    dictionary_r3 <- dplyr::filter(dictionary_r3,startsWith(var_nm_chr, items_prefix_1L_chr))
+    object_xx <- dictionary_r3 %>% ready4use::renew.ready4use_dictionary(var_nm_chr = c(paste0(domains_prefix_1L_chr,names(domains_ls),"_int"),total_var_nm_1L_chr,ctg_var_nm_1L_chr),
+                                                                         var_ctg_chr = dict_ctg_1L_chr,
+                                                                         var_desc_chr = c("PHQ-4 anxiety score", "PHQ-4 depression score", "PHQ-4 total score", "PHQ-4 mental health"),
+                                                                         var_type_chr = c(paste0(domains_prefix_1L_chr,names(domains_ls),"_int"),total_var_nm_1L_chr,ctg_var_nm_1L_chr) %>%
+                                                                           purrr::map_chr(~ds_tb %>% dplyr::pull(.x) %>% class() %>% purrr::pluck(1)))
+  }else{
+    object_xx <- ds_tb
+  }
+  return(object_xx)
+}
+add_scores <- function(X_YouthvarsProfile, # New Scorz class
+                       scoring_tb,
+                       label_ds_1L_lgl = T,
+                       what_1L_chr = c("merged", "list")){
+  what_1L_chr <- match.arg(what_1L_chr)
+  object_xx <- purrr::pmap(scoring_tb,
+                           ~ {
+                             dict_fn <- eval(parse(text= ..10))
+                             dict_args_ls <- ..11
+                             scoring_fn <- eval(parse(text= ..5))
+                             if(identical(dict_args_ls, list()))
+                               dict_args_ls <- NULL
+                             if(identical(dict_fn, scoring_fn)){
+                               instrument_dict_r3 <- rlang::exec(dict_fn, Y@a_Ready4useDyad@ds_tb, !!!dict_args_ls) # make conditional
+                             }else{
+                               instrument_dict_r3 <- rlang::exec(dict_fn,!!!dict_args_ls)
+                             }
+                             scoring_args_ls <- ..6
+                             if(identical(scoring_args_ls, list()))
+                               scoring_args_ls <- NULL
+                             ScorzProfile(a_YouthvarsProfile = X_YouthvarsProfile,
+                                          country_1L_chr = ..7,
+                                          domain_unwtd_var_nms_chr = ..4,
+                                          domain_wtd_var_nms_chr = ..8,
+                                          instrument_dict_r3 = instrument_dict_r3, # make conditional
+                                          instrument_nm_1L_chr =  ..1,
+                                          instrument_short_nm_1L_chr = ..2,
+                                          instrument_version_1L_chr = ..15,
+                                          itm_labels_chr = Y@a_Ready4useDyad@dictionary_r3 %>%
+                                            get_from_lup_obj(match_value_xx = ..9,
+                                                             match_var_nm_1L_chr = "var_ctg_chr",
+                                                             target_var_nm_1L_chr = "var_desc_chr"),
+                                          itm_prefix_1L_chr = ..3,
+                                          scrg_dss_ls = ..11,
+                                          total_wtd_var_nm_1L_chr = ..14,
+                                          total_unwtd_var_nm_1L_chr = ..13) %>%
+                               renew(scoring_fn = scoring_fn,
+                                     scorz_args_ls = scoring_args_ls,
+                                     label_ds_1L_lgl = label_ds_1L_lgl,
+                                     type_1L_chr = "score-w")
+                           }
+  ) %>% stats::setNames(scoring_tb$short_name_chr)
+  if(what_1L_chr == "merged"){
+    Y <- purrr::reduce(object_xx, .init = X_YouthvarsProfile,
+                       ~ {
+                         Y_YouthvarsProfile <- .x
+                         Y_YouthvarsProfile@a_Ready4useDyad@ds_tb <- dplyr::left_join(.x@a_Ready4useDyad@ds_tb,
+                                                                                      .y@a_YouthvarsProfile@a_Ready4useDyad@ds_tb)
+                         Y_YouthvarsProfile@a_Ready4useDyad@dictionary_r3 <- dplyr::bind_rows(.y@a_YouthvarsProfile@a_Ready4useDyad@dictionary_r3,
+                                                                                              .x@a_Ready4useDyad@dictionary_r3) %>%
+                           dplyr::distinct()
+                         Y_YouthvarsProfile
+                       })
+    Y@a_Ready4useDyad@dictionary_r3 <- Y@a_Ready4useDyad@dictionary_r3 %>%  dplyr::filter(!is.na(var_nm_chr)) %>%
+      dplyr::arrange(var_ctg_chr, var_nm_chr)
+    object_xx <- Y
+  }
+  return(object_xx)
+}
 add_unwtd_dim_tots <- function (items_tb, domain_items_ls, domain_pfx_1L_chr)
 {
   items_and_domains_tb <- purrr::reduce(1:length(domain_items_ls),
@@ -261,7 +481,7 @@ add_wtd_dim_tots <- function (unwtd_dim_tb, domain_items_ls, domain_unwtd_pfx_1L
                               domain_wtd_pfx_1L_chr, aqol6d_scrg_dss_ls = NULL)
 {
   if(is.null(aqol6d_scrg_dss_ls))
-    aqol6d_scrg_dss_ls <- get_aqol6d_scrg_dss()
+    aqol6d_scrg_dss_ls <- make_aqol6d_scrg_dss()
   aqol6d_adult_disv_lup_tb <- aqol6d_scrg_dss_ls$aqol6d_adult_disv_lup_tb
   aqol6d_domain_qs_lup_tb <- aqol6d_scrg_dss_ls$aqol6d_domain_qs_lup_tb
   # utils::data("aqol6d_adult_disv_lup_tb", package = "youthvars", envir = environment())

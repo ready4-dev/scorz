@@ -15,7 +15,7 @@ calculate_adol_aqol6dU <- function (unscored_aqol_tb, aqol6d_scrg_dss_ls = NULL,
     id_var_nm_1L_chr = "fkClientID", wtd_aqol_var_nm_1L_chr = "aqol6d_total_w") 
 {
     if (is.null(aqol6d_scrg_dss_ls)) {
-        aqol6d_scrg_dss_ls <- get_aqol6d_scrg_dss()
+        aqol6d_scrg_dss_ls <- make_aqol6d_scrg_dss()
     }
     scored_aqol_tb <- add_adol6d_scores(unscored_aqol_tb, aqol6d_scrg_dss_ls = aqol6d_scrg_dss_ls, 
         prefix_1L_chr = prefix_1L_chr, id_var_nm_1L_chr = id_var_nm_1L_chr, 
@@ -36,7 +36,7 @@ calculate_adol_aqol6dU <- function (unscored_aqol_tb, aqol6d_scrg_dss_ls = NULL,
 calculate_adult_aqol6dU <- function (aqol6d_items_tb, prefix_1L_chr, aqol6d_scrg_dss_ls = NULL) 
 {
     if (is.null(aqol6d_scrg_dss_ls)) 
-        aqol6d_scrg_dss_ls <- get_aqol6d_scrg_dss()
+        aqol6d_scrg_dss_ls <- make_aqol6d_scrg_dss()
     coefs_lup_tb <- aqol6d_scrg_dss_ls$aqol6d_from_8d_coefs_lup_tb
     dim_sclg_con_lup_tb <- aqol6d_scrg_dss_ls$aqol6d_dim_sclg_con_lup_tb
     disvalues_lup_tb <- aqol6d_scrg_dss_ls$aqol6d_adult_disv_lup_tb
@@ -55,6 +55,41 @@ calculate_adult_aqol6dU <- function (aqol6d_items_tb, prefix_1L_chr, aqol6d_scrg
         add_aqol6dU_to_aqol6d_items_tb(coefs_lup_tb = coefs_lup_tb)
     aqol6dU_dbl <- aqol6d_items_tb$aqol6dU
     return(aqol6dU_dbl)
+}
+#' Calculate AQoL-4D dimension disvalue
+#' @description calculate_aqol4d_dim_disv() is a Calculate function that performs a numeric calculation. Specifically, this function implements an algorithm to calculate aqol-4d dimension disvalue. The function returns an AQoL-4D dimension disvalue (a double vector).
+#' @param domain_1L_chr Domain (a character vector of length one)
+#' @param ds_tb Dataset (a tibble)
+#' @param scrg_dss_ls Scoring datasets (a list), Default: NULL
+#' @return an AQoL-4D dimension disvalue (a double vector)
+#' @rdname calculate_aqol4d_dim_disv
+#' @export 
+#' @importFrom purrr map map_dbl pmap_dbl
+#' @importFrom ready4 get_from_lup_obj
+#' @importFrom stats setNames
+#' @importFrom dplyr select
+#' @keywords internal
+calculate_aqol4d_dim_disv <- function (domain_1L_chr, ds_tb, scrg_dss_ls = NULL) 
+{
+    if (is.null(scrg_dss_ls)) {
+        scrg_dss_ls <- make_aqol4d_scrg_dss_ls()
+    }
+    domains_chr <- scrg_dss_ls$domain_qs_lup$Domain_chr %>% unique()
+    domains_ls <- domains_chr %>% purrr::map(~ready4::get_from_lup_obj(scrg_dss_ls$domain_qs_lup, 
+        match_var_nm_1L_chr = "Domain_chr", match_value_xx = .x, 
+        target_var_nm_1L_chr = "Question_int")) %>% stats::setNames(domains_chr)
+    qs_int <- domains_ls[[domain_1L_chr]]
+    coefficients_dbl <- qs_int %>% purrr::map_dbl(~ready4::get_from_lup_obj(scrg_dss_ls$domain_qs_lup, 
+        match_var_nm_1L_chr = "Question_int", match_value_xx = .x, 
+        target_var_nm_1L_chr = "Coefficient_dbl"))
+    multiplier_1L_dbl <- ready4::get_from_lup_obj(scrg_dss_ls$dim_multipliers_lup, 
+        match_var_nm_1L_chr = "Dimension_chr", match_value_xx = domain_1L_chr, 
+        target_var_nm_1L_chr = "Multiplier_dbl")
+    aqol4d_dim_disv_dbl <- ds_tb %>% dplyr::select(paste0("aqol4d_disv_q", 
+        qs_int, "_dbl")) %>% purrr::pmap_dbl(~(multiplier_1L_dbl * 
+        (1 - (1 - coefficients_dbl[1] * ..1) * (1 - coefficients_dbl[2] * 
+            ..2) * (1 - coefficients_dbl[3] * ..3))))
+    return(aqol4d_dim_disv_dbl)
 }
 #' Calculate Assessment of Quality of Life Six Dimension dimension 1 disvalue
 #' @description calculate_aqol6d_dim_1_disv() is a Calculate function that performs a numeric calculation. Specifically, this function implements an algorithm to calculate assessment of quality of life six dimension dimension 1 disvalue. The function returns DvD1 (a double vector).

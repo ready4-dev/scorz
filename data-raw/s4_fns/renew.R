@@ -5,7 +5,7 @@ renew_ScorzAqol6Adol <- function(x,
   y <- renew(y, type_1L_chr = "unlabel")
   if(type_1L_chr == "score"){
     if(identical(x@scrg_dss_ls,list(list()))){
-      x@scrg_dss_ls <- get_aqol6d_scrg_dss()
+      x@scrg_dss_ls <- make_aqol6d_scrg_dss()
     }
     select_chr <- setdiff(names(y@ds_tb),
                           x@instrument_dict_r3$var_nm_chr[!x@instrument_dict_r3$var_nm_chr %>%
