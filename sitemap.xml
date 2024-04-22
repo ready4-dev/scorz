@@ -4,9 +4,6 @@
     <loc>https://ready4-dev.github.io/scorz/404.html</loc>
   </url>
   <url>
-    <loc>https://ready4-dev.github.io/scorz/LICENSE-text.html</loc>
-  </url>
-  <url>
     <loc>https://ready4-dev.github.io/scorz/LICENSE.html</loc>
   </url>
   <url>
@@ -46,6 +43,9 @@
     <loc>https://ready4-dev.github.io/scorz/reference/add_adol6d_scores.html</loc>
   </url>
   <url>
+    <loc>https://ready4-dev.github.io/scorz/reference/add_aqol4d_scores.html</loc>
+  </url>
+  <url>
     <loc>https://ready4-dev.github.io/scorz/reference/add_aqol6dU_to_aqol6d_items_tb.html</loc>
   </url>
   <url>
@@ -67,10 +67,22 @@
     <loc>https://ready4-dev.github.io/scorz/reference/add_dim_scores_to_aqol6d_items_tb.html</loc>
   </url>
   <url>
+    <loc>https://ready4-dev.github.io/scorz/reference/add_item_totals.html</loc>
+  </url>
+  <url>
     <loc>https://ready4-dev.github.io/scorz/reference/add_itm_disv_to_aqol6d_itms_tb.html</loc>
   </url>
   <url>
     <loc>https://ready4-dev.github.io/scorz/reference/add_labels_to_aqol6d_tb.html</loc>
+  </url>
+  <url>
+    <loc>https://ready4-dev.github.io/scorz/reference/add_paid_totals.html</loc>
+  </url>
+  <url>
+    <loc>https://ready4-dev.github.io/scorz/reference/add_phq4_totals.html</loc>
+  </url>
+  <url>
+    <loc>https://ready4-dev.github.io/scorz/reference/add_scores.html</loc>
   </url>
   <url>
     <loc>https://ready4-dev.github.io/scorz/reference/add_unwtd_dim_tots.html</loc>
@@ -79,10 +91,19 @@
     <loc>https://ready4-dev.github.io/scorz/reference/add_wtd_dim_tots.html</loc>
   </url>
   <url>
+    <loc>https://ready4-dev.github.io/scorz/reference/adol_dim_sclg_eqs_lup.html</loc>
+  </url>
+  <url>
+    <loc>https://ready4-dev.github.io/scorz/reference/aqol6d_adult_vldn_pop_with_STATA_scores_tb.html</loc>
+  </url>
+  <url>
     <loc>https://ready4-dev.github.io/scorz/reference/calculate_adol_aqol6dU.html</loc>
   </url>
   <url>
     <loc>https://ready4-dev.github.io/scorz/reference/calculate_adult_aqol6dU.html</loc>
+  </url>
+  <url>
+    <loc>https://ready4-dev.github.io/scorz/reference/calculate_aqol4d_dim_disv.html</loc>
   </url>
   <url>
     <loc>https://ready4-dev.github.io/scorz/reference/calculate_aqol6d_dim_1_disv.html</loc>
@@ -109,6 +130,9 @@
     <loc>https://ready4-dev.github.io/scorz/reference/deprecated.html</loc>
   </url>
   <url>
+    <loc>https://ready4-dev.github.io/scorz/reference/dotdata.html</loc>
+  </url>
+  <url>
     <loc>https://ready4-dev.github.io/scorz/reference/exhibit-methods.html</loc>
   </url>
   <url>
@@ -130,6 +154,27 @@
     <loc>https://ready4-dev.github.io/scorz/reference/make_adol_aqol6d_disv_lup.html</loc>
   </url>
   <url>
+    <loc>https://ready4-dev.github.io/scorz/reference/make_aqol4d_dict.html</loc>
+  </url>
+  <url>
+    <loc>https://ready4-dev.github.io/scorz/reference/make_aqol4d_dim_multipliers_lup.html</loc>
+  </url>
+  <url>
+    <loc>https://ready4-dev.github.io/scorz/reference/make_aqol4d_domain_qs_lup.html</loc>
+  </url>
+  <url>
+    <loc>https://ready4-dev.github.io/scorz/reference/make_aqol4d_domains_ls.html</loc>
+  </url>
+  <url>
+    <loc>https://ready4-dev.github.io/scorz/reference/make_aqol4d_item_disvalue_lup.html</loc>
+  </url>
+  <url>
+    <loc>https://ready4-dev.github.io/scorz/reference/make_aqol4d_params_lup.html</loc>
+  </url>
+  <url>
+    <loc>https://ready4-dev.github.io/scorz/reference/make_aqol4d_scrg_dss_ls.html</loc>
+  </url>
+  <url>
     <loc>https://ready4-dev.github.io/scorz/reference/make_aqol6d_adol_pop_tbs_ls.html</loc>
   </url>
   <url>
@@ -142,6 +187,9 @@
     <loc>https://ready4-dev.github.io/scorz/reference/make_aqol6d_items_tb.html</loc>
   </url>
   <url>
+    <loc>https://ready4-dev.github.io/scorz/reference/make_aqol6d_scrg_dss.html</loc>
+  </url>
+  <url>
     <loc>https://ready4-dev.github.io/scorz/reference/make_dim_sclg_cons_dbl.html</loc>
   </url>
   <url>
@@ -151,7 +199,16 @@
     <loc>https://ready4-dev.github.io/scorz/reference/make_eq5d_dict.html</loc>
   </url>
   <url>
+    <loc>https://ready4-dev.github.io/scorz/reference/make_filtered_profile.html</loc>
+  </url>
+  <url>
+    <loc>https://ready4-dev.github.io/scorz/reference/make_scoring_tb.html</loc>
+  </url>
+  <url>
     <loc>https://ready4-dev.github.io/scorz/reference/manufacture-methods.html</loc>
+  </url>
+  <url>
+    <loc>https://ready4-dev.github.io/scorz/reference/nseequals.html</loc>
   </url>
   <url>
     <loc>https://ready4-dev.github.io/scorz/reference/pipe.html</loc>
