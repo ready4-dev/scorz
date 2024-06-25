@@ -96,7 +96,7 @@ y <- dplyr::bind_rows(ready4class::make_pt_ready4class_constructor(make_s3_lgl =
                                                                                 "character",
                                                                                 "character") %>% list(),
                                                                    vals_ls = list(list(domain_wtd_var_nms_chr = "paste0(\"vD\",1:6)",
-                                                                                       instrument_dict_r3 = "get_aqol6d_scrg_dict()",
+                                                                                       instrument_dict_r3 = " make_aqol6d_scrg_dict()",
                                                                                        instrument_nm_1L_chr = "'Assessment of Quality of Life (6 Dimension)'",
                                                                                        instrument_short_nm_1L_chr = "'AQoL-6D'",
                                                                                        #instrument_version_1L_chr = NA_character_,

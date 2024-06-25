@@ -269,6 +269,51 @@ make_aqol6d_items_tb <- function (aqol_tb, old_pfx_1L_chr, new_pfx_1L_chr)
         })
     return(aqol6d_items_tb)
 }
+#' Make Assessment of Quality of Life Six Dimension scoring dictionary
+#' @description make_aqol6d_scrg_dict() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make assessment of quality of life six dimension scoring dictionary. The function is called for its side effects and does not return a value.
+#' @param prefix_1L_chr Prefix (a character vector of length one), Default: 'aqol6d_q'
+#' @param scrg_dss_ls Scoring datasets (a list), Default: NULL
+#' @param tot_unwtd_var_nm_1L_chr Total unweighted variable name (a character vector of length one), Default: 'aqol6d_total_c'
+#' @param utl_var_nm_1L_chr Utility variable name (a character vector of length one), Default: 'aqol6d_total_w'
+#' @return Assessment of Quality of Life Six Dimension (ready4 s3 class defining a data dictionary tibble.)
+#' @rdname make_aqol6d_scrg_dict
+#' @export 
+#' @importFrom ready4use ready4use_dictionary renew.ready4use_dictionary
+#' @keywords internal
+make_aqol6d_scrg_dict <- function (prefix_1L_chr = "aqol6d_q", scrg_dss_ls = NULL, tot_unwtd_var_nm_1L_chr = "aqol6d_total_c", 
+    utl_var_nm_1L_chr = "aqol6d_total_w") 
+{
+    if (is.null(scrg_dss_ls)) {
+        scrg_dss_ls <- make_aqol6d_scrg_dss()
+    }
+    aqol6d_ready4use_dictionary <- ready4use::ready4use_dictionary() %>% 
+        ready4use::renew.ready4use_dictionary(var_nm_chr = c(paste0(prefix_1L_chr, 
+            1:20), tot_unwtd_var_nm_1L_chr, scrg_dss_ls$adol_dim_sclg_eqs_lup$Dim_scal[1:6], 
+            scrg_dss_ls$adol_dim_sclg_eqs_lup$Dim_scal[7:12], 
+            paste0("dvQ", 1:20), scrg_dss_ls$adol_dim_sclg_eqs_lup$Dim_scal[13:18], 
+            utl_var_nm_1L_chr), var_ctg_chr = c(rep(paste0("multi-attribute utility instrument question"), 
+            20), "multi-attribute utility instrument unweighted total score", 
+            rep("utility dimension disvalue", 6), rep("utility dimension score (adult)", 
+                6), rep("utility item disvalue", 20), c("utility overall score (disvalue scale)", 
+                "utility overall score (life-death scale)", rep("utility overall score (adolescent disutility scale)", 
+                  2), "utility overall score (instrument)", "utility overall score (instrument - rotated)"), 
+            "utility overall score (final weighted)"), var_desc_chr = c(c(paste0("AQoL-6D - ", 
+            c(paste0("independent living - ", c("household tasks", 
+                "mobility (out of home)", "mobility (unaided)", 
+                "self-care")), paste0("relationships - ", c("quality", 
+                "role (family)", "role (community)")), paste0("mental health - ", 
+                c("despair", "anxiety", "sadness", "calm")), 
+                paste0("coping - ", c("energy", "control", "resilience")), 
+                paste0("pain - ", c("frequency", "quanitity", 
+                  "impact")), paste0("senses - ", c("vision", 
+                  "hearing", "communication"))))), "Unweighted AQoL-4D total", 
+            scrg_dss_ls$adol_dim_sclg_eqs_lup$Label[1:6], scrg_dss_ls$adol_dim_sclg_eqs_lup$Label[7:12], 
+            paste0("Assessment of Quality of Life (6 Dimension) item disvalue ", 
+                1:20), scrg_dss_ls$adol_dim_sclg_eqs_lup$Label[13:18], 
+            "AQol-6D utility"), var_type_chr = c(rep("integer", 
+            20), rep("numeric", 40)))
+    return(aqol6d_ready4use_dictionary)
+}
 #' Make Assessment of Quality of Life Six Dimension scoring datasets
 #' @description make_aqol6d_scrg_dss() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make assessment of quality of life six dimension scoring datasets. The function returns Assessment of Quality of Life Six Dimension scoring datasets (a list).
 

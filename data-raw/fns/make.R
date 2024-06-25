@@ -46,6 +46,60 @@ make_aqol4d_dict <- function(prefix_1L_chr =  "aqol4d_q",
                                           var_type_chr = c(rep("integer",12), rep("logical",2),rep("numeric",10)))
   return(aqol4d_ready4use_dictionary)
 }
+make_aqol6d_scrg_dict <- function(prefix_1L_chr =  "aqol6d_q",
+                                  scrg_dss_ls = NULL,
+                                  tot_unwtd_var_nm_1L_chr = "aqol6d_total_c",
+                                  utl_var_nm_1L_chr = "aqol6d_total_w"){
+  #scorz::make_aqol6d_scrg_dss()
+  if(is.null(scrg_dss_ls)){
+    scrg_dss_ls <- make_aqol6d_scrg_dss()
+  }
+  aqol6d_ready4use_dictionary <- ready4use::ready4use_dictionary() %>%
+    ready4use::renew.ready4use_dictionary(var_nm_chr = c(paste0(prefix_1L_chr, 1:20),
+                                                         #c("aqol4d_imputed_lgl","aqol4d_complete_lgl"),
+                                                         #paste0("aqol4d_unwtd_",domains_chr,"_dbl"),
+                                                         tot_unwtd_var_nm_1L_chr,
+                                                         scrg_dss_ls$adol_dim_sclg_eqs_lup$Dim_scal[1:6],
+                                                         scrg_dss_ls$adol_dim_sclg_eqs_lup$Dim_scal[7:12],
+                                                         paste0("dvQ", 1:20),
+                                                         scrg_dss_ls$adol_dim_sclg_eqs_lup$Dim_scal[13:18],
+                                                         #paste0("aqol4d_dim_",domains_chr,"_dbl"),
+                                                         utl_var_nm_1L_chr),
+                                          var_ctg_chr = c(rep(paste0("multi-attribute utility instrument question"), 20),
+                                                          #rep(paste0("multi-attribute utility instrument participation"),2),
+                                                          #rep("multi-attribute utility instrument unweighted dimension score",4),
+                                                          "multi-attribute utility instrument unweighted total score",
+                                                          rep("utility dimension disvalue", 6),
+                                                          rep("utility dimension score (adult)", 6),
+                                                          rep("utility item disvalue", 20),
+                                                          c("utility overall score (disvalue scale)","utility overall score (life-death scale)",
+                                                            rep("utility overall score (adolescent disutility scale)",2),
+                                                            "utility overall score (instrument)", "utility overall score (instrument - rotated)"),
+
+                                                          "utility overall score (final weighted)"),
+                                          var_desc_chr = c(c(paste0("AQoL-6D - ",
+                                                                    c(paste0("independent living - ", c("household tasks", "mobility (out of home)", "mobility (unaided)", "self-care")),#"independent living - self-care",
+                                                                      paste0("relationships - ", c("quality", "role (family)", "role (community)")),
+                                                                      paste0("mental health - ", c("despair",  "anxiety", "sadness", "calm")),
+                                                                      paste0("coping - ", c("energy",  "control", "resilience")),
+                                                                      paste0("pain - ", c("frequency",  "quanitity", "impact")),
+                                                                      paste0("senses - ",c("vision", "hearing", "communication"))
+                                                                    ))),
+                                                           #"AQoL-4D item responses include imputed values", "Responded to all AQoL-4D questions",
+                                                           #paste0("AQoL-4D ",c("Independent Living", "Relationships", "Senses", "Mental Health")," domain (unweighted)"),
+                                                           "Unweighted AQoL-4D total",
+                                                           scrg_dss_ls$adol_dim_sclg_eqs_lup$Label[1:6],
+                                                           scrg_dss_ls$adol_dim_sclg_eqs_lup$Label[7:12],
+                                                           paste0("Assessment of Quality of Life (6 Dimension) item disvalue ",1:20),
+                                                           scrg_dss_ls$adol_dim_sclg_eqs_lup$Label[13:18],
+                                                           #paste0("AQoL-4D ",c("Independent Living", "Relationships", "Senses", "Mental Health")," domain (weighted)"),
+                                                           "AQol-6D utility"),
+                                          var_type_chr = c(rep("integer",20),
+                                                           #rep("logical",2),
+                                                           rep("numeric", 40)))
+  return(aqol6d_ready4use_dictionary)
+
+}
 make_aqol4d_dim_multipliers_lup <- function(domain_qs_lup = NULL){
   if(is.null(domain_qs_lup))
     domain_qs_lup <- make_aqol4d_domain_qs_lup()
