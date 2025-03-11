@@ -1,6 +1,6 @@
 Package: scorz
 Title: Score Multi-Attribute Utility Instruments
-Version: 0.0.0.9066
+Version: 0.0.0.9067
 Authors@R: c(
     person("Matthew", "Hamilton", , "matthew.hamilton1@monash.edu", role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0000-0001-7407-9194")),
@@ -20,15 +20,14 @@ Description: Modules from the readyforwhatsnext youth mental health
     as part of the process of testing and documenting the package.  If you
     have any questions, please contact the authors
     (matthew.hamilton1@monash.edu).
-License: GPL-3
+License: GPL-3 + file LICENSE
 URL: https://ready4-dev.github.io/scorz/,
     https://github.com/ready4-dev/scorz, https://www.ready4-dev.com/
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
 Suggests: 
     knitr,
-    pkgload,
     rmarkdown,
     testthat
 VignetteBuilder: knitr
@@ -45,15 +44,16 @@ Imports:
     mice,
     purrr,
     ready4,
-    ready4use (>= 0.0.0.9233),
+    ready4use (>= 0.0.0.9249),
     rlang,
     simstudy,
     stats,
     stringi,
     stringr,
     tibble,
+    tidyr,
     tidyselect,
-    youthvars (>= 0.0.0.9125)
+    youthvars (>= 0.0.0.9129)
 Depends: 
     R (>= 2.10)
 LazyData: true
