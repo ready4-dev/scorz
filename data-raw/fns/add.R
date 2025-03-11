@@ -1,3 +1,60 @@
+add_adol_chu9d <- function(ds_tb,
+                           adol_chu9d_scrg_ds = make_adol_chu9d_scrg_ds(),
+                           cleanse_1L_chr = c("all", "none", "dims", "items", "itemdims"),
+                           dim_pfx_1L_chr = "chu9d_dim",
+                           item_pfx_1L_chr = "chu9d_item",
+                           scale_by_1L_dbl = 1.1059,
+                           unweighted_1L_chr = "chu9d_cml",
+                           weighted_1L_chr = "chu9d_utl"){
+  acknowledgement_1L_chr <- "Adapted from the SPSS scoring algorithm by Chen and Ratcliffe 2015"
+  cleanse_1L_chr <- match.arg(cleanse_1L_chr)
+  ds_tb <- ds_tb %>%
+    dplyr::rowwise() %>%
+    dplyr::mutate(chu9d_missing_items = sum(is.na(dplyr::c_across(dplyr::starts_with(item_pfx_1L_chr))))) %>%
+    dplyr::ungroup()
+  ds_tb <- purrr::reduce(names(ds_tb)[names(ds_tb) %>% startsWith(item_pfx_1L_chr)],
+                         .init = ds_tb,
+                         ~ {
+                           new_nm_1L_chr <- stringr::str_replace(.y, item_pfx_1L_chr, dim_pfx_1L_chr)
+                           index_1L_int <- stringr::str_replace(.y, item_pfx_1L_chr, "") %>% as.integer()
+                           .x %>%
+                             dplyr::mutate(!!rlang::sym(new_nm_1L_chr) := !!rlang::sym(.y) %>%
+                                             purrr::map2_dbl(chu9d_missing_items,
+                                                             ~ifelse(.y>0,
+                                                                     NA_integer_,
+                                                                     adol_chu9d_scrg_ds[adol_chu9d_scrg_ds$Response==.x,index_1L_int+1][[1]]))
+                             )
+                         })
+  ds_tb <- ds_tb %>%
+    dplyr::rowwise() %>%
+    dplyr::mutate(!!rlang::sym(unweighted_1L_chr) := sum(dplyr::c_across(dplyr::starts_with(item_pfx_1L_chr)))) %>%
+    dplyr::ungroup() %>%
+    dplyr::mutate(!!rlang::sym(unweighted_1L_chr) := dplyr::case_when(chu9d_missing_items>0 ~ NA_real_,
+                                                                      T ~ !!rlang::sym(unweighted_1L_chr)))
+  ds_tb <- ds_tb %>%
+    dplyr::rowwise() %>%
+    dplyr::mutate(chu9d_disval = sum(dplyr::c_across(dplyr::starts_with(dim_pfx_1L_chr)))) %>%
+    dplyr::ungroup()
+
+  ds_tb <- ds_tb %>%
+    dplyr::mutate(!!rlang::sym(weighted_1L_chr) := 1 - (scale_by_1L_dbl * (1- chu9d_disval)))
+  if(cleanse_1L_chr != "none"){
+    cleanse_chr <- c("chu9d_missing_items", "chu9d_disval")
+
+    if(cleanse_1L_chr %in% c("all","items", "itemdims")){
+      cleanse_chr <- c(cleanse_chr, names(ds_tb)[names(ds_tb) %>% startsWith(item_pfx_1L_chr)])
+    }
+    if(cleanse_1L_chr %in% c("all","dims", "itemdims")){
+      cleanse_chr <- c(cleanse_chr, names(ds_tb)[names(ds_tb) %>% startsWith(dim_pfx_1L_chr)])
+    }
+    if(cleanse_1L_chr %in% c("all")){
+      cleanse_chr <- c(cleanse_chr, unweighted_1L_chr)
+    }
+    ds_tb <- ds_tb %>%
+      dplyr::select(-tidyr::all_of(cleanse_chr))
+  }
+  return(ds_tb)
+}
 add_aqol4d_scores <- function(object_xx,
                               country_1L_chr = NA_character_,#"Australia",
                               itm_labels_chr = character(0),

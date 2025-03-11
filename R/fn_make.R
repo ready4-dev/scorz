@@ -17,6 +17,28 @@ make_adol_aqol6d_disv_lup <- function (aqol6d_scrg_dss_ls = NULL)
         "Q1" ~ 0.073, TRUE ~ Answer_5_dbl))
     return(adol_aqol6d_disv_lup)
 }
+#' Make adolescent CHU-9D scoring dataset
+#' @description make_adol_chu9d_scrg_ds() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make adolescent chu-9d scoring dataset. The function is called for its side effects and does not return a value.
+
+#' @return Adolescent CHU-9D scoring (a dataset)
+#' @rdname make_adol_chu9d_scrg_ds
+#' @export 
+#' @importFrom tibble tibble
+#' @keywords internal
+make_adol_chu9d_scrg_ds <- function () 
+{
+    acknowledgement_1L_chr <- "Adapted from the SPSS scoring algorithm by Chen and Ratcliffe 2015"
+    adol_chu9d_scrg_ds <- tibble::tibble(Response = 1:5, Worry = c(0.2163, 
+        0.1326, 0.118, 0.118, 0.1077), Sad = c(0.1475, 0.0532, 
+        0.0492, 0.0274, 0.0178), Pain = c(0.1039, 0.0308, 0.0305, 
+        -0.0189, -0.0189), Tired = c(0.107, 0.0788, 0.0678, 0.0603, 
+        0.0254), Annoyed = c(0.0773, 0.0039, 0.0024, -0.0086, 
+        -0.0386), Work = c(0.0922, 0.0128, 0.0059, -0.0083, -0.0185), 
+        Sleep = c(0.0649, 0.0082, 0.0082, -0.0054, -0.0492), 
+        Daily = c(0.0667, -0.0348, -0.044, -0.0501, -0.0501), 
+        Activities = c(0.1242, 0.1144, 0.0871, 0.0788, 0.0244))
+    return(adol_chu9d_scrg_ds)
+}
 #' Make AQoL-4D dictionary
 #' @description make_aqol4d_dict() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make aqol-4d dictionary. The function is called for its side effects and does not return a value.
 #' @param prefix_1L_chr Prefix (a character vector of length one), Default: 'aqol4d_q'
