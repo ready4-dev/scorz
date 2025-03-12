@@ -192,4 +192,11 @@ write_to_tidy_pkg(z$x_ready4fun_manifest, build_vignettes_1L_lgl = TRUE,
                   clean_license_1L_lgl = TRUE, consent_1L_chr = "Y",
                   examples_chr = character(0),
                   suggest_chr = "pkgload")
+paste0(".github/workflows/", c("pkgdown.yaml", "R-CMD-check.yaml")) %>%
+  purrr::walk(~{
+    path_1L_chr <- .x
+    readLines(path_1L_chr)[-(which(readLines(path_1L_chr) %>% startsWith("    # Addresses issue with incompatibility between libcurl4-gnutls-dev and libcurl4-openssl-dev") | readLines(path_1L_chr) %>% startsWith("        # Addresses issue with incompatibility between libcurl4-gnutls-dev and libcurl4-openssl-dev")) %>%
+                               purrr::map(~.x:(.x+6)) %>% purrr::flatten_int())] %>%
+      writeLines(path_1L_chr)
+  })
 
